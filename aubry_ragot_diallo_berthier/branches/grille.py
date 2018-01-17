@@ -35,17 +35,3 @@ class grille:
         while(self.ligne%2 == 0) or (self.ligne>= self.colonne):
             self.ligne = int(input("La largeur de votre grille doit être impaire et inferieur à la hauteur ? \n"))
         return self.ligne
-
-
-def main():
-    colonne = int(input("La hauteur de votre grille ? \n"))
-    ligne = int(input("La largeur de votre grille ? \n"))
-    val = "-"
-
-    maGrille = grille(colonne, ligne)
-    maGrille.creerGrille(val)
-    maGrille.impaire()
-    maGrille.affiche()
-
-
-main()
