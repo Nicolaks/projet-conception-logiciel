@@ -24,8 +24,8 @@ class grille:
         ch = ""
         ligne = self.ligne
         colonne = self.colonne
-        for j in range(ligne):
-            for i in range(colonne[j]):
+        for j in range(len(self.grid)):
+            for i in range(len(self.grid[j])):
                 ch += str(self.grid[j][i]) + (1+4-len(str(self.grid[j][i])))* " "
             ch += "\n \n"
         print(ch)
@@ -45,20 +45,7 @@ def main():
     maGrille = grille(colonne, ligne)
     maGrille.creerGrille(val)
     maGrille.impaire()
-    #maGrille.affiche()
+    maGrille.affiche()
 
 
 main()
-
-
-"""
-    def affiche(self):
-        #Affiche en mode console
-        #ch = ""
-        ligne = self.ligne
-        colonne = self.colonne
-        for j in range(ligne):
-            for i in range()
-            self.grid[j]= colonne *["-"]
-        print(self.grid)
-"""
