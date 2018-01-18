@@ -1,8 +1,8 @@
 #Fichier de lancement general.
 from grille import *
 from hero import *
-#import hero
-#import ennemis
+from ennemis import *
+
 
 def main():
     global colonne
@@ -16,8 +16,15 @@ def main():
     maGrille.impaire()
     maGrille.affiche()
 
-    monhero = hero(maGrille)
-    monhero.ajoutHero(maGrille.grid)
+
+
+    monhero = hero()
+    monhero.ajoutHero(maGrille)
+
+    monennemis = ennemis()
+    monennemis.ajoutEnnemis(maGrille)
+
+    maGrille.affiche()
 
 
 main()

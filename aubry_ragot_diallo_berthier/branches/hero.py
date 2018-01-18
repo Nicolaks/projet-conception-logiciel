@@ -2,15 +2,19 @@ from grille import *
 import math
 class hero:
 
-    def __init__(self,grid):
+    def __init__(self):
+        self.posX = 0
+        self.posY = 0
 
-        self.grid = grid
 
-    def ajoutHero(grid): # Permet de mettre le joueur a sa place dans la grille.
-        hauteurMap = colonne - 1
-        centre = math.ceil(ligne/2) - 1 #placement du hero
-        for i in range(len(grid)):
-            for j in range(ligne):
-                self.grid[hauteurMap][centre] = hero # ajout du hero dans le centre de la liste
 
-#ajout déplacement
+    def ajoutHero(self, maGrille): #Permet l'ajout du héro.
+
+        hauteurMap = maGrille.colonne - 1
+        centre = math.ceil(maGrille.ligne/2) - 1 #placement du hero
+        self.posX = hauteurMap
+        self.posY = centre
+        hero = "1"
+        for i in range(len(maGrille.grid)):
+            for j in range(maGrille.ligne):
+                maGrille.grid[hauteurMap][centre] = hero # ajout du hero dans le centre de la liste
