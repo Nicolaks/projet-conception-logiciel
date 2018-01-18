@@ -11,17 +11,15 @@ class grille:
 
     def creerGrille(self, val):
         #grid = []
-        for i in range(self.colonne):
-            l = [val]*self.ligne
-            self.grid.append(l)
-        return self.grid
+        for i in range(self.colonne):#Parcours la taille de la colonne
+            l = [val]*self.ligne#Ajoute à chaque tour de boucle la valeur à la ligne
+            self.grid.append(l)#Ajoute la variable l à la grille.
+        return self.grid#Retourne la grille.
 
 
-
-    #Ne fonctionne pas encore, en utilsant les objets.
     def affiche(self):
         #Affiche en mode console
-        ch = ""
+        ch = ""#Créer une liste vide.
         ligne = self.ligne
         colonne = self.colonne
         for j in range(len(self.grid)):
@@ -31,6 +29,7 @@ class grille:
         print(ch)
 
     #Verifie si la largeur de la grille est inférieure est impair.
+    #Si c'est le cas alors une boucle while se charge de redemmander une réponse.
     def impaire(self):
         while(self.ligne%2 == 0) or (self.ligne>= self.colonne):
             self.ligne = int(input("La largeur de votre grille doit être impaire et inferieur à la hauteur ? \n"))

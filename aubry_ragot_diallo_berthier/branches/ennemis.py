@@ -12,19 +12,7 @@ class ennemis:
 
         ennemis = "0"
 
+        #Permet de mettre les ennemis sur les deux premières lignes de la grille.
         for i in range(2):
             for j in range(maGrille.ligne):
                 maGrille.grid[i][j] = ennemis
-
-"""
-
-        hauteurMap = maGrille.colonne - 1
-        centre = math.ceil(maGrille.ligne/2) - 1 #placement du hero
-        self.posX = hauteurMap
-        self.posY = centre
-        hero = "1"
-        for i in range(len(maGrille.grid)):
-            for j in range(maGrille.ligne):
-                maGrille.grid[hauteurMap][centre] = hero # ajout du hero dans le centre de la liste
-
-"""
