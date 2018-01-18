@@ -26,5 +26,15 @@ def main():
 
     maGrille.affiche()
 
+    #monhero.gauche(maGrille)
+
+    #monhero.droite(maGrille)
+
+
+
+
+    maGrille.affiche()
+
+
 
 main()
