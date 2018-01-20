@@ -42,3 +42,11 @@ class hero:
             self.posY += 1#Lui donne une nouvelle direction
             posHero = "1"#Un hero vaut le chiffre 1.
             maGrille.grid[self.posX][self.posY] = posHero#Applique la direction
+
+#Arriver à ajouter le tire sur la grille en jouant avec les position de celle-ci.
+    def tirer(self, maGrille):
+
+        if self.posX -1 > -1 and self.posX + 1 < maGrille.colonne:
+            posXTire = self.posX
+            posYTire = self.posY + 1
+            maGrille.grid[posXTire][posYTire] = "|"

@@ -30,7 +30,7 @@ def main():
 
     #monhero.droite(maGrille)
 
-
+    monhero.tirer(maGrille)
 
 
     maGrille.affiche()
