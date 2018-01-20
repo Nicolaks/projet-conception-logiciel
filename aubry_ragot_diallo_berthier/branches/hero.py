@@ -45,8 +45,6 @@ class hero:
 
 #Arriver à ajouter le tire sur la grille en jouant avec les position de celle-ci.
     def tirer(self, maGrille):
-
-        if self.posX -1 > -1 and self.posX + 1 < maGrille.colonne:
-            posXTire = self.posX
-            posYTire = self.posY + 1
-            maGrille.grid[posXTire][posYTire] = "|"
+        posXTire = self.posX - 1
+        posYTire = self.posY
+        maGrille.grid[posXTire][posYTire] = "|"
