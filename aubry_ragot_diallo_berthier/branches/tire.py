@@ -24,7 +24,8 @@ class tire:
 
         #Si le tire touche un "0" alors la position du tire vaut désormais la position du zéro et le tire disparrait.
         #Il est remplacé par un "-"
-        if self.posXTire - 1 == ennemis.posX:
+
+        if self.posXTire  == ennemis.posX:
             self.posXTire -= 1#Décremente la position actuelle.
             maGrille.grid[self.posXTire][self.posYTire] = "-"#Remplace l'ancienne position par un nul.
 
@@ -33,6 +34,3 @@ class tire:
             maGrille.grid[self.posXTire][self.posYTire] = "-"#Remplace l'ancienne position par un nul.
             self.posXTire -= 1#Décremente la position actuelle.
             maGrille.grid[self.posXTire][self.posYTire] = "|"#Réajuste la position du tire.
-
-        print(self.posXTire)
-        print(ennemis.posX)
