@@ -4,8 +4,9 @@ class hero:
 
     def __init__(self):
         #Constructeur
-        self.posX = 0
-        self.posY = 0
+        self.posX = 0#Position en X du héro.
+        self.posY = 0#Position en Y du héro.
+
 
 
 
@@ -42,9 +43,3 @@ class hero:
             self.posY += 1#Lui donne une nouvelle direction
             posHero = "1"#Un hero vaut le chiffre 1.
             maGrille.grid[self.posX][self.posY] = posHero#Applique la direction
-
-#Arriver à ajouter le tire sur la grille en jouant avec les position de celle-ci.
-    def tirer(self, maGrille):
-        posXTire = self.posX - 1
-        posYTire = self.posY
-        maGrille.grid[posXTire][posYTire] = "|"

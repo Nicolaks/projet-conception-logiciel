@@ -2,6 +2,7 @@
 from grille import *
 from hero import *
 from ennemis import *
+from tire import *
 
 
 def main():
@@ -21,19 +22,34 @@ def main():
     monhero = hero()
     monhero.ajoutHero(maGrille)
 
+
     monennemis = ennemis()
     monennemis.ajoutEnnemis(maGrille)
 
     maGrille.affiche()
 
-    #monhero.gauche(maGrille)
+    monhero.gauche(maGrille)
 
     #monhero.droite(maGrille)
 
-    monhero.tirer(maGrille)
 
+
+    tire1 = tire(monhero)
+    tire1.tirer(maGrille)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+    tire1.tire(maGrille, monennemis)
+
+    #tire2 = tire(hero)
 
     maGrille.affiche()
+
+
+
 
 
 
