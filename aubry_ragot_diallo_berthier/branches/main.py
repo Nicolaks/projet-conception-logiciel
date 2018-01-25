@@ -33,26 +33,40 @@ def main():
 
         rep = input("Que voulez-vous faire ?")
 
-        if rep == "g":
-            if isinstance(tire1, tire):
+        listeTire = []
+
+
+        if rep == "t":
+            tir = tire(monhero)
+            tir.tirer(maGrille)
+            listeTire.append(tir)
+            print(listeTire)
+
+        elif rep == "g":
+            print(len(listeTire))
+            if len(listeTire) >= 1:
                 monhero.gauche(maGrille)
                 maGrille.affiche()
-                tire1.tire(maGrille, monennemis)
+                print("text")
+                #tire1.tire(maGrille, monennemis)
+                listeTire[0].tire(maGrille, monennemis)
+                print(listeTire[0].posXTire)
             else:
                 monhero.gauche(maGrille)
                 maGrille.affiche()
+                print("else")
 
         elif rep == "d":
-            if isinstance(tire1, tire):
+            if len(listeTire) > 0:
                 monhero.droite(maGrille)
                 maGrille.affiche()
-                tire1.tire(maGrille, monennemis)
+                listeTire[0].tire(maGrille, monennemis)
             else:
                 monhero.droite(maGrille)
                 maGrille.affiche()
-        elif rep == "t":
-            tire1 = tire(monhero)
-            tire1.tirer(maGrille)
+
+        elif rep == "q" or rep == "quitter":
+            continuer = False;
 
         maGrille.affiche()
 
