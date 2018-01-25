@@ -13,14 +13,12 @@ def main():
     ligne = int(input("La largeur de votre grille ? \n"))
     val = "-"
 
-
+    continuer = True
 
     maGrille = grille(colonne, ligne)
     maGrille.creerGrille(val)
     maGrille.impaire()
     maGrille.affiche()
-
-
 
     monhero = hero()
     monhero.ajoutHero(maGrille)
@@ -31,25 +29,31 @@ def main():
 
     maGrille.affiche()
 
-    monhero.gauche(maGrille)
+    while continuer:
 
-    #monhero.droite(maGrille)
+        rep = input("Que voulez-vous faire ?")
 
+        if rep == "g":
+            if isinstance(tire1, tire):
+                monhero.gauche(maGrille)
+                maGrille.affiche()
+                tire1.tire(maGrille, monennemis)
+            else:
+                monhero.gauche(maGrille)
+                maGrille.affiche()
 
+        elif rep == "d":
+            if isinstance(tire1, tire):
+                monhero.droite(maGrille)
+                maGrille.affiche()
+                tire1.tire(maGrille, monennemis)
+            else:
+                monhero.droite(maGrille)
+                maGrille.affiche()
+        elif rep == "t":
+            tire1 = tire(monhero)
+            tire1.tirer(maGrille)
 
-    tire1 = tire(monhero)
-    tire1.tirer(maGrille)
-
-    tire1.tire(maGrille, monennemis)
-
-
-    #tire2 = tire(hero)
-
-    maGrille.affiche()
-
-
-
-
-
+        maGrille.affiche()
 
 main()

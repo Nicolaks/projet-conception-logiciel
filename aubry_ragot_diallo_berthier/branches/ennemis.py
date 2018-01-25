@@ -9,13 +9,17 @@ class ennemis:
 
 
 
-    def ajoutEnnemis(self, maGrille): #Permet l'ajout du héro.
-
+    def ajoutEnnemis(self, maGrille): #Permet l'ajout d'un ennemis de façon aléatoire.
+        #A ajouter
+        #Que les ennemis ne puissent pas apparaitre sur des autres ennemis ou sur un tire en cours
         ennemis = "0"
+        maGrille.grid[math.ceil(random.random()*2)-1][math.ceil(random.random()*maGrille.ligne)-1] = ennemis#Ajoute un ennemis de façon aléatoire dans le haut de la grille.
 
 
-        #Faire en sorte que a chaque instance, un ennemis apparaissent de manière aléatoire entre les deux premières lignes.
-        #Permet de mettre les ennemis sur les deux premières lignes de la grille
-        for i in range(2):
-            for j in range(math.ceil(random.random()*maGrille.ligne)):
-                maGrille.grid[i][j] = ennemis
+    def defile(self):
+
+        return None
+
+    def collision(self):
+
+        return None
