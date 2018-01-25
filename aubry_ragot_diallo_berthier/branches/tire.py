@@ -26,7 +26,10 @@ class tire:
         #Il est remplacé par un "-"
 
         if self.posXTire  == ennemis.posX:
-            self.posXTire -= 1#Décremente la position actuelle.
+            print(self.posXTire)
+            print(ennemis.posX)
+            ennemis.posX = "-"
+            self.posXTire += 1#Décremente la position actuelle.
             maGrille.grid[self.posXTire][self.posYTire] = "-"#Remplace l'ancienne position par un nul.
 
         #Déroule le tire correctement.

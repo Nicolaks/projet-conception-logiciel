@@ -23,3 +23,7 @@ class ennemis:
     def collision(self):
 
         return None
+
+    def mort(self):
+
+        return None
