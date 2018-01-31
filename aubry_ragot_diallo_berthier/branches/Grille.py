@@ -13,6 +13,7 @@ class grille:
         #grid = []
         for i in range(self.ligne):#On parcours le nombres de ligne
             l = [val]*self.colonne#Ajoute à chaque tour de boucle la valeur à la ligne
+            print(l)
             self.grid.append(l)#Ajoute la variable l à la grille.
         return self.grid#Retourne la grille.
 
@@ -28,5 +29,5 @@ class grille:
             ch += "\n\n"
         print(ch)
 
-   
+#On peut gerer diféramment la grille où l'on ne référence que les objets TIRS,Ennemies,HERO et où l'on ne référence AUCUNE case vide.
 
