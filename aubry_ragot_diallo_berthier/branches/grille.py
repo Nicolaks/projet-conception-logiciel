@@ -9,7 +9,7 @@ class grille:
         self.ligne = y
         self.grid = []
 
-    def creerGrille(self, val):
+    def creerGrille(self, val):#Fonction qui crée la grille
         #grid = []
         for i in range(self.colonne):#Parcours la taille de la colonne
             l = [val]*self.ligne#Ajoute à chaque tour de boucle la valeur à la ligne
@@ -17,7 +17,7 @@ class grille:
         return self.grid#Retourne la grille.
 
 
-    def affiche(self):
+    def affiche(self):#Fonction permettant d'afficher la grille.
         #Affiche en mode console
         ch = ""#Créer une liste vide.
         ligne = self.ligne
@@ -32,5 +32,5 @@ class grille:
     #Si c'est le cas alors une boucle while se charge de redemmander une réponse.
     def impaire(self):
         while(self.ligne%2 == 0) or (self.ligne>= self.colonne):
-            self.ligne = int(input("La largeur de votre grille doit être impaire et inferieur à la hauteur ? \n"))
+            self.ligne = int(input("La largeur de votre grille doit être impaire et inferieur à la hauteur ? \n"))#Demande une valeur inférieure et impaire.
         return self.ligne
