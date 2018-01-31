@@ -21,6 +21,8 @@ class ennemis:
     def defile(self,maGrille):#Fonction qui fait défiler vers le bas un ennemi.
         if self.posX  == maGrille.colonne:#Vérifie que l'ennemis ne dépasse pas la hauteur.
             maGrille.grid[self.posX][self.posY] = "-"#Si c'est le cas alors on le suprime.
+            self.posX += 1#Fait défiler les ennemis
+
 
 
 

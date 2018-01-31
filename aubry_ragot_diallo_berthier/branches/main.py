@@ -5,17 +5,16 @@ from ennemis import *
 from tire import *
 
 
-
 def main():
     global colonne
     global ligne
     global val
     val = "-"
-    colonne = int(input("La hauteur de votre grille ? \n"))
-    ligne = int(input("La largeur de votre grille ? \n"))
+    colonne = int(input("La hauteur de votre grille ? \n"))#Demande la hauteur de la grille.
+    ligne = int(input("La largeur de votre grille ? \n"))#Demande la largeur de la grille.
 
 
-    continuer = True
+    continuer = True#Variable pour continuer dans la boucle.
 
     maGrille = grille(colonne, ligne)
     maGrille.creerGrille(val)
@@ -79,3 +78,9 @@ def main():
         maGrille.affiche()#Affiche la grille.
 
 main()
+
+
+#http://apprendre-python.com/page-apprendre-dictionnaire-python
+#DicoEnnemis = {}
+#DicoEnnemis = {"PosX": monennemis.posX}
+#DicoEnnemis.get("PosX")
