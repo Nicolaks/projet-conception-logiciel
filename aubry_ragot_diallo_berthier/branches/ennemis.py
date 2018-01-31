@@ -1,4 +1,3 @@
-from grille import *
 import math
 import random
 class ennemis:
