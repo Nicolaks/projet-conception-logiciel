@@ -57,18 +57,17 @@ print(maGrille)
 monhero = mHero.hero()
 monhero.ajoutHero(maGrille)
 ###################################
-def waves(nb, listeEnnemis):
-    
-    if nb == "init":
-        for i in range(5):
-            ennemi = mEnnemis.ennemis()
-            ennemi.ajoutEnnemis(listeEnnemis, maGrille)
-            listeEnnemis.append(ennemi)
-    return listeEnnemis
+def waves(dictEnnemis, nb=5):#Valeur 5 ennemies de bases, on peut la changer en donnant nb=nombre en arguments
+    for i in range(nb):
+        print("i=",i)
+        ennemi = mEnnemis.ennemis()
+        ennemi.ajoutEnnemis(dictEnnemis, maGrille)
+        dictEnnemis[i] = ennemi
+    return dictEnnemis
 ###################################
 # Initialisation de la première vague d'énnemie
-listeEnnemis = []
-listeEnnemis = waves("init", listeEnnemis)
+dictEnnemis = {}
+dictEnnemis = waves(dictEnnemis)
 ###################################
 ###################################
 # Menu PAUSE
@@ -78,15 +77,10 @@ def PAUSE():
     pauseGrid.grid[0] = "PAUSE"
     pauseGrid.affiche()
     pygame.time.delay(5000)
-    
-
-
-
-
 
 maGrille.affiche() # Affichage de la grille avec ENNEMIE + HERO + VIDE
 
-listeTire = [] #Liste qui va contenir les instances des tirs.
+idc = {} #Liste qui va contenir les instances des tirs.
  #Liste qui va contenir les instances des ennemis.
 
 Window = pygame.display.set_mode((Width,Height))
@@ -109,7 +103,6 @@ def Menu():
                 pygame.display.update()
                 if event.key == pygame.K_ESCAPE:
                     preset = False
-
 #Fin preset test
 
 flags = [0,0,0,0,0]
@@ -159,9 +152,7 @@ while continuer:
         monhero.droite(maGrille)
     if len(listeTire) >= 1:
         #GERER CETTE PARTIE DANS TIRE DIFFERAMENT, ALGORITHME SIMPLIFIABLE.
-        for tir in listeTire:
-             tir.tire(maGrille)
-        Tire.collision(listeTire,listeTire)
+        Tire.col_tire(listeTire,listeTire)
     pygame.display.update()
     maGrille.affiche()
 pygame.quit()
