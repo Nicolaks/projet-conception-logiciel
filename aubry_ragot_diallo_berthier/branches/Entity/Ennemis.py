@@ -17,7 +17,7 @@ class ennemis:#Class qui définit un ennemi.
         #A ajouter
         caractereEnnemis = "0"# Le caractère d'un ennemi.
 
-        if len(listeEnnemis) >= 1:
+        if len(listeEnnemis) >= 1:#Regarde si la liste des ennemis est supérieur ou égale à 1.
             lPosEnnemis = []
             for enn in listeEnnemis:
                 lPosEnnemis.append([enn.posX, enn.posY])
@@ -29,8 +29,8 @@ class ennemis:#Class qui définit un ennemi.
         else:
             posX, posY = self.rd_POS(maGrille.colonne)
 
-        print(posX,posY)
-        print(maGrille.grid[posX][posY])
+        print(posX,posY)#Affiche la position de l'ennemi.
+        print(maGrille.grid[posX][posY])#Affiche dnas la grille la position de l'ennemi.
 
         self.posX = posX#Définit la position de l'ennemi en X par rapport à la variable posX.
         self.posY = posY#Définit la position de l'ennemi en Y par rapport à la variable posY.
