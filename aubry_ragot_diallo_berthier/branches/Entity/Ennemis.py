@@ -13,13 +13,14 @@ class ennemis:#Class qui définit un ennemi.
     def rd_POS(self,colonneGrille):#Ajoute une position random à un ennemis.
         return rd.randint(0,1),rd.randint(0,(colonneGrille - 1))#Utilise la fonction randint permettant de mettre aléatoire.
 
-    def ajoutEnnemis(self, listeEnnemis, maGrille): #Permet l'ajout d'un ennemis de façon aléatoire.
+    def ajoutEnnemis(self, dictEnnemis, maGrille): #Permet l'ajout d'un ennemis de façon aléatoire.
         #A ajouter
         caractereEnnemis = "0"# Le caractère d'un ennemi.
-
-        if len(listeEnnemis) >= 1:#Regarde si la liste des ennemis est supérieur ou égale à 1.
+        print(dictEnnemis)
+        if len(dictEnnemis) >= 1:
             lPosEnnemis = []
-            for enn in listeEnnemis:
+            for enn in dictEnnemis.values():
+                print(enn)
                 lPosEnnemis.append([enn.posX, enn.posY])
 
             posX, posY = self.rd_POS(maGrille.colonne)  #Initialisation de position potentiel d'un nouvel ennemi.
@@ -29,8 +30,8 @@ class ennemis:#Class qui définit un ennemi.
         else:
             posX, posY = self.rd_POS(maGrille.colonne)
 
-        print(posX,posY)#Affiche la position de l'ennemi.
-        print(maGrille.grid[posX][posY])#Affiche dnas la grille la position de l'ennemi.
+        print(posX,posY)
+        print(maGrille.grid[posX][posY])
 
         self.posX = posX#Définit la position de l'ennemi en X par rapport à la variable posX.
         self.posY = posY#Définit la position de l'ennemi en Y par rapport à la variable posY.
