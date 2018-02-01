@@ -1,4 +1,4 @@
-from Grille import *
+#from Grille import *
 import Entity.Hero as mHero
 import Entity.Ennemis as mEnnemis
 
@@ -37,7 +37,7 @@ class tire:
     def collision(lTires, lEnnemis): #Test de collision, si oui on remplace l'objet par une chaine "del"
         for Tir in lTires:#On parcours pour tout les tir
             for Enn in lEnnemis:
-                #if Tir isinstance (Tire,tire) and Enn isinstance (mEnnemis,ennemis):       
+                #if Tir isinstance (Tire,tire) and Enn isinstance (mEnnemis,ennemis):
                 if tir.posXTire == shoot.posX:
                     if tir.posY + 1 == enn.posY:
                         enn,tir = "del"
