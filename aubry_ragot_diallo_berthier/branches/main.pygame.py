@@ -9,14 +9,6 @@ import Entity.Hero as mHero
 import Entity.Ennemis as mEnnemis
 import Tire as mTire
 
-pygame.init()
-
-global colonne
-global ligne
-global val
-
-error = True
-
 def switch(value):
     if value == 0:
         return "Veuillez entrer des valeurs entières !"
@@ -24,7 +16,21 @@ def switch(value):
         return "Manic Shooter : Shot'em up !"
     return None
 
-while error:
+global colonne
+global ligne
+global val
+
+fps = 30 #IPS ou Frame per seconds
+Height = 800 #Hauteur
+Width = 500 #Largeur
+val = "-"
+
+
+pygame.init()
+
+error_grid = True
+
+while error_grid:
     try:
         ligne = int(input("La hauteur de votre grille ? \n"))
         colonne = int(input("La largeur de votre grille ? \n"))
@@ -37,13 +43,8 @@ while error:
             except ValueError:
                 print(switch(0))
             else:
-                error = False
-        error = False
-
-fps = 30 #IPS ou Frame per seconds
-Height = 800 #Hauteur
-Width = 500 #Largeur
-val = "-"
+                error_grid = False
+        error_grid = False
 
 ###################################
 # DEFINITION DE LA GRILLE
@@ -68,7 +69,10 @@ def waves(dictEnnemis, nb=5):#Valeur 5 ennemies de bases, on peut la changer en 
 # Initialisation de la première vague d'énnemie
 dictEnnemis = {}
 dictEnnemis = waves(dictEnnemis)
+len(dictEnnemis)
 ###################################
+dictTire = {} #Liste qui va contenir les instances des tirs.
+ #Liste qui va contenir les instances des ennemis.
 ###################################
 # Menu PAUSE
 def PAUSE():
@@ -77,11 +81,6 @@ def PAUSE():
     pauseGrid.grid[0] = "PAUSE"
     pauseGrid.affiche()
     pygame.time.delay(5000)
-
-maGrille.affiche() # Affichage de la grille avec ENNEMIE + HERO + VIDE
-
-idc = {} #Liste qui va contenir les instances des tirs.
- #Liste qui va contenir les instances des ennemis.
 
 Window = pygame.display.set_mode((Width,Height))
 pygame.display.set_caption(switch("titre"))
@@ -104,6 +103,8 @@ def Menu():
                 if event.key == pygame.K_ESCAPE:
                     preset = False
 #Fin preset test
+
+maGrille.affiche() # Affichage de la grille avec ENNEMIE + HERO + VIDE
 
 flags = [0,0,0,0,0]
 now = pygame.time.get_ticks()
@@ -141,7 +142,7 @@ while continuer:
     if flags[0] == 1:
         tir = mTire.tire(monhero)
         tir.tirer(maGrille)
-        listeTire.append(tir)
+        dictTire[len(dictTire)] = tir
     if flags[1] == 1:
         monhero.haut(maGrille)
     if flags[2] == 1:
@@ -150,9 +151,9 @@ while continuer:
         monhero.gauche(maGrille)
     if flags[4] == 1:
         monhero.droite(maGrille)
-    if len(listeTire) >= 1:
+    if len(dictTire) >= 1:
         #GERER CETTE PARTIE DANS TIRE DIFFERAMENT, ALGORITHME SIMPLIFIABLE.
-        Tire.col_tire(listeTire,listeTire)
+        mTire.col_tire(dictEnnemis,dictTire)
     pygame.display.update()
     maGrille.affiche()
 pygame.quit()
