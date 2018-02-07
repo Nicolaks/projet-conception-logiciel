@@ -1,21 +1,28 @@
 #Fichier de sauvegarde de SCORE, changement des touches assignés, récupération des scores et touches
-import pygame
-def modifier(self):
-    return True
 
-def settings():
-    try:
-        fichier = open("settings.txt","r")
-    except:
-        fichier = open("settings.txt","w")#on creer et ecrit dans settings.txt les differentes touche du jeux
-        fichier.write("-up-=_pygame.KUP_\n")
-        fichier.write("-down-=_pygame.KDOWN_\n")
-        fichier.write("-left-=_pygame.KLEFT_\n")
-        fichier.write("-right-=_pygame.KRIGHT_\n"),
-        fichier.write("-tir-=_pygame.KSPACE_\n")
-        fichier.write("-scores-=_{}_\n")
-    fichier.close()
+try:
+    fichier = open("settings.txt","r")
+except:
+    fichier = open("settings.txt","w")#on creer et ecrit dans settings.txt les differentes touche du jeux
+    fichier.write("up=pygame.KUP\n")
+    fichier.write("down=pygame.KDOWN\n")
+    fichier.write("left=pygame.KLEFT\n")
+    fichier.write("right=pygame.KRIGHT\n"),
+    fichier.write("tir=pygame.KSPACE\n")
+    fichier.write("scores={}\n")
+fichier.close()
 
 
+def lecture():
 
-settings()
+    fichier = open("settings.txt", "r")
+    tableau = {}
+    for ligne in fichier:
+        ligne = ligne.replace("\n", "")
+        ligne = ligne.split("=")
+        tableau[ligne[0]] = ligne[1]
+
+    print(tableau)
+
+
+lecture()
