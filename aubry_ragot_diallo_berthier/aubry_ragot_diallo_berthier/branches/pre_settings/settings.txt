@@ -1,0 +1,6 @@
+up=pygame.KUP
+down=pygame.KDOWN
+left=pygame.KLEFT
+right=pygame.KRIGHT
+tir=pygame.KSPACE
+scores={}
