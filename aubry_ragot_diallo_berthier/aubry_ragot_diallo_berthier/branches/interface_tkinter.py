@@ -6,6 +6,7 @@ from threading import Thread
 
 class App():#Class de type App qui gère la fenêtre graphique de base.
     def __init__(self, master):
+        self.master = master
         self.frame = Frame(master)
         self.frame.pack()
 
@@ -29,8 +30,8 @@ class App():#Class de type App qui gère la fenêtre graphique de base.
 
     def lancerPartie(self):#Fonction lancerPartie qui va lancer la partie puis quitter la fenêtre.
         print ("Lancement de la partie")
-        self.frame.quit()
-        self.frame.destroy()
+        self.master.quit()
+        self.master.destroy()
 
         mon_thread=Thread(target=Jeux())
     def settings(self):
