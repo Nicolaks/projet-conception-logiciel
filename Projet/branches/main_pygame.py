@@ -2,10 +2,6 @@ import os
 import time
 from tkinter import *
 
-
-
-
-
 try:
     import pygame
     from pygame.locals import *
@@ -14,27 +10,22 @@ except ImportError:
 
 import Entity.Hero as mHero
 import Entity.Ennemis as mEnnemis
+import Entity.Reactor as Rct
 from Function import *
 
 
 
 
 def Jeux():
-
     def switch(value):
         if value == 0:
             return "Veuillez entrer des valeurs entières !"
         if value == "titre":
             return "Manic Shooter : Shot'em up !"
         return None
-
-    global colonne
-    global ligne
-    global val
-
+    
     Height = 900 #Hauteur
     Width = 500 #Largeur
-    val = "-"
     fps = 60
 
     pygame.init()
@@ -43,11 +34,6 @@ def Jeux():
     pygame.display.set_caption(switch("titre"))
     Background = pygame.image.load(os.path.join("..","Ressources","Graphics","Background.jpg")).convert()
     Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
-
-
-    ###################################
-    # CREATION DU HERO
-    Spaceship = mHero.hero(style="spaceCraft1.png")
 
     ###################################
     #def waves(dictEnnemis, nb=5):#Valeur 5 ennemies de bases, on peut la changer en donnant nb=nombre en arguments
@@ -66,7 +52,7 @@ def Jeux():
      #Liste qui va contenir les instances des ennemis.
     ###################################
     def Game():
-        Spaceship = mHero.hero(style="spaceCraft1.png")
+        Spaceship = mHero.hero(style="spaceShip1.png")
         continuer = True
         flags = [0,0,0,0,0]
         while continuer:
@@ -116,6 +102,5 @@ def Jeux():
             Window.blit(Spaceship.style, (Spaceship.posX, Spaceship.posY))
             pygame.display.update()
             pygame.time.Clock().tick(fps)
-    Game()
     pygame.quit()
     quit()
