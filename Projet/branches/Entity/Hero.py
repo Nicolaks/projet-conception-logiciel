@@ -2,10 +2,10 @@ import time
 import os
 import pygame
 from pygame.locals import * 
+import Entity.Reactor as Rct
 
 class hero:
-
-    def __init__(self, style = "spaceCraft1.png", __vect_v = 10):
+    def __init__(self, style = "spaceShip1.png", __vect_v = 7):
 
         Surface = pygame.display.get_surface()#Recupere la surface de la fenetre
         self.Surf_Width, self.Surf_Height = Surface.get_width(), Surface.get_height()#Recupere sa longeur et largeur
@@ -23,13 +23,19 @@ class hero:
         self.posX = self.Surf_Width/2 - self.width/2
         self.posY = self.Surf_Height*(1-(5/80)) - self.height
 
+        self.Reactor = None
+
+    def Reactor_innit(self):
+        self.Reactor = Rct.reactor_f(self)
+
     def up(self):#Permet de faire déplacer le héro vers la gauche.
         if self.posY != 0:
             if self.posY - self.__vect_v < 0:
                 self.posY = 0
             else:
                 self.posY -= self.__vect_v
-                        
+            self.Reactor.follow(self)
+                       
 
     def down(self):#Permet de faire se déplacer le héro sur la droite.
         if self.posY != self.Surf_Height - self.height:
@@ -37,6 +43,8 @@ class hero:
                 self.posY = self.Surf_Height - self.height
             else:
                 self.posY += self.__vect_v
+            self.Reactor.follow(self)
+
                         
 
     def left(self):
@@ -45,6 +53,8 @@ class hero:
                 self.posX = 0
             else:
                 self.posX -= self.__vect_v
+            self.Reactor.follow(self)
+
 
     def right(self):
         if self.posX != self.Surf_Width - self.width:
@@ -52,3 +62,8 @@ class hero:
                 self.posX = self.Surf_Width - self.width
             else:
                 self.posX += self.__vect_v
+            self.Reactor.follow(self)
+
+    def tir(self, dictTire):
+        pass
+
