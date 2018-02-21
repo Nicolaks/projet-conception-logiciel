@@ -11,7 +11,7 @@
 \usepackage{algorithmic}
 \usepackage{rotate}
 \usepackage{url}
-
+\usepackage{hyperref}
 \usepackage{setspace}
 
 \newtheorem{definition}{Definition}
@@ -27,22 +27,30 @@
 
 \maketitle
 \tableofcontents
-\section{Un projet}
+\section{Manic Shooter}
+\subsection{Présentation}
 
-Dans un projet on à due aborder la notion de travail en équipe, de coordination, et surtout de communication.
-Il nous à fallu d'abord établir un cahier des charges ou nous avons intégré des normes pour définir notre manic'shooter et surtout savoir ou nous allions
- \subsection{Communication}
- \subsection{Paramètre humain}
- \subsection{Paramètre Machine}
- 
-\section{Cahier des charges}
+Présentation d'un Manic Shooter:
+Manic shooter ou Shoot them up ou Shmup qui signifie littéralement "Descendez-les tous".
+Un Manic shooter est un jeu ou le joueur doit diriger un personnage ou véhicule devant tuer un grand nombres d'ennemis à l'aide d'armes de plus en plus puissantes au fur et à mesure des niveaux, le personnages doit esquiver les tirs ou projectile ennemis.
+Ce système de jeu est sorti en 1978 avec 
+\href{http://dictionnaire.sensagent.leparisien.fr/Space%20Invaders/fr-fr/}{Space inverders}
+ present dans les salles d'arcades de base c'est un jeu 2D il trouve son succès enfin des années 80 début 90 dès que le graphisme tri-dimensionnelle apparut, son succès disparut.
 
-\begin{figure*}[ht!]
+ \begin{figure*}[ht!]
  \centering
- \includegraphics[width=0.7\linewidth]{picture.png}
- \caption{Manic shooter trouver sur le net}
+ \includegraphics[width=0.7\linewidth]{space.jpg}
+ \caption{Space inverders}
  \label{fig::example::one}
 \end{figure*}
+
+\subsection{diagramme}
+diagramme 
+
+\section{Cahier des charges}
+
+\subsection{diagramme des besoins}
+
 Le cahier des charges est l'une des chose essentiel pour bien débuter un projet sans cela la conception de notre logiciel serait devenue impossible.
 Tout d'abord nous voulions définir les normes logique du manic shooter 
 une carte / un personnage / des ennemies / ce déplacer / tirer etc ... 
@@ -71,10 +79,10 @@ ce personnage est équiper d'un réacteur qui le suit il à fallut intégrer cel
 Le héro n'est pas le seul personnage à géré il nous faut également gérer les ennemies
 	\subsection{Déplacement}
 Une fois le contexte poser pour les personnages / la carte, c'est maintenant qu'intervient la notion de déplacement évidement le héro doit se déplacer pour éviter les ennemies et avant dans sont épopée, mais les ennemies doivent ce déplacer également, il ce déplace aléatoirement pour atteindre la héro pour cela nous allons utiliser la librairie random qui génère de chiffre aléatoire ce qui nous permet d'associer cela à des déplacement.
-Au début les déplacement était de la "téléportation" c'est à dire que la position du héro était traiter avec des rafraichissement d'images c'est à dire, quand le joueur appuie sur la touche déplacer le héro change de position et donc une nouvelle image et créer sur cette position et l'autre est supprimer, mais cela pose un problème, quand la vitesse du héro est trop grande on voit les différente images des différentes position du héro, ....... suite .......
+Au début les déplacement était de la "téléportation" c'est à dire que la position du héro était traité avec des rafraichissement d'images c'est à dire, quand le joueur appuie sur la touche déplacer le héro change de position et donc une nouvelle image et créer sur cette position et l'autre est supprimer, mais cela pose un problème, quand la vitesse du héro est trop grande on voit les différente images des différentes position du héro, ....... suite .......
 	
 	\subsection{Tir}
-Généralement dans un manic shooter le hero doit posséder un tir qui va détruire les ennemies 
+Généralement dans un manic shooter le héro doit posséder un tir qui va détruire les ennemies 
 	\subsection{collisions}
 Les personnages sont confronté à des collisions qui doivent être gérer, c'est à dire quand le tir va aller
 \section{Choix des utilitaires utiliser}
