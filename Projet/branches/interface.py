@@ -1,4 +1,6 @@
 from tkinter import *
+#from tkinter import ttk
+#from PIL import Image, ImageTk
 from main_pygame import *
 
 
@@ -26,24 +28,31 @@ class App:#Class de type App qui gère la fenêtre graphique de base.
         width=25, height=5, command=self.quitterPartie).pack()#Ajout d'un boutton pour quitter la fenêtre.
 
 
-
-
-    def lancerPartie(self):#Fonction lancerPartie qui va lancer la partie puis quitter la fenêtre.
+    def lancerPartie(self):#Fonction lancerPartie qui va quitter la fenêtre puis lancer le jeu.
         self.master.destroy()
         self.master.quit()
         Jeux()
-        
-    def settings(self):
-        print("Accès aux paramètres")
 
-    def quitterPartie(self):
+    def settings(self):#Fonction qui donneras accès aux paramètres du joueur.
+        windows = Toplevel(self.master)
+        #self.frame.destroy()
+
+    def quitterPartie(self):#Fonction qui quitte la fenêtre.
         self.master.destroy()
 
 
 
 root = Tk()
+#canvas = Canvas(root, width =400, height=500, background="blue")
+#fond = Image.open(file="terre.gif")
+#image = canvas.create_image(0,0, image=fond, anchor = NW)
+#canvas.pack()
+
+
 root.title("Le jeu trop bien !!!")
 root.geometry("500x400")#Fenètre de 500 par 400
+
+
 
 #Mettre en fond d'écran du programme cette image, mais ne fonctionne pas.
 #image = Image.open("terre.jpg")#censer ouvrir l'image.
