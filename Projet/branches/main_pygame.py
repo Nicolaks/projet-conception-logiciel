@@ -1,16 +1,6 @@
 import os
 import time
 from tkinter import *
-import interface
-
-
-root = Tk()
-root.title("Le jeu trop bien !!!")
-root.geometry("500x400")#Fenètre de 500 par 400
-
-#Mettre en fond d'écran du programme cette image, mais ne fonctionne pas.
-#image = Image.open("terre.jpg")#censer ouvrir l'image.
-#photo = ImageTK.PhotoImage(image)#cencer appliquer l'image.
 
 
 
@@ -129,9 +119,3 @@ def Jeux():
     Game()
     pygame.quit()
     quit()
-
-
-app = interface.App(root)
-app.frame.quit
-root.mainloop()#Boucle principal
-Jeux()
