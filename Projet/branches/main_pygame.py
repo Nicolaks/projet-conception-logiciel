@@ -108,6 +108,7 @@ def Jeux():
             ############################
             pygame.display.update()
             pygame.time.Clock().tick(fps)
+    Game()
     pygame.quit()
     quit()
 
