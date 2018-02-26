@@ -4,8 +4,8 @@ import pygame
 from pygame.locals import *
 
 class reactor_f:
-    def __init__(self, spaceShip, style = "spaceShip1.png", spaceShip_type = 1):
-        self.spaceShip_type = spaceShip_type
+    def __init__(self, spaceShip):
+        #self.spaceShip_type = spaceShip.type
 
         self.reactor_style = pygame.image.load(os.path.join("..","Ressources","Graphics","Reactor","Reactor_" + style)).convert_alpha()
         self.reactor_width, self.reactor_height = self.reactor_style.get_width(), self.reactor_style.get_height()

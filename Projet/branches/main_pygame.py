@@ -1,16 +1,15 @@
 import os
+import sys
 import time
-
-try:
-    import pygame
-    from pygame.locals import *
-except ImportError:
-    os.system("pip3 install pygame")
-
-import Entity.Hero as mHero
-import Entity.Ennemis as mEnnemis
+import pygame
+from pygame.locals import *
 import Entity.Reactor as Rct
-from Function import *
+import Entity.EntityGroup as ENTGroup
+import Entity.SpaceShip as spaceShip
+import Entity.Ally as Ally
+
+
+
 def Jeux():
     def switch(value):
         if value == 0:
@@ -21,7 +20,7 @@ def Jeux():
 
 
     Height = 900 #Hauteur
-    Width = 500 #Largeur
+    Width = 900 #Largeur
     fps = 60
 
     pygame.init()
@@ -48,9 +47,10 @@ def Jeux():
      #Liste qui va contenir les instances des ennemis.
     ###################################
     def Game():
-        dictTire = {}
-        dictEnnemis = {}
-        Spaceship = mHero.hero(style="spaceShip1.png")
+        __GroupBullet_Ennemy = ENTGroup.Entity()
+        __GroupEnnemy = ENTGroup.Entity()
+        __GroupBullet_Ally = ENTGroup.Entity()
+        Spaceship = Ally.allyShip()
         Spaceship.Reactor_innit()
         continuer = True
         flags = [0,0,0,0,0]
@@ -103,8 +103,8 @@ def Jeux():
             #__Draw() A ajouter pour tout les BLITs
             ############################
             Window.blit(Background, (0,0))
-            Window.blit(Spaceship.Reactor.reactor_style, (Spaceship.Reactor.reactor_posX, Spaceship.Reactor.reactor_posY))#Affiche le reacteur du vaisseau
-            Window.blit(Spaceship.style, (Spaceship.posX, Spaceship.posY))#Affiche le vaisseau
+            #Window.blit(Spaceship.Reactor.reactor_style, (Spaceship.Reactor.reactor_posX, Spaceship.Reactor.reactor_posY))#Affiche le reacteur du vaisseau
+            Window.blit(Spaceship.image, (Spaceship.posX, Spaceship.posY))#Affiche le vaisseau
             ############################
             pygame.display.update()
             pygame.time.Clock().tick(fps)
