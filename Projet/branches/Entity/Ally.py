@@ -5,10 +5,11 @@ from pygame.locals import *
 import Entity.SpaceShip as _ss_
 
 class allyShip(_ss_.SpaceShip):
-    def __init__(self, style=1, __speed__ = 7):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, style=1, __speed__ = 7, life = 3, dmg = 50):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "SpaceShip"
         super().__init__(Type, style, __speed__)
-        self.life = 3
+        self.life = life
+        self.dmg = dmg
 
 
     def up(self):#Permet de faire déplacer le héro vers la gauche.
@@ -47,5 +48,5 @@ class allyShip(_ss_.SpaceShip):
                 self.posX += self.__speed__
             #self.Reactor.follow(self)
 
-    def tir(self, dictTire):
+    def shoot(self):
         pass
