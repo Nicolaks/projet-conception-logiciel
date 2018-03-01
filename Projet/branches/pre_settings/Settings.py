@@ -3,11 +3,12 @@ import pygame
 #####LE CHANGER EN JSON FILE, Utilisation plus simple
 class Settings:
     def __init__(self):
-        self.path = "Settings.json"
+        self.path = "pre_settings/Settings.json"#Par rapport a main_pygame.py
 
-        self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{}}
+        self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{},u"language":"Francais"}
 
         self._dict_ = self._default_dict_
+
         self.file = None
 
         self.key_hold = None
@@ -23,8 +24,20 @@ class Settings:
         self.load_json_to_dict()
 
     def load_json_to_dict(self):
-        with open(self.path) as self.file:
+        tmp = {}
+
+        with open(self.path) as self.file:#On récupère le fichier
             self._dict_ = json.load(self.file)
+
+        if len(self._dict_) < len(self._default_dict_):#Si l'on a rajouté un paramètre
+            for i in self._dict_:#On récupere les différences dans un dictionnaire temporaire
+                if self._dict_[i] != self._default_dict_[i]:
+                    tmp[i] = self._dict_
+            self._dict_ = self._default_dict_#On remet le dictionnaire que l'on utilise par default
+
+            for i in tmp:#Enfin, on remet les paramètres personnalisé de l'utilisateur
+                self._dict_[i] = tmp[i]
+            self.save_settings(self._dict_)#Pour finir, on sauvegarde
 
     def get_key(self):
         get = True
