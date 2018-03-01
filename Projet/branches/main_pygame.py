@@ -6,7 +6,7 @@ try:
     import json
     from pygame.locals import *
 
-
+    import pre_settings.Settings as Settings
     import Entity.Reactor as Rct
     import Entity.EntityGroup as ENTGroup
     import Entity.SpaceShip as spaceShip
@@ -49,13 +49,11 @@ def Jeux():
     
     
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    try:
-        with open('Entity/Bullet/Bullet_type.json') as file_bullet:
-            _dict_Bullet = json.load(file_bullet)
-    except:
-        print("File: Entity/Bullet/Bullet_type.json not found")
-        sys.exit(0)
+    #lFile_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
+    #__dict_Bullet_type = Settings.load_json_to_dict(lFile_path[0])
+    #__dict_Patern = Settings.load_json_to_dict(lFile_path[1])
 
+    Set = Settings.Settings()
 
     __GroupBullet_Ennemy = ENTGroup.Entity()
     __GroupEnnemy = ENTGroup.Entity()
@@ -64,50 +62,29 @@ def Jeux():
     Spaceship.Reactor_innit()
 
     continuer = True
-    flags = [0,0,0,0,0]
     while continuer:
+        pressed = pygame.key.get_pressed() # already familiar with that
+        buttons = {pygame.key.name(k) for k,v in enumerate(pressed) if v}#Recupère le nom des touches PRESSE
+        print(buttons)
+        if Set._dict_["up"] in buttons:
+            Spaceship.up()
+        if Set._dict_["down"] in buttons:
+            Spaceship.down()
+        if Set._dict_["left"] in buttons:
+            Spaceship.left()
+        if Set._dict_["right"] in buttons:
+            Spaceship.right()
+        if Set._dict_["s_shoot"] in buttons:
+            pass
+        if 'escape' in buttons:
+            Set.get_key()
+            Set.change_settings("up")
+            print(Set._dict_["up"])
+        if 'f' in buttons and 'i' in buttons and 'n' in buttons:
+            continuer = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 continuer = False
-            if event.type == pygame.KEYDOWN:#Si TOUCHE ENFONCE
-                if event.key == pygame.K_ESCAPE:#Touche Echape
-                    PAUSE()
-                if event.key == pygame.K_SPACE:#Touche Espace
-                    flags[0] = 1
-                if event.key == pygame.K_UP:
-                    flags[1] = 1
-                if event.key == pygame.K_DOWN:
-                    flags[2] = 1
-                if event.key == pygame.K_LEFT:
-                    flags[3] = 1
-                if event.key == pygame.K_RIGHT:
-                    flags[4] = 1
-            if event.type == pygame.KEYUP:#Si touche RELACHE
-                if event.key == pygame.K_SPACE:#Touche Espace
-                    flags[0] = 0
-                if event.key == pygame.K_UP:
-                    flags[1] = 0
-                if event.key == pygame.K_DOWN:
-                    flags[2] = 0
-                if event.key == pygame.K_LEFT:
-                    flags[3] = 0
-                if event.key == pygame.K_RIGHT:
-                    flags[4] = 0
-        #EN FONCTION DES TOUCHES UTILISE
-        #if flags[0] == 1:
-            #tir = mTire.tire(monhero,maGrille)
-            #dictTire[len(dictTire)] = tir
-        if flags[1] == 1:
-            Spaceship.up()
-        if flags[2] == 1:
-            Spaceship.down()
-        if flags[3] == 1:
-            Spaceship.left()
-        if flags[4] == 1:
-            Spaceship.right()
-        #if len(dictTire) >= 1:
-            #mTire.col_tire(dictEnnemis,dictTire)
-
         #__followPos() A ajouter pour reactualisé les positions de nos objets
         ############################
         ############################

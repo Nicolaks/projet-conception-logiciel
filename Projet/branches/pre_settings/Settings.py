@@ -1,28 +1,71 @@
+import json
+import pygame
 #####LE CHANGER EN JSON FILE, Utilisation plus simple
-try:#On regarde si le file existe ou non.
-    file = open("settings.txt","r")#Si il existe on le regarde à l'intérieur.
-except:#Sinon.
-    file = open("settings.txt","w")#on creer et ecrit dans settings.txt les differentes touches du jeux
-    file.write("up=up\n")#Mets les valeurs.
-    file.write("down=down\n")#Mets les valeurs.
-    file.write("left=left\n")#Mets les valeurs.
-    file.write("right=right\n"),#Mets les valeurs.
-    file.write("tir=space\n")#Mets les valeurs.
-    file.write("scores={}\n")#Mets les valeurs.
-file.close()#Ferme le file.
+class Settings:
+    def __init__(self):
+        self.path = "Settings.json"
+
+        self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{}}
+
+        self._dict_ = self._default_dict_
+        self.file = None
+
+        self.key_hold = None
+
+    def read(self):#Fonction qui va faire une lecture du file pour en extraire des informations.
+        try:    
+            self.load_json_to_dict()
+        except:
+            self.default_save()
+
+    def default_save(self):
+        self.save_settings(self._default_dict_)
+        self.load_json_to_dict()
+
+    def load_json_to_dict(self):
+        with open(self.path) as self.file:
+            self._dict_ = json.load(self.file)
+
+    def get_key(self):
+        get = True
+        while get:
+            #On récupere les touches de la même manière que pour déplacer notre vaisseau
+            pressed = pygame.key.get_pressed() # already familiar with that
+            buttons = [pygame.key.name(k) for k,v in enumerate(pressed) if v]
+            for i in buttons:
+                if i != "numlock" and i != "caps lock" and i != "escape":
+                    self.key_hold = i
+                    #print("KEY = " + self.key_hold)
+                    get = False
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                        get = False
+
+    def change_settings(self, key):
+
+        if self.key_hold != None:
+            for i in self._dict_:
+                if self._dict_[i] == self.key_hold:
+                    self._dict_[i] = "No assignement"
+                    #print(i + "No longer Assign")
+            self._dict_[key] = self.key_hold
+
+        #if "n'appuie pas sur le bouton save":
+            #self.load_json_to_dict() #On remet les paramètres d'avant
+        #else:
+            #self.save_settings(self.__dict__)
+
+    def save_settings(self,__dict__):
+        with open(self.path, "w") as self.file:
+            json.dump(__dict__, self.file, sort_keys=True, indent=4) 
 
 
-def lecture():#Fonction qui va faire une lecture du file pour en extraire des informations.
+#    Settings = Settings()
+#   print(Settings._dict_)
+#    Settings.read()
+#    print(Settings._dict_["up"])
+#    print(Settings._dict_)
+#    Settings.default_save()
+#    print(Settings._dict_["up"])
+#    print(Settings._dict_)
 
-    file = open("settings.txt", "r")#Ouvre le file.
-    tableau = {}#Initialise un dictionnaire vide.
-
-    for ligne in file:#On regarde chaque ligne du file.
-        ligne = ligne.replace("\n", "")#On enlève les retours à la ligne.
-        ligne = ligne.split("=")#On split par rapport au signe "=".
-        tableau[ligne[0]] = ligne[1]#On ajoute dans le dictionnaire les nouvelles valeurs.
-
-    print(tableau)#On affiche pour le vérifier.
-
-
-lecture()#On lance la fonction.

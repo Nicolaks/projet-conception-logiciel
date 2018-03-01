@@ -10,3 +10,5 @@ class EnnShip(_ss_.SpaceShip):
         super().__init__(Type, style, __speed__)
         self.hp = hp
         self.dmg = dmg
+    
+    

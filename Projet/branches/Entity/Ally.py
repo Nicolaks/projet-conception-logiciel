@@ -47,6 +47,3 @@ class allyShip(_ss_.SpaceShip):
             else:
                 self.posX += self.__speed__
             #self.Reactor.follow(self)
-
-    def shoot(self):
-        pass

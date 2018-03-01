@@ -2,7 +2,7 @@ from tkinter import *
 #from tkinter import ttk
 #from PIL import Image, ImageTk
 from main_pygame import *
-from pre_settings.Settings import *
+#from pre_settings.Settings import *
 
 
 #from PIL import Image, ImageTK
