@@ -5,7 +5,7 @@ from pygame.locals import *
 import Entity.Reactor as Rct
 
 class SpaceShip(pygame.sprite.Sprite):
-    def __init__(self, typ, style, __speed__):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, typ, style, __speed__, bullet_type = "single", Bullet_CD = 300):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         super().__init__()
 
         Surface = pygame.display.get_surface()#Recupere la surface de la fenetre
@@ -25,13 +25,17 @@ class SpaceShip(pygame.sprite.Sprite):
         self.height = int(coef * self.width)
         self.image = pygame.transform.scale(self.image, (self.width,self.height))#Puis on appliques les nouvelles proportion
 
-        self.image_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         ####################################
+
+        self.bullet_type = bullet_type
+        self.bullet_last_hit = pygame.time.get_ticks()
+        self.bullet_CD = Bullet_CD
 
         self.__speed__ = __speed__
 
-        self.posX = self.Surf_Width/2 - self.width/2
-        self.posY = self.Surf_Height*(1-(5/80)) - self.height
+        self.posX = self.rect.x = self.Surf_Width/2 - self.width/2
+        self.posY = self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
 
         self.Reactor = None
 

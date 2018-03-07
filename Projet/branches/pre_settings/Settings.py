@@ -3,9 +3,9 @@ import pygame
 #####LE CHANGER EN JSON FILE, Utilisation plus simple
 class Settings:
     def __init__(self):
-        self.path = "pre_settings/Settings.json"#Par rapport a main_pygame.py
+        self.path = "JSON_File/Settings.json"#Par rapport a main_pygame.py
 
-        self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{},u"language":"Francais"}
+        self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{},u"language":"Francais",u"Width":900,u"Height":900, u"fps":60}
 
         self._dict_ = self._default_dict_
 

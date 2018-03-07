@@ -1,0 +1,13 @@
+{
+    "typ_bullet":
+    {
+        "single":{"speed":5,"Cooldown":100,"damage":50},
+        "double":{"speed":4,"Cooldown":125,"damage":50},
+        "triple":{"speed":3,"Cooldown":150,"damage":60},
+        "quad":{"speed":2,"Cooldown":175,"damage":70}
+    },
+    "style":
+    {
+        "1":{}
+    }
+}

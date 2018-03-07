@@ -12,6 +12,7 @@ class allyShip(_ss_.SpaceShip):
         self.dmg = dmg
 
 
+
     def up(self):#Permet de faire déplacer le héro vers la gauche.
         if self.posY != 0:
             if self.posY - self.__speed__ < 0:
