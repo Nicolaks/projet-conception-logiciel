@@ -31,6 +31,15 @@ def menu():
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
 
+    continuer = True
+    while continuer:
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+        pygame.display.update()
+        pygame.time.Clock().tick(fps)
+
 
 def Jeux(Hht, Wth):
     Set = Settings.Settings()
