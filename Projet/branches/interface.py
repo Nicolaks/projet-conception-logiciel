@@ -50,7 +50,7 @@ class App:#Class de type App qui gère la fenêtre graphique de base.
             self.master.destroy()
             self.master.quit()
             #Jeux(self.inputHeight, self.inputWidth)
-        Jeux()
+        menu()
 
     #def settings(self):#Fonction qui donneras accès aux paramètres du joueur.
         #windows = Toplevel(self.master, bg=couleurPrincipale)
