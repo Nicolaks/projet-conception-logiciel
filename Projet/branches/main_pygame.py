@@ -17,13 +17,29 @@ except ImportError as error:
     sys.exit(0)
 
 
-
-def Jeux():
+def menu():
     Set = Settings.Settings()
     Set.read()
 
     Height = Set._dict_["Height"] #Hauteur
     Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
+
+    pygame.init()
+
+    Window = pygame.display.set_mode((Width,Height))
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
+
+
+
+def Jeux(Hht, Wth):
+    Set = Settings.Settings()
+    Set.read()
+
+    Heigth, Width = Hht, Wth
+    if Set.file_here:
+        Height = Set._dict_["Height"] #Hauteur
+        Width = Set._dict_["Width"] #Largeur
     fps = Set._dict_["fps"]
 
     pygame.init()
@@ -48,7 +64,7 @@ def Jeux():
         with open(path) as file:#On récupère le fichier
             _dict_ = json.load(file)
         return _dict_
-    
+
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
 
@@ -100,7 +116,7 @@ def Jeux():
         Window.blit(Background, (0,0))
         #Window.blit(Spaceship.Reactor.reactor_style, (Spaceship.Reactor.reactor_posX, Spaceship.Reactor.reactor_posY))#Affiche le reacteur du vaisseau
         Window.blit(Spaceship.image, (Spaceship.posX, Spaceship.posY))
-        Window.blit(os.join(), (Spaceship.posX, Spaceship.posY))
+        #Window.blit(os.join(), (Spaceship.posX, Spaceship.posY))
         __GroupBullet_Ally.draw(Window)
         #__GroupEnnemy.__Draw()  Cette fonction devrais affiché normalement TOUT les énemies qui sont dans le groupe de SPRITE
         #Affiche le vaisseau
@@ -109,4 +125,3 @@ def Jeux():
         pygame.time.Clock().tick(fps)
     pygame.quit()
     quit()
-
