@@ -20,6 +20,7 @@ except ImportError as error:
 def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
     Set = Settings.Settings()
     Set.read()
+    pygame.font.init()
 
     Height = Set._dict_["Height"] #Hauteur
     Width = Set._dict_["Width"] #Largeur
@@ -30,15 +31,32 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     Window = pygame.display.set_mode((Width,Height))
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    textTitre = police.render("Manic Shooter:", True, (255,255,255))
+    textJouer = police.render("JOUER", True, (255,255,255))
+    textSettings = police.render("SETTINGS", True, (255,255,255))
+    textQuitter = police.render("QUITTER", True, (255,255,255))
+
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
+    placementTexteJouer = (Width/2) - (textJouer.get_width()/2)
+    placementTexteSettings = (Width/2) - (textSettings.get_width()/2)
+    placementTexteQuitter = (Width/2) - (textQuitter.get_width()/2)
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textJouer, (placementTexteJouer,350))
+    Window.blit(textSettings, (placementTexteSettings,470))
+    Window.blit(textQuitter, (placementTexteQuitter,590))
+
+
 
 
     continuer = True
     while continuer:#Boucle principale du jeux.
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 continuer = False
-        Window.fill((153,77,0))#Donne une couleur de fond a la page.
+
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
