@@ -17,7 +17,7 @@ except ImportError as error:
     sys.exit(0)
 
 
-def menu():
+def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
     Set = Settings.Settings()
     Set.read()
 
@@ -31,13 +31,15 @@ def menu():
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
 
+
     continuer = True
-    while continuer:
-        
+    while continuer:#Boucle principale du jeux.
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 continuer = False
-        pygame.display.update()
+        Window.fill((153,77,0))#Donne une couleur de fond a la page.
+        pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
 

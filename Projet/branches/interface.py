@@ -49,8 +49,9 @@ class App:#Class de type App qui gère la fenêtre graphique de base.
         if inputHeight > 0 and inputWidth > 0:
             self.master.destroy()
             self.master.quit()
-            #Jeux(self.inputHeight, self.inputWidth)
+        #Jeux(self.inputHeight, self.inputWidth)
         menu()
+
 
     #def settings(self):#Fonction qui donneras accès aux paramètres du joueur.
         #windows = Toplevel(self.master, bg=couleurPrincipale)
