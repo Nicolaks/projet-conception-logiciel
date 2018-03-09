@@ -17,6 +17,17 @@ except ImportError as error:
     sys.exit(0)
 
 
+    #https://stackoverflow.com/questions/10168447/how-to-make-buttons-in-python-pygame/10169083 pour les boutons.
+    #https://stackoverflow.com/questions/12150957/pygame-action-when-mouse-click-on-rect pour l'interaction entre les boutons.
+    #https://stackoverflow.com/questions/47639826/pygame-button-single-click pour les boutons.
+    #https://stackoverflow.com/questions/47758248/pygame-button-get-pressed peut aider.
+
+
+class Button:
+    def __init__(self, master):
+        self.master = master
+
+
 def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
     Set = Settings.Settings()
     Set.read()
@@ -30,22 +41,6 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
 
     Window = pygame.display.set_mode((Width,Height))
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-
-
-    #https://stackoverflow.com/questions/10168447/how-to-make-buttons-in-python-pygame/10169083 pour les boutons.
-    #https://stackoverflow.com/questions/12150957/pygame-action-when-mouse-click-on-rect pour l'interaction entre les boutons.
-    #https://stackoverflow.com/questions/47639826/pygame-button-single-click pour les boutons.
-    #https://stackoverflow.com/questions/47758248/pygame-button-get-pressed peut aider.
-
-
-    class Button:
-        def __init__(self):
-
-
-
-
-
-
 
 
 
