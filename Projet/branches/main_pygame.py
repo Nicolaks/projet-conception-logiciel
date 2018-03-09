@@ -23,9 +23,9 @@ except ImportError as error:
     #https://stackoverflow.com/questions/47758248/pygame-button-get-pressed peut aider.
 
 
-class Button:
-    def __init__(self, master):
-        self.master = master
+#class Button:
+    #def __init__(self, master):
+        #self.master = master
 
 
 def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
