@@ -48,16 +48,18 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     placementTexteSettings = (Width/2) - (textSettings.get_width()/2)
     placementTexteQuitter = (Width/2) - (textQuitter.get_width()/2)
 
-    rectJouer = pygame.draw.rect(Window, (255,0,0) ,(placementTexteJouer,340,160,70))
-    rectSettings = pygame.draw.rect(Window, (255,0,0), (placementTexteSettings, 460, 250, 70))
-    rectQuitter = pygame.draw.rect(Window, (255,0,0), (placementTexteQuitter, 580, 220, 70))
+    rectJouer = pygame.draw.rect(Window, (144,88,41) ,(placementTexteJouer,340,160,70))
+    rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
+    rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
 
     Window.blit(textTitre, (placementTexteTitre, 30))
     Window.blit(textJouer, (placementTexteJouer,350))
     Window.blit(textSettings, (placementTexteSettings,470))
     Window.blit(textQuitter, (placementTexteQuitter,590))
-    Window.blit(textCopyright, (700,800))
+    Window.blit(textCopyright, (540,950))
 
+
+    #https://stackoverflow.com/questions/10168447/how-to-make-buttons-in-python-pygame/10169083 pour les boutons.
 
 
 
