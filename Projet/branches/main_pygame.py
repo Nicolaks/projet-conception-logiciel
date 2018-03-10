@@ -16,7 +16,6 @@ except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
 
-
     #https://stackoverflow.com/questions/10168447/how-to-make-buttons-in-python-pygame/10169083 pour les boutons.
     #https://stackoverflow.com/questions/12150957/pygame-action-when-mouse-click-on-rect pour l'interaction entre les boutons.
     #https://stackoverflow.com/questions/47639826/pygame-button-single-click pour les boutons.
@@ -72,35 +71,39 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     Window.blit(textCopyright, (540,950))
 
 
-
-
-
-
     continuer = True
     while continuer:#Boucle principale du jeux.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    Jeux(Height,Width)
 
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
+
+
 
 
 def Jeux(Hht, Wth):
     Set = Settings.Settings()
     Set.read()
 
-    Heigth, Width = Hht, Wth
+    Height, Width = Hht, Wth
     if Set.file_here:
-        Height = Set._dict_["Height"] #Hauteur
-        Width = Set._dict_["Width"] #Largeur
+        Height = Set._dict_["Height"]  # Hauteur
+        Width = Set._dict_["Width"]  # Largeur
     fps = Set._dict_["fps"]
 
     pygame.init()
-
-    Window = pygame.display.set_mode((Width,Height))
+    # print("DRIVER :",pygame.display.get_driver())
+    # input()
+    Window = pygame.display.set_mode((Width, Height))
+    Clock = pygame.time.Clock()
+    FontFPS = pygame.font.Font(None, 30)
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-    Background = pygame.image.load(os.path.join("..","Ressources","Background","Background.jpg")).convert()
+    Background = pygame.image.load(os.path.join("..", "Ressources", "Background","Background.jpg")).convert()
     Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
 
     ###################################
@@ -115,7 +118,7 @@ def Jeux(Hht, Wth):
     # Initialisation de la première vague d'énnemie
 
     def load_json_to_dict(path):
-        with open(path) as file:#On récupère le fichier
+        with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
         return _dict_
 
@@ -123,19 +126,27 @@ def Jeux(Hht, Wth):
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    #lFile_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
 
     __GroupBullet_Ennemy = ENTGroup.Entity()
-    __GroupEnnemy = ENTGroup.Entity()
+    __GroupSHIP = ENTGroup.Entity()
     __GroupBullet_Ally = ENTGroup.Entity()
+    __AllyG = ENTGroup.Entity()
 
     Spaceship = Ally.allyShip()
     Spaceship.Reactor_innit()
+    Spaceship.bullet_type = "quad"
+    __AllyG.add(Spaceship)
 
-    now = pygame.time.get_ticks()
+    BLACK = (0, 0, 0)
     continuer = True
     while continuer:
-        pressed = pygame.key.get_pressed() # already familiar with that
+        Window.blit(Background, (0,0))
+        #Window.fill(BLACK)
+        delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde
+        FPS = Clock.get_fps()
+
+        pressed = pygame.key.get_pressed()
         buttons = {pygame.key.name(k) for k,v in enumerate(pressed) if v}#Recupère le nom des touches PRESSE
         #print(buttons)
         if Set._dict_["up"] in buttons:
@@ -147,10 +158,12 @@ def Jeux(Hht, Wth):
         if Set._dict_["right"] in buttons:
             Spaceship.right()
         if Set._dict_["s_shoot"] in buttons:
-            if Spaceship.bullet_last_hit - now >= Spaceship.bullet_CD:
-                now = pygame.time.get_ticks()
-                Bullet = Blt.bullet()
-                __GroupBullet_Ally.add(Bullet)
+            now = pygame.time.get_ticks()
+            if now - Spaceship.bullet_last_hit >= _dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["Cooldown"]:
+                for i in range(_dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["n"]):
+                    Bullet = Blt.bullet(Spaceship, _dict_Bullet_type, i)
+                    __GroupBullet_Ally.add(Bullet)
+                Spaceship.bullet_last_hit = now
         if 'escape' in buttons:
             pass
             #Set.get_key()
@@ -167,15 +180,25 @@ def Jeux(Hht, Wth):
         ############################
         #__Draw() A ajouter pour tout les BLITs
         ############################
-        Window.blit(Background, (0,0))
+        # 
         #Window.blit(Spaceship.Reactor.reactor_style, (Spaceship.Reactor.reactor_posX, Spaceship.Reactor.reactor_posY))#Affiche le reacteur du vaisseau
-        Window.blit(Spaceship.image, (Spaceship.posX, Spaceship.posY))
-        #Window.blit(os.join(), (Spaceship.posX, Spaceship.posY))
+        
+        __AllyG.draw(Window)
+        #print(__GroupBullet_Ally)
+        __GroupBullet_Ally.update(_dict_Bullet_type, delta_time)
         __GroupBullet_Ally.draw(Window)
         #__GroupEnnemy.__Draw()  Cette fonction devrais affiché normalement TOUT les énemies qui sont dans le groupe de SPRITE
         #Affiche le vaisseau
         ############################
+
+        fps_render = FontFPS.render("FPS : {}".format(int(FPS)), True, (255, 255, 255))
+        nb_sprites = len(__GroupBullet_Ally.sprites())
+        counter_render = FontFPS.render("NBs : {}".format(nb_sprites),
+            True, (255, 255, 255))
+        Window.blit(fps_render, (100, 100))
+        Window.blit(counter_render, (100, 150))
+
         pygame.display.update()
-        pygame.time.Clock().tick(fps)
     pygame.quit()
     quit()
+

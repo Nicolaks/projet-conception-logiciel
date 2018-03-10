@@ -14,3 +14,6 @@ class EnnShip(_ss_.SpaceShip):
     def update(self):
         pass
     
+    def shoot(self):#Faire avec un fichier Json qui définira en fonction du type le tire qui sera en direction du HAUT ou du BAS, ou encore change la fonction du TIR,
+    #Plus simple faire un fichier de patern de tire qui bougera un élément en fonction de sa position, conclusion vers le haut fonction négative, vers le bas -> fonction positive.
+        pass

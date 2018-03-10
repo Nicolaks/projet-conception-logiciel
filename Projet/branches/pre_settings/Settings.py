@@ -8,13 +8,15 @@ class Settings:
         self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"score":{},u"language":"Francais",u"Width":900,u"Height":900, u"fps":60}
 
         self._dict_ = self._default_dict_
-        self.file_here = None
+
         self.file = None
+
+        self.file_here = None
 
         self.key_hold = None
 
     def read(self):#Fonction qui va faire une lecture du file pour en extraire des informations.
-        try:
+        try:    
             self.load_json_to_dict()
             self.file_here = True
         except:
@@ -72,7 +74,7 @@ class Settings:
 
     def save_settings(self,__dict__):
         with open(self.path, "w") as self.file:
-            json.dump(__dict__, self.file, sort_keys=True, indent=4)
+            json.dump(__dict__, self.file, sort_keys=True, indent=4) 
 
 
 #    Settings = Settings()
@@ -83,3 +85,4 @@ class Settings:
 #    Settings.default_save()
 #    print(Settings._dict_["up"])
 #    print(Settings._dict_)
+
