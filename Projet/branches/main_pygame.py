@@ -130,6 +130,8 @@ def Jeux(Hht, Wth):
         return _dict_
 
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
+    _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
+    
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###

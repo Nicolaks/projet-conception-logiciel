@@ -1,15 +1,122 @@
 {
-    "linear_simple":{
+    "patern":{
+        "linear_simple":{
+            "Appears":{
+                "Chance":1,
+                "lower":-0.10
+            },
+            "position":{
+                "0":{
+                    "x":"",
+                    "y":"",
+                    "angle":0             
+                },
+                "1":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                },
+                "2":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                }
+            },
+            "function":{
+                "fct":{
+                    "0":{
+                        "x":"",
+                        "y":"",
+                        "angle":0             
+                    },
+                    "1":{
+                        "x":"",
+                        "y":"",
+                        "angle":0                
+                    },
+                    "2":{
+                        "x":"",
+                        "y":"",
+                        "angle":0                
+                    }
+                },
+                "time_break":[2000,2000,1500]
+            }
+        },
+        "Morrrrron":{
+            "Appears":{
+                "Chance":1,
+                "lower":-0.10
+            },
+            "position":{
+                "0":{
+                    "x":"",
+                    "y":"",
+                    "angle":0             
+                },
+                "1":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                },
+                "2":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                }
+            },
+            "function":{
+                "fct":{
+                    "0":{
+                        "x":"",
+                        "y":"",
+                        "angle":0             
+                    },
+                    "1":{
+                        "x":"",
+                        "y":"",
+                        "angle":0                
+                    },
+                    "2":{
+                        "x":"",
+                        "y":"",
+                        "angle":0                
+                    }
+                },
+                "time_break":[2000,2000,1500]
+            }
+        }
+
+    },
+    "End Waves":{
         "Appears":{
             "Chance":1,
             "lower":-0.10
         },
-        "function":{
-            "fct":["linear", "y = ax+b",3],
-            "time_break":[2000,2000,1500]
-        },
         "position":{
-            
+            "x":"",
+            "y":"",
+            "angle":0             
+        },
+        "function":{
+            "fct":{
+                "0":{
+                    "x":"",
+                    "y":"",
+                    "angle":0             
+                },
+                "1":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                },
+                "2":{
+                    "x":"",
+                    "y":"",
+                    "angle":0                
+                }
+            },
+            "time_break":[2000,2000,1500]
         }
     },
     "ennemy_wave":{
