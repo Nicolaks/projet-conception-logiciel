@@ -5,12 +5,11 @@ from pygame.locals import *
 import Entity.SpaceShip as _ss_
 
 class allyShip(_ss_.SpaceShip):
-    def __init__(self, style=1, __speed__ = 10,bullet_type = "single", life = 100, dmg = 10):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, style=1, __speed__ = 10, bullet_type = "single", life = 100, dmg = 10):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "SpaceShip"
-        super().__init__(Type, style, __speed__, bullet_type)
-        self.life = life
-        self.dmg = dmg
+        super().__init__(life, dmg ,Type, style, __speed__, bullet_type)
         self.bullet_style = 10
+        self.money = 0
 
     def up(self):#Permet de faire déplacer le héro vers la gauche.
         if self.rect.y != 0:
@@ -46,5 +45,6 @@ class allyShip(_ss_.SpaceShip):
                 self.rect.x += self.__speed__
             #self.Reactor.follow(self)
 
-    def update_style(self, style):
-        pass
+    def update_style(self, _dict_Spaceship):#Ce dictionnaire rescense tout les styles avec les tailles approprié
+        self.style = self.type + "_" + str(style)
+        self.image = pygame.image.load(os.path.join("..", "Ressources", "Graphics", self.type, self.style + ".png")).convert_alpha()#Charge l'image

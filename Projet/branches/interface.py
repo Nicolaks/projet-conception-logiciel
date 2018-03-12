@@ -43,12 +43,12 @@ class App:#Class de type App qui gère la fenêtre graphique de base.
 
 
     def lancerPartie(self):#Fonction lancerPartie qui va quitter la fenêtre puis lancer le jeu.
-        inputWidth = int(self.inputWidth.get())
-        inputHeight = int(self.inputHeight.get())
+        #inputWidth = int(self.inputWidth.get())
+        #inputHeight = int(self.inputHeight.get())
 
-        if inputHeight > 0 and inputWidth > 0:
-            self.master.destroy()
-            self.master.quit()
+        #if inputHeight > 0 and inputWidth > 0:
+        self.master.destroy()
+        self.master.quit()
         #Jeux(self.inputHeight, self.inputWidth)
         menu()
 

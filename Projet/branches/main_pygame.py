@@ -43,7 +43,6 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
 
 
 
-    Window.fill((153,77,0))#Donne une couleur de fond a la page.
     #Window.fill((255,255,255))
     police = pygame.font.SysFont("monospace", 50)
     policeCopyright = pygame.font.SysFont("arial", 12)
@@ -64,13 +63,6 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
     rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
 
-    Window.blit(textTitre, (placementTexteTitre, 30))
-    Window.blit(textJouer, (placementTexteJouer,350))
-    Window.blit(textSettings, (placementTexteSettings,470))
-    Window.blit(textQuitter, (placementTexteQuitter,590))
-    Window.blit(textCopyright, (540,950))
-
-
     continuer = True
     while continuer:#Boucle principale du jeux.
         for event in pygame.event.get():
@@ -80,9 +72,24 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
                 if event.key == pygame.K_g:
                     Jeux(Height,Width)
 
+        Window.fill((153,77,0))#Donne une couleur de fond a la page.
+
+        Window.blit(textTitre, (placementTexteTitre, 30))
+        Window.blit(textJouer, (placementTexteJouer,350))
+        Window.blit(textSettings, (placementTexteSettings,470))
+        Window.blit(textQuitter, (placementTexteQuitter,590))
+        Window.blit(textCopyright, (540,950))
+
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
+
+def Pause():
+    continuer = True
+    while continuer:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                continuer = False
 
 
 
@@ -136,14 +143,14 @@ def Jeux(Hht, Wth):
     Spaceship = Ally.allyShip()
     Spaceship.Reactor_innit()
     Spaceship.bullet_type = "quad"
-    __AllyG.add(Spaceship)
+    __AllyG.add(Spaceship)#On ajoute le vaisseau dans un group, pour ne pas utilisé BLIT sur le vaisseau cx)
 
     BLACK = (0, 0, 0)
     continuer = True
     while continuer:
         Window.blit(Background, (0,0))
         #Window.fill(BLACK)
-        delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde
+        delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
         FPS = Clock.get_fps()
 
         pressed = pygame.key.get_pressed()
@@ -165,31 +172,20 @@ def Jeux(Hht, Wth):
                     __GroupBullet_Ally.add(Bullet)
                 Spaceship.bullet_last_hit = now
         if 'escape' in buttons:
-            pass
-            #Set.get_key()
-            #Set.change_settings("up")
-            #Set.save_settings(Set._dict_)
-            #print(Set._dict_["up"])
+            menu()
+
         if 'f' in buttons and 'i' in buttons and 'n' in buttons:
-            continuer = False
+            pygame.quit()
+            quit()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
-                continuer = False
-        #__followPos() A ajouter pour reactualisé les positions de nos objets
-        ############################
-        ############################
-        #__Draw() A ajouter pour tout les BLITs
-        ############################
-        # 
-        #Window.blit(Spaceship.Reactor.reactor_style, (Spaceship.Reactor.reactor_posX, Spaceship.Reactor.reactor_posY))#Affiche le reacteur du vaisseau
-        
+                pygame.quit()
+                quit()
+    
         __AllyG.draw(Window)
-        #print(__GroupBullet_Ally)
         __GroupBullet_Ally.update(_dict_Bullet_type, delta_time)
         __GroupBullet_Ally.draw(Window)
-        #__GroupEnnemy.__Draw()  Cette fonction devrais affiché normalement TOUT les énemies qui sont dans le groupe de SPRITE
-        #Affiche le vaisseau
-        ############################
 
         fps_render = FontFPS.render("FPS : {}".format(int(FPS)), True, (255, 255, 255))
         nb_sprites = len(__GroupBullet_Ally.sprites())
@@ -199,6 +195,4 @@ def Jeux(Hht, Wth):
         Window.blit(counter_render, (100, 150))
 
         pygame.display.update()
-    pygame.quit()
-    quit()
 
