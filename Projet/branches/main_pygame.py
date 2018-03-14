@@ -63,6 +63,14 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
     rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
 
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textJouer, (placementTexteJouer,350))
+    Window.blit(textSettings, (placementTexteSettings,470))
+    Window.blit(textQuitter, (placementTexteQuitter,590))
+    Window.blit(textCopyright, (540,950))
+
     continuer = True
     while continuer:#Boucle principale du jeux.
         for event in pygame.event.get():
@@ -71,14 +79,6 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_g:
                     Jeux(Height,Width)
-
-        Window.fill((153,77,0))#Donne une couleur de fond a la page.
-
-        Window.blit(textTitre, (placementTexteTitre, 30))
-        Window.blit(textJouer, (placementTexteJouer,350))
-        Window.blit(textSettings, (placementTexteSettings,470))
-        Window.blit(textQuitter, (placementTexteQuitter,590))
-        Window.blit(textCopyright, (540,950))
 
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
@@ -131,7 +131,7 @@ def Jeux(Hht, Wth):
 
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
-    
+
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
@@ -184,7 +184,7 @@ def Jeux(Hht, Wth):
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 pygame.quit()
                 quit()
-    
+
         __AllyG.draw(Window)
         __GroupBullet_Ally.update(_dict_Bullet_type, delta_time)
         __GroupBullet_Ally.draw(Window)
@@ -197,4 +197,3 @@ def Jeux(Hht, Wth):
         Window.blit(counter_render, (100, 150))
 
         pygame.display.update()
-
