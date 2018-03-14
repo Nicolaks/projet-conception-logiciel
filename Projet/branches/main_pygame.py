@@ -4,14 +4,15 @@ try:
     import time
     import pygame
     import json
+    import button as btn
     from pygame.locals import *
 
     import pre_settings.Settings as Settings
-    import Entity.Reactor as Rct
-    import Entity.EntityGroup as ENTGroup
-    import Entity.SpaceShip as spaceShip
-    import Entity.Ally as Ally
-    import Entity.Bullet as Blt
+    #import Entity.Reactor as Rct
+    #import Entity.EntityGroup as ENTGroup
+    #import Entity.SpaceShip as spaceShip
+    #import Entity.Ally as Ally
+    #import Entity.Bullet as Blt
 except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
@@ -44,6 +45,7 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
 
 
     #Window.fill((255,255,255))
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
     police = pygame.font.SysFont("monospace", 50)
     policeCopyright = pygame.font.SysFont("arial", 12)
     textTitre = police.render("Manic Shooter:", True, (255,255,255))
@@ -52,6 +54,8 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     textQuitter = police.render("QUITTER", True, (255,255,255))
 
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+
+
 
 
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
@@ -63,13 +67,17 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
     rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
 
-    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    btnJouer = btn.Button(200,70, (0,0,0), "bonjour", 900/2, 50, Window)
+    btnJouer.afficherTexte()
+    btnJouer.draw()
+
+    Window.blit(btnJouer.afficherTexte(),(200,70))
 
     Window.blit(textTitre, (placementTexteTitre, 30))
     Window.blit(textJouer, (placementTexteJouer,350))
     Window.blit(textSettings, (placementTexteSettings,470))
     Window.blit(textQuitter, (placementTexteQuitter,590))
-    Window.blit(textCopyright, (540,950))
+    Window.blit(textCopyright, (450,850))
 
     continuer = True
     while continuer:#Boucle principale du jeux.
@@ -92,7 +100,7 @@ def Pause():
                 continuer = False
 
 
-
+"""
 def Jeux(Hht, Wth):
     Set = Settings.Settings()
     Set.read()
@@ -197,3 +205,4 @@ def Jeux(Hht, Wth):
         Window.blit(counter_render, (100, 150))
 
         pygame.display.update()
+"""
