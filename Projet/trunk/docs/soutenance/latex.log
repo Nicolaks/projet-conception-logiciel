@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.23)  21 FEB 2018 11:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.23)  7 MAR 2018 10:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -902,11 +902,7 @@ Package: setspace 2011/12/19 v6.7a set line spacing
 \c@example=\count167
 \c@proposition=\count168
 \c@proof=\count169
- (./latex.aux
-
-LaTeX Warning: Label `fig::example::one' multiply defined.
-
-)
+ (./latex.aux)
 \openout1 = `latex.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -923,7 +919,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count170
 \scratchdimen=\dimen180
@@ -991,12 +988,6 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 \tf@toc=\write4
 \openout4 = `latex.toc'.
 
-
-<space.jpg, id=75, 752.8125pt x 423.5825pt>
-File: space.jpg Graphic file (type jpg)
- <use space.jpg>
-Package pdftex.def Info: space.jpg used on input line 42.
-(pdftex.def)             Requested size: 251.9989pt x 141.79276pt.
  [1
 Non-PDF special ignored!
 Non-PDF special ignored!
@@ -1011,38 +1002,39 @@ Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<Background.jpg, id=88, 1284.8pt x 722.7pt>
+<space.jpg, id=107, 752.8125pt x 423.5825pt>
+File: space.jpg Graphic file (type jpg)
+ <use space.jpg>
+Package pdftex.def Info: space.jpg used on input line 42.
+(pdftex.def)             Requested size: 251.9989pt x 141.79276pt.
+
+<Background.jpg, id=108, 1284.8pt x 722.7pt>
 File: Background.jpg Graphic file (type jpg)
  <use Background.jpg>
 Package pdftex.def Info: Background.jpg used on input line 62.
 (pdftex.def)             Requested size: 288.0011pt x 161.99396pt.
- [2 <./space.jpg> <./Background.jpg>] <spaceCraft1.png, id=96, 127.47626pt x 10
-6.3975pt>
+ [2 <./space.jpg>] <spaceCraft1.png, id=115, 127.47626pt x 106.3975pt>
 File: spaceCraft1.png Graphic file (type png)
-
-<use spaceCraft1.png>
+ <use spaceCraft1.png>
 Package pdftex.def Info: spaceCraft1.png used on input line 73.
 (pdftex.def)             Requested size: 36.0022pt x 30.04922pt.
- [3 <./spaceCraft1.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 99.
- [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 99.
+
+[3 <./Background.jpg> <./spaceCraft1.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 104.
+ [4] [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 104.
  (./latex.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 99.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 99.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 104.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 104.
 Package rerunfilecheck Info: File `latex.out' has not changed.
-(rerunfilecheck)             Checksum: 024ABB0E8C8D8AEE954133CED6A0F06C;828.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 99.
+(rerunfilecheck)             Checksum: F4505FAFBC6F0F7E1ECCE6F5731D391F;1075.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 104.
  ) 
 Here is how much of TeX's memory you used:
- 12268 strings out of 493136
- 179850 string characters out of 6140128
- 327484 words of memory out of 5000000
- 15519 multiletter control sequences out of 15000+600000
+ 12277 strings out of 493136
+ 179946 string characters out of 6140128
+ 327428 words of memory out of 5000000
+ 15523 multiletter control sequences out of 15000+600000
  16336 words of font info for 50 fonts, out of 8000000 for 9000
  1119 hyphenation exceptions out of 8191
  37i,7n,52p,644b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1054,10 +1046,10 @@ Here is how much of TeX's memory you used:
 x1440.600pk> </home/etudiants/21611020/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
 crm1200.600pk> </home/etudiants/21611020/.texmf-var/fonts/pk/ljfour/jknappen/ec
 /ecrm1728.600pk>
-Output written on latex.pdf (4 pages, 168398 bytes).
+Output written on latex.pdf (5 pages, 179054 bytes).
 PDF statistics:
- 326 PDF objects out of 1000 (max. 8388607)
- 126 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 128 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 381 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 28 named destinations out of 1000 (max. 500000)
+ 160 words of extra memory for PDF output out of 10000 (max. 10000000)
 
