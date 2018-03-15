@@ -44,45 +44,33 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
 
 
 
-    #Window.fill((255,255,255))
+
     Window.fill((153,77,0))#Donne une couleur de fond a la page.
     police = pygame.font.SysFont("monospace", 50)
     policeCopyright = pygame.font.SysFont("arial", 12)
     textTitre = police.render("Manic Shooter:", True, (255,255,255))
-    #textJouer = police.render("JOUER", True, (255,255,255))
-    #textSettings = police.render("SETTINGS", True, (255,255,255))
-    #textQuitter = police.render("QUITTER", True, (255,255,255))
+
 
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
-
-
-
-
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
-    #placementTexteJouer = (Width/2) - (textJouer.get_width()/2)
-    #placementTexteSettings = (Width/2) - (textSettings.get_width()/2)
-    #placementTexteQuitter = (Width/2) - (textQuitter.get_width()/2)
 
-    #rectJouer = pygame.draw.rect(Window, (144,88,41) ,(placementTexteJouer,340,160,70))
-    #rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
-    #rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
-
-    btnJouer = btn.Button(170,70, (144,88,41), "JOUER", Height, Width, Window)
+    btnJouer = btn.Button(170,60, (144,88,41), "JOUER", 450, Width, Window)
     btnJouer.draw()
     btnJouer.afficherTexte()
     #btnJouer.commande()
 
-    btnSettings = btn.Button(220,120, (144,88,41), "SETTINGS", Height, Width, Window)
+    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width, Window)
     btnSettings.draw()
     btnSettings.afficherTexte()
-    #btnJouer.draw()
+
+
+    btnQuitter = btn.Button(220,60, (144,88,41), "QUITTER", 950, Width, Window)
+    btnQuitter.draw()
+    btnQuitter.afficherTexte()
 
 
 
     Window.blit(textTitre, (placementTexteTitre, 30))
-    #Window.blit(textJouer, (placementTexteJouer,350))
-    #Window.blit(textSettings, (placementTexteSettings,470))
-    #Window.blit(textQuitter, (placementTexteQuitter,590))
     Window.blit(textCopyright, (450,850))
 
     continuer = True
