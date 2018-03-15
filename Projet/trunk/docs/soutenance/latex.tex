@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{article}
+  \documentclass[a4paper, 11pt]{article}
 \usepackage[utf8]{inputenc} 
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
@@ -44,14 +44,25 @@ Ce système de jeu est sorti en 1978 avec
  \label{fig::example::one}
 \end{figure*}
 
-\subsection{diagramme}
+\section{Architecture}
 
-diagramme 
+
+ \begin{figure*}[ht!]
+ \centering
+ \includegraphics[width=1.1\linewidth]{diagfinal.png}
+ \caption{diagramme cas d'utilisation}
+ \label{fig::example::one}
+\end{figure*}
+
+Ici nous avons a faire au premier menu qui va proposer de jouer , Quitter et de choisir la résolution de l'écran souhaitée.
+Jouer lance pygame et donne accès au menu final du jeu ou lancer le jeu est possible ou de changer des paramètres comme les préférences de jeu du joueur.
+
 
 \section{Fonctionnalité du jeu}
 
 
  	\subsection{Une carte}
+ 	
  	\begin{figure*}[ht!]
 \centering
 \includegraphics[width=0.8\linewidth]{Background.jpg}
@@ -81,33 +92,49 @@ Généralement dans un manic shooter le héro doit posséder un tir qui va détr
 	\subsection{collisions}
 Les personnages sont confronté à des collisions qui doivent être gérer, c'est à dire quand le tir va aller
 
- 
-
-\subsection{•}
-
-\section{Architecture}
-
-différent diagramme (classe , et cas d'utilisation)
-
-Le cahier des charges est l'une des chose essentiel pour bien débuter un projet sans cela la conception de notre logiciel serait devenue impossible.
-Tout d'abord nous voulions définir les normes logique du manic shooter 
-une carte / un personnage / des ennemies / ce déplacer / tirer etc ... 
-
-
 \section{Elements technique}
 
-\subsection{Choix des utilitaires utiliser}
+\subsection{Python}
+
+pour ce projet nous utilisons python 3 avec 10 librairie externe à python :
+OS,sys,pygame,tkinter,random,json,time,sympy
+
+\subsection{Choix de l'interface graphique}
 
 le choix des utilitaires utilisés peut différer le rendu du projet nous avons donc dû tester au fur et à mesure ce qui aller nous convenir le mieux
 
 \subsection{Tkinter}
-tkinter est une interface graphique qui permet la conception de logiciel relativement pousser mais d'un rendu graphique faible, dans notre cas nous l'utilisons pour notre menu de notre jeu ce qui nous à rendement faciliter la tache car sur tkinter permet de créer des menu relativement facilement.
+tkinter est une interface graphique qui est orienté logiciel elle permet la création de menu beaucoup plus simple dans notre cas cela nous sert pour le premier menu de notre jeu, du faite que les boutons sont directement
+implémentés dans la librairie de tkinter.
+ \begin{figure*}[ht!]
+ \centering
+ \includegraphics[width=0.7\linewidth]{tkinter.png}
+ \caption{notre premier menu avec tkinter}
+ \label{fig::example::one}
+\end{figure*}
+
+\href{https://www.tutorialspoint.com/python/python_gui_programming.htm}{source tkinter}
+
 \subsection{Pygame}
 Pygame est également une interface graphique qui est plus destiné au jeu,
 dans notre cas nous l'utilisons pour l'intégralité de notre gameplay , les déplacement, les collisions , la carte et le choix de cette interface graphique nous est venu naturellement car elle offre une possibilité de déplacement intéressante.
+ \begin{figure*}[ht!]
+ \centering
+ \includegraphics[width=0.5\linewidth]{diag.png}
+ \caption{Gameplay avec pygame}
+ \label{fig::example::one}
+\end{figure*}
+
+\href{http://www.pygame.org/docs/}{source pygame}
 
 \section{Expérimentation et Usage}
 capture d'écran rendu final / perfomance 
+
+\subsection{Expérimentation}
+Une phase d'expérimentation à du être nécessaire pour identifier ce qui peut poser problème.
+Pour commencer nous avons penser initialiser une grille pour la carte et des personnage étant des numéro pouvait traverser la grille, nous nous sommes vite rendu compte que cela aller poser problème cela ne rendait pas le jeu dynamique.
+Une fois que nous avons ouvert la fenêtre de pygame nous nous somme rendu compte que la grille aller être cette fenêtre et que les déplacements aller ce faire plus dynamiquement de cette manière nous avons donc oublier la grille.
+Le choix des interface graphique c'est fait en essayant dans un premier temps tkinter à était solliciter et nous somme rendu compte que le rendu graphique n'était pas qualité, les menu ce faisait facilement donc le premier menu c'est fait avec celui ci mais pour la conception du jeu c'est tkinter qui à était retenu.
 
 \section{Conclusion}
 \end{document}

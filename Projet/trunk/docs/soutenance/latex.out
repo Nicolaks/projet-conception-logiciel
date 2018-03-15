@@ -1,18 +1,18 @@
 \BOOKMARK [1][-]{section.1}{Manic Shooter}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{Pr\351sentation-Objectif}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{diagramme}{section.1}% 3
-\BOOKMARK [1][-]{section.2}{Fonctionnalit\351 du jeu}{}% 4
-\BOOKMARK [1][-]{section.3}{Cahier des charges}{}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Architecture du projet}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Une carte}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{Un personnage}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.4}{Des ennemis}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.5}{D\351placement}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.6}{Tir}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.7}{collisions}{section.3}% 12
-\BOOKMARK [1][-]{section.4}{Elements technique}{}% 13
-\BOOKMARK [2][-]{subsection.4.1}{Choix des utilitaires utiliser}{section.4}% 14
-\BOOKMARK [2][-]{subsection.4.2}{Tkinter}{section.4}% 15
-\BOOKMARK [2][-]{subsection.4.3}{Pygame}{section.4}% 16
-\BOOKMARK [1][-]{section.5}{Exp\351rimentation et Usage}{}% 17
+\BOOKMARK [1][-]{section.2}{Architecture}{}% 3
+\BOOKMARK [1][-]{section.3}{Fonctionnalit\351 du jeu}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Une carte}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.2}{Un personnage}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.3}{Des ennemis}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.4}{D\351placement}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.5}{Tir}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.6}{collisions}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Elements technique}{}% 11
+\BOOKMARK [2][-]{subsection.4.1}{Python}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.2}{Choix de l'interface graphique}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.3}{Tkinter}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.4}{Pygame}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{Exp\351rimentation et Usage}{}% 16
+\BOOKMARK [2][-]{subsection.5.1}{Exp\351rimentation}{section.5}% 17
 \BOOKMARK [1][-]{section.6}{Conclusion}{}% 18
