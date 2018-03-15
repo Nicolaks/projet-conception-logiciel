@@ -73,6 +73,8 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     Window.blit(textTitre, (placementTexteTitre, 30))
     Window.blit(textCopyright, (450,850))
 
+
+
     continuer = True
     while continuer:#Boucle principale du jeux.
         for event in pygame.event.get():
@@ -81,7 +83,10 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_g:
                     Jeux(Height,Width)
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_l:
+                    Pause()
+                    #Mettre le menu pause
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
