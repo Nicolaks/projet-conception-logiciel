@@ -5,11 +5,15 @@ from pygame.locals import *
 import Entity.SpaceShip as _ss_
 
 class allyShip(_ss_.SpaceShip):
-    def __init__(self, style=1, __speed__ = 10, bullet_type = "single", life = 100, dmg = 10):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, style=1, __speed__ = 5, bullet_type = "single", life = 100, dmg = 10):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "SpaceShip"
-        super().__init__(life, dmg ,Type, style, __speed__, bullet_type)
+        angle = 45
+        super().__init__(life, dmg ,Type, style, __speed__, bullet_type, angle)
         self.bullet_style = 1
         self.money = 0
+        
+        self.rect.x = self.Surf_Width/2 - self.width/2
+        self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
 
     def up(self):#Permet de faire déplacer le héro vers la gauche.
         if self.rect.y != 0:

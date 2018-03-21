@@ -1,137 +1,68 @@
 {
     "patern":{
-        "linear_simple":{
+        "simple":{
             "Appears":{
+                "PO":2,
+                "Cooldown":2000,
                 "Chance":1,
-                "lower":-0.10
+                "lower":-0.30, 
+                "upgrade":0.05
             },
             "position":{
                 "0":{
-                    "x":"",
-                    "y":"",
-                    "angle":0             
-                },
-                "1":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
-                },
-                "2":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
-                }
-            },
-            "function":{
-                "fct":{
                     "0":{
-                        "x":"",
-                        "y":"",
-                        "angle":0             
+                        "x":"-1*w",
+                        "y":"0"
                     },
                     "1":{
-                        "x":"",
-                        "y":"",
-                        "angle":0                
-                    },
-                    "2":{
-                        "x":"",
-                        "y":"",
-                        "angle":0                
-                    }
-                },
-                "time_break":[2000,2000,1500]
-            }
-        },
-        "Morrrrron":{
-            "Appears":{
-                "Chance":1,
-                "lower":-0.10
-            },
-            "position":{
-                "0":{
-                    "x":"",
-                    "y":"",
-                    "angle":0             
-                },
+                        "x":"200",
+                        "y":"-1*h"           
+                    }},
                 "1":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
-                },
-                "2":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
-                }
-            },
-            "function":{
-                "fct":{
                     "0":{
-                        "x":"",
-                        "y":"",
-                        "angle":0             
+                        "x":"-1*w",
+                        "y":"0"
                     },
                     "1":{
-                        "x":"",
-                        "y":"",
-                        "angle":0                
-                    },
-                    "2":{
-                        "x":"",
-                        "y":"",
-                        "angle":0                
-                    }
-                },
-                "time_break":[2000,2000,1500]
-            }
-        }
-
-    },
-    "End Waves":{
-        "Appears":{
-            "Chance":1,
-            "lower":-0.10
-        },
-        "position":{
-            "x":"",
-            "y":"",
-            "angle":0             
-        },
-        "function":{
-            "fct":{
+                        "x":"200",
+                        "y":"-1*h"              
+                    }               
+                }},
+            "fonction":{
                 "0":{
-                    "x":"",
-                    "y":"",
-                    "angle":0             
+                    "0":{
+                        "x":"x + 1",
+                        "y":"y + 1"
+                    },
+                    "1":{
+                        "x":"x",
+                        "y":"y + 1"
+                    }                     
                 },
                 "1":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
-                },
-                "2":{
-                    "x":"",
-                    "y":"",
-                    "angle":0                
+                    "0":{
+                        "x":"x + 1",
+                        "y":"y + 1"
+                    },
+                    "1":{
+                        "x":"x",
+                        "y":"y + 1"
+                    }
                 }
             },
-            "time_break":[2000,2000,1500]
+            "times_break":{
+                "0":[2000,1000],
+                "1":[500,2000]
+            }
         }
-    },
+        },
+        
     "ennemy_wave":{
-        "function":{
-            "fct":{
-                "ln(x)":{
-                    "Wave Min":0,
-                    "Wave Max":15
-                },
-                "exp(x)":{
-                    "Wave Min":16,
-                    "Wave Max":null
+        "fonction":{
+                "0":"2*v + 6",
+                "15":"exp(v)"
+                    },
+        "Wave change":[0,15]
+                    
                 }
-            }
-        },
-        "Time_btw_waves":"break"
-    }
 }

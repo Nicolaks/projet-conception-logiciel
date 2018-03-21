@@ -32,7 +32,7 @@
         "ADN":{
             "n":2,
             "speed":-4,
-            "Cooldown":0,
+            "Cooldown":300,
             "damage":20, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
@@ -54,7 +54,7 @@
         },
         "quad":{
             "n":4,
-            "speed":-1,
+            "speed":-5,
             "Cooldown":0,
             "damage":40,
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},

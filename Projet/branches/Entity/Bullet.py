@@ -50,6 +50,8 @@ class bullet(pygame.sprite.Sprite):
         self.angle = dict_file["angle"]
         self.image = pygame.transform.rotate(self.image, self.angle)
 
+        self.mask = pygame.mask.from_surface(self.image)
+
         self.init_pos(dict_file, spaceShip)
         
         self.FposX = self.rect.x 
