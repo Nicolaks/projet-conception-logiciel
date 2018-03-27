@@ -2,3 +2,5 @@ Mot clé norme:
     Width: Largeur de la fenetre,
     break: PAUSE, appuyez sur Barre espace pour lancez la future Wave
     null: infini +
+
+https://www.google.fr/search?q=Image+de+l%27espace+pixelis%C3%A9&safe=strict&tbm=isch&tbs=rimg:CVGRDyPuQt1DIjjJNTcowBqHmQZP_1u906mzkR3mnimCMG3pmmqAripfa3QZP4pupZhYnbacU0g6BtC91c45u7_1w3XyoSCck1NyjAGoeZEfXRLQm_12_1kMKhIJBk_1-73TqbOQR5x9IMwcohWoqEglHeaeKYIwbehH10S0Jv9v5DCoSCWaaoCuKl9rdER1QkXpovSFAKhIJBk_1im6lmFicRa3u43FEdcokqEgltpxTSDoG0LxG-6bSfxcz-8ioSCXVzjm7v_1DdfEWRum6GuE8Zr&tbo=u&sa=X&ved=2ahUKEwj5keO_sYXaAhWBuRQKHUxqAjAQ9C96BAgAEBs&biw=1920&bih=964&dpr=1#imgrc=_

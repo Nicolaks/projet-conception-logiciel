@@ -5,7 +5,7 @@
             "n":1,
             "speed":-5,
             "Cooldown":600,
-            "damage":10, 
+            "damage":0, 
             "position":{"0":{"x":"x + c/2","y":"y - h","angle":0}}, 
             "fonction":{"0":{"x":"x","y":"y + s"}}
         },
@@ -13,7 +13,7 @@
             "n":2,
             "speed":-5,
             "Cooldown":300,
-            "damage":20, 
+            "damage":5, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
             "fonction":{"0":{"x":"x","y":"y + s"},
@@ -23,7 +23,7 @@
             "n":2,
             "speed":-5,
             "Cooldown":300,
-            "damage":20, 
+            "damage":10, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
             "fonction":{"0":{"x":"x + 10*cos(100*t)","y":"y + s"},
@@ -33,7 +33,7 @@
             "n":2,
             "speed":-4,
             "Cooldown":300,
-            "damage":20, 
+            "damage":10, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
             "fonction":{"0":{"x":"x + 10*cos(10*t) ","y":"y + s"},
@@ -43,7 +43,7 @@
             "n":3,
             "speed":-4,
             "Cooldown":400,
-            "damage":35,
+            "damage":12,
             "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 - 2 * w","y":"y - h","angle":10},
                         "2":{"x":"x + c/2 + 2 * w","y":"y - h","angle":-10}},
@@ -52,11 +52,25 @@
                         "2":{"x":"x - cos(a)","y":"y + s"}
                     }
         },
+        "pierreM":{
+            "n":3,
+            "speed":-10,
+            "Cooldown":300,
+            "damage":5, 
+            "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
+                        "1":{"x":"x + c/2 - 5 * w","y":"y - h","angle":0},
+                        "2":{"x":"x + c/2 + 5 * w","y":"y - h","angle":0}
+                    },
+            "fonction":{"0":{"x":"x","y":"y + s"},
+                        "1":{"x":"x + 10*cos(10*t)","y":"y + s"},
+                        "2":{"x":"x - 10*cos(10*t)","y":"y + s"}
+                    }
+        },
         "quad":{
             "n":4,
             "speed":-5,
-            "Cooldown":0,
-            "damage":40,
+            "Cooldown":300,
+            "damage":15,
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0},
                         "2":{"x":"x + c/2 + 4 *w","y":"y - h","angle":-10},
@@ -65,13 +79,31 @@
                         "1":{"x":"x","y":"y + s"},
                         "2":{"x":"x - cos(a)","y":"y + s"},
                         "3":{"x":"x + cos(a)","y":"y + s"}
-                        }
-        }
-    },
+                        }},
+        "single_ennemy":{
+            "n":1,
+            "speed":5,
+            "Cooldown":600,
+            "damage":0, 
+            "position":{"0":{"x":"x + c/2","y":"y + h","angle":0}}, 
+            "fonction":{"0":{"x":"x","y":"y + s"}}
+        },
+        "double_ennemy":{
+            "n":2,
+            "speed":5,
+            "Cooldown":300,
+            "damage":5, 
+            "position":{"0":{"x":"x + c/2","y":"y - h","angle":0},
+                        "1":{"x":"x + c/2","y":"y - 2*h","angle":0}},
+            "fonction":{"0":{"x":"x","y":"y + s"},
+                        "1":{"x":"x","y":"y + s"}}
+                    }
+        },
+    "Order_typ_bullet":["single","double","quad","ADN"],
     "style":
     {
-        "1":{"path":"","dmg":0},
-        "10":{"path":"", "dmg":10}
+        "1":{"dmg":0},
+        "2":{"dmg":10}
 
     }
 }
