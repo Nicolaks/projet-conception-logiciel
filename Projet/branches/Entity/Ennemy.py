@@ -1,17 +1,31 @@
 import time
 import os
 import pygame
+import random as rd
 from pygame.locals import * 
 import Entity.SpaceShip as _ss_
 
 class EnnShip(_ss_.SpaceShip):
-    def __init__(self, FCTposX, FCTposY, CalcposX, CalcposY, Pobj,style=1, __speed__ = 5, life=100, dmg=1, bullet_type="single_ennemy"):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, _dict_Specs, _dict_Bullet, wave,FCTposX, FCTposY, CalcposX, CalcposY, Pobj):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "Ennemy"
         angle = 40
-        super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle)
+
+        life, width, __speed__, dmg, style = _dict_Specs["life"], _dict_Specs["width"], _dict_Specs["speed"], _dict_Specs["dmg"], _dict_Specs["style"]
+        score = _dict_Specs["score"]
+        bullet_type = "single_ennemy"
+
+
+        self.shoot_prob = _dict_Specs["life"] + float()
+
+        super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle, width)
         self.bullet_style = 41
         self.phase = 0
         self.position = Pobj
+        self.time = 0
+
+        #self.damage += s
+
+        self.score = score
         
         self.init_pos(FCTposX, FCTposY)
         self.posX, self.posY = self.rect.x, self.rect.y 
@@ -40,7 +54,6 @@ class EnnShip(_ss_.SpaceShip):
 
         #print("posX = ",self.rect.x, "posY = ", self.rect.y)
 
-
     def patern_executed(self):
 
         if self.posX <= (-2*self.width)  or self.posX >= (self.Surf_Width + 2*self.width):
@@ -65,9 +78,10 @@ class EnnShip(_ss_.SpaceShip):
                 self.phase_done = False
                 self.passiv = False
 
-        if self.life == 0:
+        if self.life <= 0:
             self.kill()
         
 
     def shoot(self):
+        p = rd.random()
         pass

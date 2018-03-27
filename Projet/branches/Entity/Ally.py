@@ -5,15 +5,34 @@ from pygame.locals import *
 import Entity.SpaceShip as _ss_
 
 class allyShip(_ss_.SpaceShip):
-    def __init__(self, style=1, __speed__ = 5, bullet_type = "single", life = 100, dmg = 10):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, _dict_Spaceship,style=1, __speed__ = 5, bullet_type = "single"):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "SpaceShip"
         angle = 45
-        super().__init__(life, dmg ,Type, style, __speed__, bullet_type, angle)
+
+        self.style = style
+
+        width, dmg, life = self.init_carac(_dict_Spaceship)
+
+        super().__init__(life, dmg ,Type, self.style, __speed__, bullet_type, angle, width)
+
         self.bullet_style = 1
         self.money = 0
         
         self.rect.x = self.Surf_Width/2 - self.width/2
         self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
+
+    def init_carac(self, _dict_Spaceship):
+        width = _dict_Spaceship[str(self.style)]["width"]
+        dmg = _dict_Spaceship[str(self.style)]["dmg"]
+        life = _dict_Spaceship[str(self.style)]["life"]
+        return width, dmg, life
+
+    def upgrade_style_performance(self,style,_dict_Spaceship):
+        if style <= len(_dict_Spaceship):
+            self.style = style
+            self.width, self.damage, self.life = self.init_carac(_dict_Spaceship)
+            self.upgrade_style()
+
 
     def up(self):#Permet de faire déplacer le héro vers la gauche.
         if self.rect.y != 0:
@@ -49,6 +68,5 @@ class allyShip(_ss_.SpaceShip):
                 self.rect.x += self.__speed__
             #self.Reactor.follow(self)
 
-    def update_style(self, _dict_Spaceship):#Ce dictionnaire rescense tout les styles avec les tailles approprié
-        self.style = self.type + "_" + str(style)
-        self.image = pygame.image.load(os.path.join("..", "Ressources", "Graphics", self.type, self.style + ".png")).convert_alpha()#Charge l'image
+    def draw(self, window):
+        window.blit(self.image, self.rect)

@@ -66,12 +66,16 @@ class bullet(pygame.sprite.Sprite):
         self.FCTnewposYY = dict_file["y"]
 
         self.speed___bullet = __dict_bullet["typ_bullet"][spaceShip.bullet_type]["speed"] #vitesse des balles, que l'on définira en Json les paramètres de base
+        self.dmg = spaceShip.damage + __dict_bullet["style"][self.style]["dmg"] + __dict_bullet["typ_bullet"][spaceShip.bullet_type]["damage"]
+
+
+        print("DMG =",self.dmg)
+ 
         self.time = 0
 
     def init_pos(self, dict_file, spaceShip):
         
         #FCTposX = lambdify((x, y, w, h, c, v), sp.sympify(dict_file["x"]), modules=["math"])
-
         #FCTposY = lambdify((x, y, w, h, c, v), sp.sympify(dict_file["y"]), modules=["math"])
 
         FCTposX = dict_file["x"]
