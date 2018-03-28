@@ -58,3 +58,7 @@ class impact(pygame.sprite.Sprite):
                 self.last_change = now
             if self.cmpt_image+1 == len(self.list_images):
                 self.kill()
+
+#class exploded(pygame.sprite.Sprite):
+#    def __init__(self):
+#        super().__init__()

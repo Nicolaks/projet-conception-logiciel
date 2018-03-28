@@ -5,7 +5,7 @@ from pygame.locals import *
 import Entity.SpaceShip as _ss_
 
 class allyShip(_ss_.SpaceShip):
-    def __init__(self, _dict_Spaceship,style=1, __speed__ = 5, bullet_type = "single"):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, _dict_Spaceship,width_score,style=1, __speed__ = 5, bullet_type = "single"):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "SpaceShip"
         angle = 45
 

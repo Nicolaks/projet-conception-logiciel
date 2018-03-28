@@ -69,7 +69,7 @@ class bullet(pygame.sprite.Sprite):
         self.dmg = spaceShip.damage + __dict_bullet["style"][self.style]["dmg"] + __dict_bullet["typ_bullet"][spaceShip.bullet_type]["damage"]
 
 
-        print("DMG =",self.dmg)
+        #print("DMG =",self.dmg)
  
         self.time = 0
 
@@ -84,13 +84,13 @@ class bullet(pygame.sprite.Sprite):
         self.rect.x = FCTposX(spaceShip.rect.x, spaceShip.rect.y, self.width, self.height, spaceShip.width, spaceShip.height)
         self.rect.y = FCTposY(spaceShip.rect.x, spaceShip.rect.y, self.width, self.height, spaceShip.width, spaceShip.height)
 
-    def update(self, __dict_bullet, delta_time):  # A chaque frame change la position
+    def update(self, delta_time):  # A chaque frame change la position
 
         self.time += delta_time
-        self.update_pos(__dict_bullet)
+        self.update_pos()
         self.auto_kill()
 
-    def update_pos(self, __dict_bullet):
+    def update_pos(self):
 
         self.FposX = self.FCTnewposXX(self.FposX, self.FposY, self.speed___bullet,
                                        self.angle, self.time)

@@ -1,29 +1,37 @@
 import time
 import os
 import pygame
+import math
 import random as rd
 from pygame.locals import * 
 import Entity.SpaceShip as _ss_
+import Entity.Bullet as Blt
 
 class EnnShip(_ss_.SpaceShip):
     def __init__(self, _dict_Specs, _dict_Bullet, wave,FCTposX, FCTposY, CalcposX, CalcposY, Pobj):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         Type = "Ennemy"
         angle = 40
 
-        life, width, __speed__, dmg, style = _dict_Specs["life"], _dict_Specs["width"], _dict_Specs["speed"], _dict_Specs["dmg"], _dict_Specs["style"]
+        life, width, __speed__, dmg = _dict_Specs["life"], _dict_Specs["width"], _dict_Specs["speed"], _dict_Specs["dmg"]
+
         score = _dict_Specs["score"]
-        bullet_type = "single_ennemy"
+        
+        style = rd.choice(_dict_Specs["style"])
+        bullet_type = rd.choice(_dict_Specs["type tir"])
 
+        self.shoot_CD = _dict_Specs["CD"]
+        self.last_shoot = pygame.time.get_ticks()
 
-        self.shoot_prob = _dict_Specs["life"] + float()
+        self.shoot_prob = _dict_Specs["ratio_tir"] + 3/40*(math.log10(wave))
+        if self.shoot_prob >= 0.8:
+            self.shoot_prob = 0.8
 
         super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle, width)
-        self.bullet_style = 41
+
+        self.bullet_style = 1
         self.phase = 0
         self.position = Pobj
         self.time = 0
-
-        #self.damage += s
 
         self.score = score
         
@@ -71,6 +79,7 @@ class EnnShip(_ss_.SpaceShip):
 
         if not self.phase_done:
             self.new_pos()
+            #self.shoot()
             self.patern_executed()
         else:
             now = pygame.time.get_ticks()
@@ -81,7 +90,3 @@ class EnnShip(_ss_.SpaceShip):
         if self.life <= 0:
             self.kill()
         
-
-    def shoot(self):
-        p = rd.random()
-        pass

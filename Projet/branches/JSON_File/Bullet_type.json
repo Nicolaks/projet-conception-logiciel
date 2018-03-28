@@ -56,7 +56,7 @@
             "n":3,
             "speed":-10,
             "Cooldown":300,
-            "damage":5, 
+            "damage":100, 
             "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 - 5 * w","y":"y - h","angle":0},
                         "2":{"x":"x + c/2 + 5 * w","y":"y - h","angle":0}

@@ -33,7 +33,11 @@ class SpaceShip(pygame.sprite.Sprite):
         self.bullet_last_hit = pygame.time.get_ticks()
         
         #INFO VAISSEAU
+        
         self.life = life
+        self.shield = 0
+        self.shield_max = 100
+        self.full_life = self.life
         self.damage = dmg
         self.__speed__ = __speed__
      

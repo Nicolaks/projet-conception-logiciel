@@ -9,6 +9,7 @@ from sympy.abc import x, y, s, a, t, w, h, c, v
 
 import Entity.EntityGroup as ENTGroup
 import Entity.Ennemy as Enn
+import Entity.Bullet as Blt
 import Animation.CollideAnimate as ColAnimate
 
 def loader_patern(_dict_Patern):
@@ -169,7 +170,7 @@ class Waves():
         if self.wave_change != None:
             self.wave_change_init()
 
-        print(self._dict_["ennemy_wave"]["fonction"])
+        #print(self._dict_["ennemy_wave"]["fonction"])
         if self.wave == self.wave_change and self.wave_change != None:
             if len(self._dict_["ennemy_wave"]["fonction"]) > len(self._dict_["ennemy_wave"]["Wave change"]):
                 self.wave_i += 1
@@ -179,7 +180,7 @@ class Waves():
     def ennemy_init(self):
 
         for i in range(int(self._dict_["patern"][self.patern]["Appears"]["PO"])):
-            print(i)
+            #print(i)
             self.init_one_ennemy(i)
         self.last_ennemy_spawn = pygame.time.get_ticks()
 
@@ -238,40 +239,53 @@ class Waves():
         self.GroupSHIP.draw(window)
         self.GroupCollide_Bullet.draw(window)
 
+    def ennemy_bullet(self):
+        
+        for ennemy in self.GroupSHIP.sprites():
+            now = pygame.time.get_ticks()
+            p = rd.random()
+            #print(now - ennemy.last_shoot, ennemy.shoot_CD)
+            if p <= ennemy.shoot_prob and now - ennemy.last_shoot >= ennemy.shoot_CD:
+                for i in range(self._dict_Bullet["typ_bullet"][ennemy.bullet_type]["n"]):
+                    Bullet = Blt.bullet(ennemy, self._dict_Bullet, i)
+                    self.__GroupBullet_Ennemy.add(Bullet)
+                ennemy.last_shoot = now
+
     def update(self, Delta_time, GroupBulletAlly):
         
         #print(self.end_patern, len(self.GroupSHIP.sprites()))
 
         if self.end_patern and len(self.GroupSHIP.sprites()) == 0:
             
-            now = pygame.time.get_ticks()
-              
-            self.Pause = True
-
+            now = pygame.time.get_ticks()         
             self.start = 0
             if now - self.begin >= 1000:
                 self.patern_choose()
                 self.numbers_ennemy_init()
-                self.wave += 1
-                
                 self.end_patern = False
                 self.Pause = False#Ligne temporaire car SHOP pas encore fait !
 
         if self.begin != None:
             now = pygame.time.get_ticks()
-
+            self.GroupCollide_Bullet.update()
             if not self.Pause and not self.end_patern and (now - self.begin) >= self.start:
                 self.Cooldown_ennemy = self._dict_["patern"][self.patern]["Appears"]["Cooldown"]
+
                 if now - self.last_ennemy_spawn >= self.Cooldown_ennemy and self.numbers_ennemy >= 2:
                     self.ennemy_init()
 
+                self.ennemy_bullet()
                 self.collided(GroupBulletAlly)
-                self.__GroupBullet_Ennemy.update()
+                self.__GroupBullet_Ennemy.update(Delta_time)
                 self.GroupSHIP.update(Delta_time)
-                self.GroupCollide_Bullet.update()
                 self.phase_statement()
 
                 if len(self.GroupSHIP.sprites())==0 and self.numbers_ennemy == 0:
+
+                    self.wave += 1
+                    self.Pause = True
+                    
                     self.end_patern = True
                     self.begin = now
+                    self.__GroupBullet_Ennemy.empty()
                     #print("WAVE END -> PAUSE -> NEXT WAVE")
