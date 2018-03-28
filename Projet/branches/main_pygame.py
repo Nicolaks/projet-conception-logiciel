@@ -8,6 +8,7 @@ try:
     from pygame.locals import *
     import random as rd
     import sympy as sp
+    import button as btn
 
     import pre_settings.Settings as Settings
     import Entity.Reactor as Rct
@@ -48,25 +49,33 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
 
 
 
-    #Window.fill((255,255,255))
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
     police = pygame.font.SysFont("monospace", 50)
     policeCopyright = pygame.font.SysFont("arial", 12)
     textTitre = police.render("Manic Shooter:", True, (255,255,255))
-    textJouer = police.render("JOUER", True, (255,255,255))
-    textSettings = police.render("SETTINGS", True, (255,255,255))
-    textQuitter = police.render("QUITTER", True, (255,255,255))
+
 
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
-
-
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
-    placementTexteJouer = (Width/2) - (textJouer.get_width()/2)
-    placementTexteSettings = (Width/2) - (textSettings.get_width()/2)
-    placementTexteQuitter = (Width/2) - (textQuitter.get_width()/2)
 
-    rectJouer = pygame.draw.rect(Window, (144,88,41) ,(placementTexteJouer,340,160,70))
-    rectSettings = pygame.draw.rect(Window, (144,88,41), (placementTexteSettings, 460, 250, 70))
-    rectQuitter = pygame.draw.rect(Window, (144,88,41), (placementTexteQuitter, 580, 220, 70))
+    btnJouer = btn.Button(170,60, (144,88,41), "JOUER", 450, Width, Window)#Ajoute un bouton jouer.
+    btnJouer.draw()
+    btnJouer.afficherTexte()
+
+
+    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width, Window)#Ajoute un bouton settings.
+    btnSettings.draw()
+    btnSettings.afficherTexte()
+
+
+    btnQuitter = btn.Button(220,60, (144,88,41), "QUITTER", 950, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte()
+
+
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
 
     continuer = True
     while continuer:#Boucle principale du jeux.
@@ -76,15 +85,14 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_g:
                     Jeux(Height,Width)
-
-        Window.fill((153,77,0))#Donne une couleur de fond a la page.
-
-        Window.blit(textTitre, (placementTexteTitre, 30))
-        Window.blit(textJouer, (placementTexteJouer,350))
-        Window.blit(textSettings, (placementTexteSettings,470))
-        Window.blit(textQuitter, (placementTexteQuitter,590))
-        Window.blit(textCopyright, (540,950))
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x , y = event.pos
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 170/2) and x < (Width/2 + 170/2):
+                    Jeux(Height,Width)
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 220/2) and x < (Width/2 + 220/2):
+                    pygame.quit()
+                if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 240/2) and x < (Width/2 + 240/2):
+                    print("ok")
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
@@ -107,13 +115,13 @@ def Jeux(Hht, Wth):
     def load_json_to_dict(path):
         with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
-        return _dict_ 
+        return _dict_
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json'] 
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
-    
+
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
     _dict_Patern = Wvs.loader_patern(_dict_Patern)
 
@@ -130,7 +138,7 @@ def Jeux(Hht, Wth):
     Clock = pygame.time.Clock()
     FontFPS = pygame.font.Font(None, 30)
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-    
+
     #Background = pygame.image.load(os.path.join("..", "Ressources", "Background","Background.jpg")).convert()
     #Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
     Background = scroll.Background(0, Width, Height)
@@ -155,7 +163,7 @@ def Jeux(Hht, Wth):
     while continuer:
         #Window.blit(Background, (0,0))
         Background.draw(Window)
-        
+
         #Background.update()
         #Window.fill(BLACK)
         delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
@@ -195,8 +203,8 @@ def Jeux(Hht, Wth):
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 pygame.quit()
                 quit()
-    
-        Spaceship.draw(Window)        
+
+        Spaceship.draw(Window)
 
         __GroupBullet_Ally.update(_dict_Bullet_type, delta_time)
         __GroupBullet_Ally.draw(Window)
@@ -221,4 +229,3 @@ def Jeux(Hht, Wth):
         Window.blit(Score_render, (100,300))
 
         pygame.display.update()
-
