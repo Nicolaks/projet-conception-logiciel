@@ -39,6 +39,7 @@ class ui():
 
         self.radius = int(1.25*self.Surf_width/20)
         self.number_wave = []
+        self.money = []
 
         self.ratio_rect = 2
 
@@ -49,12 +50,23 @@ class ui():
         self.Origin_rect_x = 10
         self.Origin_rect_y = int((self.Surf_height - self.height_rect/10 - self.height_rect))
 
-        self.last_change_color = pygame.time.get_ticks()
+        self.last_change_color = 0
+        self.last_change_color_i = 0
 
         self.shield_height = int(self.height_rect/2)
         self.shield_back_rect = self.shield_height
         self.shield_origin_x = int(self.Origin_rect_x + self.width_rect + 5*self.ratio_rect)
         self.shield_origin_y = int(self.Surf_height - self.shield_height - self.height_rect/10)
+
+        self.invincible_origin_x = self.Surf_width - self.width_rect - self.Origin_rect_x
+        self.invincible_origin_y = self.shield_origin_y
+
+        self.WHITE = (255,255,255)
+        self.YELLOW = (255,255,0)
+        self.GREY = (112,128,144)
+        self.RED = (255,0,0)
+        self.RED_a = (156,0,0,0)
+        self.GREEN = (0,139,0)
 
     def __init_image(self, char):
         im = pygame.image.load(os.path.join("..","Ressources","Graphics","UI","numeral"+ str(char) + ".png")).convert_alpha()
@@ -66,6 +78,43 @@ class ui():
         self.draw_wave(window)
         self.draw_life(window, SpaceShip) 
         self.draw_shield(window, SpaceShip)
+
+        if SpaceShip.invincible:
+            self.draw_invicible(window, SpaceShip)
+
+    def draw_invicible(self, window, SpaceShip):
+        for Bonus in SpaceShip.Group_Bonus.sprites():
+            if Bonus.type == "Invincible":#RAJOUTER ET FACTORISER AVEC SPEED
+                
+                now = pygame.time.get_ticks()
+                height = self.shield_back_rect - (self.shield_back_rect*(now - Bonus.time)/Bonus.cd)
+                y_origin = self.invincible_origin_y + self.shield_back_rect - height
+                
+                x = (now - Bonus.time)/Bonus.cd
+                x = 1 - x
+
+                if x >= 0.66:
+                    color = self.GREEN
+                elif x < 0.66 and x >= 0.33:
+                    color = self.YELLOW
+                elif x < 0.33:
+                    color = self.RED
+
+                pygame.draw.rect(window, color, [self.invincible_origin_x, y_origin,self.width_rect, height])
+                if x <= 0.6 and x > 0.4:
+                    if now - self.last_change_color_i >= 600:
+                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
+                        self.last_change_color_i = now
+                if x <= 0.4 and x > 0.2:
+                    if now - self.last_change_color_i >= 400:
+                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
+                        self.last_change_color_i = now
+                if x <= 0.2:
+                    if now - self.last_change_color_i >= 200:
+                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
+                        self.last_change_color_i = now
+                        
+                
 
     def draw_score(self,window):
         pos = 0
@@ -83,41 +132,31 @@ class ui():
             posX += self.width + 5
 
     def draw_life(self, window,SpaceShip):
-        WHITE_a = (255,255,255,118)
-        GREY = (112,128,144)
-        RED = (255,0,0)
-        RED_a = (156,0,0,0)
-        RED_flash = (255,255,255)
 
-        pygame.draw.rect(window, GREY, [self.Origin_rect_x, self.Origin_rect_y,self.width_rect, self.height_back_rect])
-        pygame.draw.rect(window, WHITE_a, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.ratio_rect,self.width_rect-2*self.ratio_rect, self.height_back_rect-2*self.ratio_rect])
+        pygame.draw.rect(window, self.GREY, [self.Origin_rect_x, self.Origin_rect_y,self.width_rect, self.height_back_rect])
+        pygame.draw.rect(window, self.WHITE, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.ratio_rect,self.width_rect-2*self.ratio_rect, self.height_back_rect-2*self.ratio_rect])
         
-
-        SpaceShip.life = 30
         self.height_rect = int(((self.height_back_rect-self.ratio_rect)/SpaceShip.full_life)*SpaceShip.life)
         if (SpaceShip.life/SpaceShip.full_life) <= 0.30:
-            pygame.draw.rect(window, RED_a, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])        
+            pygame.draw.rect(window, self.RED_a, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])        
             now = pygame.time.get_ticks()
             if now - self.last_change_color >= 600:
-                pygame.draw.rect(window, RED_flash, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])
+                pygame.draw.rect(window, self.WHITE, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])
                 self.last_change_color = now
         else:
-            pygame.draw.rect(window, RED, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])        
+            pygame.draw.rect(window, self.RED, [self.Origin_rect_x+self.ratio_rect, self.Origin_rect_y+self.height_back_rect+self.ratio_rect-self.height_rect,self.width_rect-2*self.ratio_rect, self.height_rect-2*self.ratio_rect])        
 
 
     def draw_shield(self, window, SpaceShip):
-        WHITE_a = (255,255,255,118)
-        GREY = (112,128,144)
-
-        SpaceShip.shield = 50
 
         self.shield_height = int(((self.shield_back_rect-self.ratio_rect)/SpaceShip.shield_max)*SpaceShip.shield)
-        pygame.draw.rect(window, WHITE_a,[self.shield_origin_x, self.shield_origin_y,self.width_rect, self.shield_back_rect])        
+        pygame.draw.rect(window, self.WHITE,[self.shield_origin_x, self.shield_origin_y,self.width_rect, self.shield_back_rect])        
         
         if SpaceShip.shield > 0:
-            pygame.draw.rect(window, GREY,[self.shield_origin_x+self.ratio_rect, self.shield_origin_y+self.ratio_rect+self.shield_back_rect-self.shield_height,self.width_rect-2*self.ratio_rect, self.shield_height-2*self.ratio_rect])
+            pygame.draw.rect(window, self.GREY,[self.shield_origin_x+self.ratio_rect, self.shield_origin_y+self.ratio_rect+self.shield_back_rect-self.shield_height,self.width_rect-2*self.ratio_rect, self.shield_height-2*self.ratio_rect])
 
 
-    def update(self, num, wave):
+    def update(self, num, wave, money):
         self.list_image = list(map(int, str(num)))
         self.number_wave = list(map(int, str(wave)))
+        self.money = list(map(int, str(wave)))

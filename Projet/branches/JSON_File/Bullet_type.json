@@ -92,9 +92,9 @@
             "n":2,
             "speed":5,
             "Cooldown":300,
-            "damage":5, 
+            "damage":2, 
             "position":{"0":{"x":"x + c/2","y":"y - h","angle":0},
-                        "1":{"x":"x + c/2","y":"y - 2*h","angle":0}},
+                        "1":{"x":"x + c/2","y":"y - 2*h - 3","angle":0}},
             "fonction":{"0":{"x":"x","y":"y + s"},
                         "1":{"x":"x","y":"y + s"}}
                     }

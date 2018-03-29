@@ -5,7 +5,7 @@ from pygame.locals import *
 import Entity.Reactor as Rct
 
 class SpaceShip(pygame.sprite.Sprite):
-    def __init__(self, life, dmg, typ, style, __speed__ , bullet_type, angle, width):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
+    def __init__(self, life, dmg, typ, style, __speed__ , bullet_type, angle, width, money):#Il y a 2 type SpaceShip et Ennemy, ils nous aideront pour les insteractions entre group
         super().__init__()
         Surface = pygame.display.get_surface()#Recupere la surface de la fenetre
         self.Surf_Width, self.Surf_Height = Surface.get_width(), Surface.get_height()#Recupere sa longeur et largeur
@@ -35,11 +35,15 @@ class SpaceShip(pygame.sprite.Sprite):
         #INFO VAISSEAU
         
         self.life = life
+        self.full_life = self.life
+
         self.shield = 0
         self.shield_max = 100
-        self.full_life = self.life
+        
         self.damage = dmg
         self.__speed__ = __speed__
+
+        self.money = money
      
         self.Reactor = None
 

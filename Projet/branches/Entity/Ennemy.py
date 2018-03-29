@@ -14,8 +14,8 @@ class EnnShip(_ss_.SpaceShip):
 
         life, width, __speed__, dmg = _dict_Specs["life"], _dict_Specs["width"], _dict_Specs["speed"], _dict_Specs["dmg"]
 
-        score = _dict_Specs["score"]
-        
+        money = _dict_Specs["money"]        
+
         style = rd.choice(_dict_Specs["style"])
         bullet_type = rd.choice(_dict_Specs["type tir"])
 
@@ -26,14 +26,14 @@ class EnnShip(_ss_.SpaceShip):
         if self.shoot_prob >= 0.8:
             self.shoot_prob = 0.8
 
-        super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle, width)
+        super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle, width, money)
 
         self.bullet_style = 1
         self.phase = 0
         self.position = Pobj
         self.time = 0
 
-        self.score = score
+        self.score = _dict_Specs["score"] 
         
         self.init_pos(FCTposX, FCTposY)
         self.posX, self.posY = self.rect.x, self.rect.y 

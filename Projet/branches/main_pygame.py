@@ -8,16 +8,24 @@ try:
     from pygame.locals import *
     import random as rd
     import sympy as sp
-    import button as btn
+
+    import WavesOBJ as Wvs
 
     import pre_settings.Settings as Settings
+
     import Entity.Reactor as Rct
     import Entity.EntityGroup as ENTGroup
     import Entity.SpaceShip as spaceShip
     import Entity.Ally as Ally
     import Entity.Bullet as Blt
-    import WavesOBJ as Wvs
+    
     import Animation.scrolling as scroll
+    import Animation.UI as UI
+
+    import button as btn
+
+    import Upgrade.Power_ups as PU
+
 except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
@@ -115,18 +123,19 @@ def Jeux(Hht, Wth):
     def load_json_to_dict(path):
         with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
-        return _dict_
+        return _dict_ 
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json'] 
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
-
+    
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
     _dict_Patern = Wvs.loader_patern(_dict_Patern)
 
     _dict_Spaceship = load_json_to_dict("JSON_File/SpaceShip.json")
     _dict_Ennemy = load_json_to_dict("JSON_File/Ennemy.json")
+    _dict_Powers_ups = load_json_to_dict("JSON_File/Power_ups.json")
 
     Height, Width = Hht, Wth
     if Set.file_here:
@@ -134,11 +143,11 @@ def Jeux(Hht, Wth):
         Width = Set._dict_["Width"]  # Largeur
     fps = Set._dict_["fps"]
 
-    Window = pygame.display.set_mode((Width, Height))
+    Window = pygame.display.set_mode((Width, Height), pygame.SRCALPHA)
     Clock = pygame.time.Clock()
     FontFPS = pygame.font.Font(None, 30)
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-
+    
     #Background = pygame.image.load(os.path.join("..", "Ressources", "Background","Background.jpg")).convert()
     #Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
     Background = scroll.Background(0, Width, Height)
@@ -147,15 +156,21 @@ def Jeux(Hht, Wth):
     #__GroupSHIP = ENTGroup.Entity()
     #__GroupBullet_enn = ENTGroup.Entity()
 
-    Wave_played = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type)#On initialise notre objet de Vague
-    #print(Wave_played.patern)
+    Wave_ = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type)#On initialise notre objet de Vague
+    #print(Wave_.patern)
 
     #Groupe d'entité ALLIE
     __GroupBullet_Ally = ENTGroup.Entity()#A mettre en variables du vaisseau
 
-    Spaceship = Ally.allyShip(_dict_Spaceship)
+    UIn = UI.ui()
+    Power_UP = PU.Power_ups(_dict_Powers_ups)
+
+    
+    Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
     Spaceship.Reactor_innit()
     Spaceship.bullet_type = "pierreM"#Ligne non nécéssaire
+
+    
 
     BLACK = (0, 0, 0)
     continuer = True
@@ -163,7 +178,7 @@ def Jeux(Hht, Wth):
     while continuer:
         #Window.blit(Background, (0,0))
         Background.draw(Window)
-
+        
         #Background.update()
         #Window.fill(BLACK)
         delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
@@ -174,9 +189,9 @@ def Jeux(Hht, Wth):
         pressed = pygame.key.get_pressed()
         buttons = {pygame.key.name(k) for k,v in enumerate(pressed) if v}#Recupère le nom des touches PRESSE
 
-        if len(buttons) >=1 and Wave_played.first_press_key != None and Temps_ecoule >= 2:
-            Wave_played.first_press_key = True
-            Wave_played.startGame()
+        if len(buttons) >=1 and Wave_.first_press_key != None and Temps_ecoule >= 2:
+            Wave_.first_press_key = True
+            Wave_.startGame()
         if Set._dict_["up"] in buttons:
             Spaceship.up()
         if Set._dict_["down"] in buttons:
@@ -203,29 +218,29 @@ def Jeux(Hht, Wth):
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 pygame.quit()
                 quit()
+     
 
-        Spaceship.draw(Window)
+        __GroupBullet_Ally.update(delta_time)
+        Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
+        Power_UP.update(Wave_.wave)
+        UIn.update(Wave_.score, Wave_.wave, Spaceship.money)
 
-        __GroupBullet_Ally.update(_dict_Bullet_type, delta_time)
+        Power_UP.draw(Window)
+        Wave_.draw(Window)
         __GroupBullet_Ally.draw(Window)
-
-        Wave_played.update(delta_time, __GroupBullet_Ally)
-        Wave_played.draw(Window)
+        Spaceship.draw(Window) 
+        UIn.draw(Window, Spaceship)
 
         fps_render = FontFPS.render("FPS : {}".format(int(FPS)), True, (255, 255, 255))
-        nb_sprites = len(Wave_played.GroupSHIP.sprites())
+        nb_sprites = len(Wave_.GroupSHIP.sprites())
         counter_render = FontFPS.render("NBs : {}".format(nb_sprites),
             True, (255, 255, 255))
-
-        Score_render = FontFPS.render("Score : {}".format(int(Wave_played.score)), True , (255,255,255))
-        Wave_render = FontFPS.render("Wave : {}".format(int(Wave_played.wave)), True, (255,255,255) )
 
         Time = FontFPS.render("Time : {0:.2f}".format(float(Temps_ecoule)), True, (255, 255, 255))
 
         Window.blit(fps_render, (100, 100))
-        Window.blit(counter_render, (100, 150))
+        #Window.blit(counter_render, (100, 150))
         Window.blit(Time, (100, 200))
-        Window.blit(Wave_render, (100,250))
-        Window.blit(Score_render, (100,300))
 
         pygame.display.update()
+

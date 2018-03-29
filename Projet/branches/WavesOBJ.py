@@ -223,7 +223,7 @@ class Waves():
             self.first_press_key = None
 
                  
-    def collided(self, GroupBulletAlly):
+    def collide_bulletA_Ennemy(self, GroupBulletAlly, SpaceShip):
 
         colision = pygame.sprite.groupcollide(GroupBulletAlly, self.GroupSHIP, True, False, pygame.sprite.collide_mask)
         for bullet in colision:
@@ -231,7 +231,23 @@ class Waves():
             self.GroupCollide_Bullet.add(ImpactAnimation)
             for ennemy in colision[bullet]:
                 ennemy.life -= bullet.dmg
-                self.score += ennemy.score
+                if ennemy.life <= 0:
+                    self.score += ennemy.score
+                    SpaceShip.money += ennemy.money
+
+    def collide_bulletE_SpaceShip(self, SpaceShip):
+        colision = pygame.sprite.spritecollide(SpaceShip, self.__GroupBullet_Ennemy, True, pygame.sprite.collide_mask)
+        for bullet in colision:
+            SpaceShip.hit(bullet.dmg)
+
+    def collide_bonus_SpaceShip(self, SpaceShip, BonusGroup):
+        colision = pygame.sprite.spritecollide(SpaceShip, BonusGroup, True, pygame.sprite.collide_mask)
+        for Bonus in colision:
+            if Bonus.type == "Random":
+                NewType = rd.choice(Bonus.dict["type"][Bonus.type+"_"+Bonus.power]["type"])
+                Bonus.stats(Bonus.dict,NewType)
+            SpaceShip.add_Bonus(Bonus)
+
 
     def draw(self, window):
           
@@ -251,7 +267,7 @@ class Waves():
                     self.__GroupBullet_Ennemy.add(Bullet)
                 ennemy.last_shoot = now
 
-    def update(self, Delta_time, GroupBulletAlly):
+    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):
         
         #print(self.end_patern, len(self.GroupSHIP.sprites()))
 
@@ -275,7 +291,12 @@ class Waves():
                     self.ennemy_init()
 
                 self.ennemy_bullet()
-                self.collided(GroupBulletAlly)
+
+                self.collide_bulletA_Ennemy(GroupBulletAlly, SpaceShip)
+                self.collide_bulletE_SpaceShip(SpaceShip)
+                self.collide_bonus_SpaceShip(SpaceShip, BonusGroup)
+
+                SpaceShip.update_bonus()
                 self.__GroupBullet_Ennemy.update(Delta_time)
                 self.GroupSHIP.update(Delta_time)
                 self.phase_statement()
