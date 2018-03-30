@@ -18,7 +18,7 @@ try:
     import Entity.SpaceShip as spaceShip
     import Entity.Ally as Ally
     import Entity.Bullet as Blt
-    
+
     import Animation.scrolling as scroll
     import Animation.UI as UI
 
@@ -123,13 +123,13 @@ def Jeux(Hht, Wth):
     def load_json_to_dict(path):
         with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
-        return _dict_ 
+        return _dict_
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json'] 
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
-    
+
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
     _dict_Patern = Wvs.loader_patern(_dict_Patern)
 
@@ -147,7 +147,7 @@ def Jeux(Hht, Wth):
     Clock = pygame.time.Clock()
     FontFPS = pygame.font.Font(None, 30)
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-    
+
     #Background = pygame.image.load(os.path.join("..", "Ressources", "Background","Background.jpg")).convert()
     #Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
     Background = scroll.Background(0, Width, Height)
@@ -165,12 +165,12 @@ def Jeux(Hht, Wth):
     UIn = UI.ui()
     Power_UP = PU.Power_ups(_dict_Powers_ups)
 
-    
+
     Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
     Spaceship.Reactor_innit()
     Spaceship.bullet_type = "pierreM"#Ligne non nécéssaire
 
-    
+
 
     BLACK = (0, 0, 0)
     continuer = True
@@ -178,8 +178,8 @@ def Jeux(Hht, Wth):
     while continuer:
         #Window.blit(Background, (0,0))
         Background.draw(Window)
-        
-        #Background.update()
+        Background.update(Wave_.wave,Wave_.Pause)
+
         #Window.fill(BLACK)
         delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
         FPS = Clock.get_fps()
@@ -218,7 +218,7 @@ def Jeux(Hht, Wth):
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 pygame.quit()
                 quit()
-     
+
 
         __GroupBullet_Ally.update(delta_time)
         Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
@@ -228,7 +228,7 @@ def Jeux(Hht, Wth):
         Power_UP.draw(Window)
         Wave_.draw(Window)
         __GroupBullet_Ally.draw(Window)
-        Spaceship.draw(Window) 
+        Spaceship.draw(Window)
         UIn.draw(Window, Spaceship)
 
         fps_render = FontFPS.render("FPS : {}".format(int(FPS)), True, (255, 255, 255))
@@ -243,4 +243,3 @@ def Jeux(Hht, Wth):
         Window.blit(Time, (100, 200))
 
         pygame.display.update()
-
