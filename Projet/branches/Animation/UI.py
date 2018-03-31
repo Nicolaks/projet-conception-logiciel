@@ -78,48 +78,61 @@ class ui():
         self.draw_wave(window)
         self.draw_life(window, SpaceShip) 
         self.draw_shield(window, SpaceShip)
+        self.draw_money(window)
+        self.draw_bonus_cd(window, SpaceShip)
 
-        if SpaceShip.invincible:
-            self.draw_invicible(window, SpaceShip)
-
-    def draw_invicible(self, window, SpaceShip):
+    def draw_bonus_cd(self, window, SpaceShip):
         for Bonus in SpaceShip.Group_Bonus.sprites():
             if Bonus.type == "Invincible":#RAJOUTER ET FACTORISER AVEC SPEED
-                
-                now = pygame.time.get_ticks()
-                height = self.shield_back_rect - (self.shield_back_rect*(now - Bonus.time)/Bonus.cd)
-                y_origin = self.invincible_origin_y + self.shield_back_rect - height
-                
-                x = (now - Bonus.time)/Bonus.cd
-                x = 1 - x
+                posX = self.invincible_origin_x
+            else:
+                posX = self.invincible_origin_x -2* self.width_rect
+            
+            now = pygame.time.get_ticks()
+            height = self.shield_back_rect - (self.shield_back_rect*(now - Bonus.time)/Bonus.cd)
+            y_origin = self.invincible_origin_y + self.shield_back_rect - height
+            
+            x = (now - Bonus.time)/Bonus.cd
+            x = 1 - x
 
-                if x >= 0.66:
-                    color = self.GREEN
-                elif x < 0.66 and x >= 0.33:
-                    color = self.YELLOW
-                elif x < 0.33:
-                    color = self.RED
+            if x >= 0.66:
+                color = self.GREEN
+            elif x < 0.66 and x >= 0.33:
+                color = self.YELLOW
+            elif x < 0.33:
+                color = self.RED
 
-                pygame.draw.rect(window, color, [self.invincible_origin_x, y_origin,self.width_rect, height])
-                if x <= 0.6 and x > 0.4:
-                    if now - self.last_change_color_i >= 600:
-                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
-                        self.last_change_color_i = now
-                if x <= 0.4 and x > 0.2:
-                    if now - self.last_change_color_i >= 400:
-                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
-                        self.last_change_color_i = now
-                if x <= 0.2:
-                    if now - self.last_change_color_i >= 200:
-                        pygame.draw.rect(window, self.WHITE, [self.invincible_origin_x, y_origin,self.width_rect, height])
-                        self.last_change_color_i = now
-                        
-                
+            pygame.draw.rect(window, color, [posX, y_origin,self.width_rect, height])
+            if x <= 0.6 and x > 0.4:
+                if now - self.last_change_color_i >= 600:
+                    pygame.draw.rect(window, self.WHITE, [posX, y_origin,self.width_rect, height])
+                    self.last_change_color_i = now
+            if x <= 0.4 and x > 0.2:
+                if now - self.last_change_color_i >= 400:
+                    pygame.draw.rect(window, self.WHITE, [posX, y_origin,self.width_rect, height])
+                    self.last_change_color_i = now
+            if x <= 0.2:
+                if now - self.last_change_color_i >= 200:
+                    pygame.draw.rect(window, self.WHITE, [posX, y_origin,self.width_rect, height])
+                    self.last_change_color_i = now
+
+
+    def draw_money(self, window):
+        pos = 0
+        n = len(self.money)
+        for i in range(9):
+            if i < n:
+                window.blit(self.list[self.money[i]],(int(1.5*self.width) + self.origine + pos,self.width + 15))
+            else:
+                window.blit(self.list[10], (int(1.5*self.width) + self.origine + pos,self.width + 15))
+            pos += self.width
+                   
 
     def draw_score(self,window):
         pos = 0
+        n = len(self.list_image)
         for i in range(11):
-            if i < len(self.list_image):
+            if i < n:
                 window.blit(self.list[self.list_image[i]],(self.origine + pos,10))
             else:
                 window.blit(self.list[10], (self.origine + pos,10))
@@ -159,4 +172,4 @@ class ui():
     def update(self, num, wave, money):
         self.list_image = list(map(int, str(num)))
         self.number_wave = list(map(int, str(wave)))
-        self.money = list(map(int, str(wave)))
+        self.money = list(map(int, str(money)))

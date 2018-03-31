@@ -35,7 +35,6 @@ class Sprite_upgrade(pygame.sprite.Sprite):
 
         if self.cd != 0:
             self.time = None
-            self.previous_speed = None
         
         self.delable = False
         

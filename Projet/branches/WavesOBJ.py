@@ -267,19 +267,7 @@ class Waves():
                     self.__GroupBullet_Ennemy.add(Bullet)
                 ennemy.last_shoot = now
 
-    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):
-        
-        #print(self.end_patern, len(self.GroupSHIP.sprites()))
-
-        if self.end_patern and len(self.GroupSHIP.sprites()) == 0:
-            
-            now = pygame.time.get_ticks()         
-            self.start = 0
-            if now - self.begin >= 1000:
-                self.patern_choose()
-                self.numbers_ennemy_init()
-                self.end_patern = False
-                self.Pause = False#Ligne temporaire car SHOP pas encore fait !
+    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):         
 
         if self.begin != None:
             now = pygame.time.get_ticks()
@@ -305,8 +293,7 @@ class Waves():
 
                     self.wave += 1
                     self.Pause = True
-                    
                     self.end_patern = True
                     self.begin = now
-                    self.__GroupBullet_Ennemy.empty()
+
                     #print("WAVE END -> PAUSE -> NEXT WAVE")

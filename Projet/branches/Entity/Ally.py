@@ -19,11 +19,19 @@ class allyShip(_ss_.SpaceShip):
         self.shield = shield
         self.bullet_style = 1
         
+        self.reset_pos()
+
+        self.spaceship_speed = self.__speed__
+        self.invincible = False
+        self.speed_bonus = 0
+
+        self.Group_Bonus = ENT.Entity()
+
+    def reset_pos(self):
         self.rect.x = self.Surf_Width/2 - self.width/2
         self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
 
-        self.invincible = False
-        self.Group_Bonus = ENT.Entity()
+
 
     def init_carac(self, _dict_Spaceship):
         width = _dict_Spaceship[str(self.style)]["width"]
@@ -86,6 +94,7 @@ class allyShip(_ss_.SpaceShip):
                 self.life -= dmg
     
     def update_bonus(self):
+        self.__speed__ = self.spaceship_speed + self.speed_bonus
         if len(self.Group_Bonus.sprites()) > 0:
             for Bonus in self.Group_Bonus.sprites():
                 now = pygame.time.get_ticks()
@@ -93,7 +102,7 @@ class allyShip(_ss_.SpaceShip):
                     if self.invincible:
                         self.invincible = False
                     else:
-                        self.__speed__ = Bonus.previous_speed
+                        self.speed_bonus = 0
                     Bonus.kill()
         
 
@@ -111,7 +120,6 @@ class allyShip(_ss_.SpaceShip):
 
         if BonusObj.cd != 0:
             BonusObj.time = pygame.time.get_ticks()
-            BonusObj.previous_speed = self.__speed__
             if len(self.Group_Bonus.sprites()) > 0:
                 for Obj in self.Group_Bonus.sprites():
                     if Obj.type == BonusObj.type:
@@ -122,13 +130,16 @@ class allyShip(_ss_.SpaceShip):
                             if Obj.power < BonusObj.power:
                                 Obj.power = BonusObj.power
                                 Obj.cd += BonusObj.cd
-                                self.__speed__ = Obj.previous_speed + BonusObj.speed
+                                self.speed_bonus = BonusObj.speed
                             else:
                                 BonusObj.delable = True
             if BonusObj.invincible:
                 self.invincible = True
+            if BonusObj.type == "Speed":
+                self.speed_bonus = BonusObj.speed
             self.Group_Bonus.add(BonusObj)
             if BonusObj.delable:
                 BonusObj.kill()
+
 
 

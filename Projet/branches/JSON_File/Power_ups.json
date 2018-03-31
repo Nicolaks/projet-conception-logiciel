@@ -2,7 +2,7 @@
     "List":{
         "Invincible":{
             "Power":[1,2,3],
-            "Unlocked":[1,1,1],
+            "Unlocked":[5,15,25],
             "Chance":[55,30,15]
         },
         "Life":{
@@ -17,7 +17,7 @@
         },
         "Speed":{
             "Power":[1,2,3],
-            "Unlocked":[5,15,25],
+            "Unlocked":[1,1,1],
             "Chance":[40,30,30]
         },
         "Random":{
@@ -59,15 +59,15 @@
         },
         "Speed_1":{
             "speed":2,
-            "cooldown":5000
+            "cooldown":2500
         },
         "Speed_2":{
             "speed":2,
-            "cooldown":10000
+            "cooldown":5000
         },
         "Speed_3":{
             "speed":3,
-            "cooldown":15000
+            "cooldown":10000
         },
         "Random_1":{
             "type":["Shield_1","Speed_1","Life_1", "Invincible_1"]
