@@ -60,5 +60,11 @@ class SpaceShip(pygame.sprite.Sprite):
         self.height = int(coef * self.width)
         self.image = pygame.transform.scale(self.image, (self.width,self.height))#Puis on appliques les nouvelles proportion
         
+        posX = self.rect.x
+        posY = self.rect.y
+
         self.rect = self.image.get_rect()
+        self.rect.x = posX
+        self.rect.y = posY
+
         self.mask = pygame.mask.from_surface(self.image)

@@ -28,6 +28,8 @@ class allyShip(_ss_.SpaceShip):
 
         self.Group_Bonus = ENT.Entity()
 
+        self.money = 40000
+
     def reset_pos(self):
         self.rect.x = self.Surf_Width/2 - self.width/2
         self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
@@ -45,7 +47,8 @@ class allyShip(_ss_.SpaceShip):
         if style <= len(_dict_Spaceship):
             self.nb_style = style
             self.style = self.type + "_" + str(self.nb_style)
-            self.width, self.damage, self.life = self.init_carac(_dict_Spaceship)
+            self.width, self.damage, self.life, self.shield = self.init_carac(_dict_Spaceship)
+            self.full_life = self.life
             self.upgrade_style()
 
 

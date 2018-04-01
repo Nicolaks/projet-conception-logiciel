@@ -31,16 +31,6 @@ except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
 
-    #https://stackoverflow.com/questions/10168447/how-to-make-buttons-in-python-pygame/10169083 pour les boutons.
-    #https://stackoverflow.com/questions/12150957/pygame-action-when-mouse-click-on-rect pour l'interaction entre les boutons.
-    #https://stackoverflow.com/questions/47639826/pygame-button-single-click pour les boutons.
-    #https://stackoverflow.com/questions/47758248/pygame-button-get-pressed peut aider.
-
-
-#class Button:
-    #def __init__(self, master):
-        #self.master = master
-
 
 def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
     Set = Settings.Settings()
@@ -67,19 +57,19 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
 
-    btnJouer = btn.Button(170,60, (144,88,41), "JOUER", 450, Width)#Ajoute un bouton jouer.
-    btnJouer.draw(Window)
-    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y, Window)
+    btnJouer = btn.Button(150,60, (144,88,41), "JOUER", 450, Width, Window)#Ajoute un bouton jouer.
+    btnJouer.draw()
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
 
 
-    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width)#Ajoute un bouton settings.
-    btnSettings.draw(Window)
-    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y, Window)
+    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width, Window)#Ajoute un bouton settings.
+    btnSettings.draw()
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
 
 
-    btnQuitter = btn.Button(220,60, (144,88,41), "QUITTER", 950, Width)#Ajoute un bouton quitter.
-    btnQuitter.draw(Window)
-    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y, Window)
+    btnQuitter = btn.Button(210,60, (144,88,41), "QUITTER", 950, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
 
 
 
@@ -93,18 +83,153 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
                 continuer = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_g:
-                    Jeux(Height,Width)
+                    save()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x , y = event.pos
-                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 170/2) and x < (Width/2 + 170/2):
-                    Jeux(Height,Width)
-                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 220/2) and x < (Width/2 + 220/2):
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 150/2) and x < (Width/2 + 150/2):
+                    save()
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
                     pygame.quit()
                 if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 240/2) and x < (Width/2 + 240/2):
                     print("ok")
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
 
+def save():#fonction qui affichera le menu de selection des sauvegardes après avoir cliqué sur jouer
+    Set = Settings.Settings()
+    Set.read()
+    pygame.font.init()
+
+    Height = Set._dict_["Height"] #Hauteur
+    Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
+
+    pygame.init()
+
+    Window = pygame.display.set_mode((Width,Height))
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
+
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    policeCopyright = pygame.font.SysFont("arial", 12)
+    textTitre = police.render("CHOIX DE LA SAUVEGARDE", True, (255,255,255))
+
+
+    textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
+
+    btnJouer = btn.Button(360,60, (144,88,41), "SAUVEGARDE 1", 450, Width, Window)#Ajoute un bouton pour la Sauvegrade une 
+    btnJouer.draw()
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
+
+
+    btnSettings = btn.Button(360,60, (144,88,41), "SAUVEGARDE 2", 700, Width, Window)#Ajoute un bouton pour la deuxième sauvegarde
+    btnSettings.draw()
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
+
+
+    btnQuitter = btn.Button(360,60, (144,88,41), "SAUVEGARDE 3", 950, Width, Window)#Ajoute un bouton pour la troisième sauvegarde
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    btnQuitter = btn.Button(210,60, (144,88,41), "QUITTER", 1200, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
+
+    continuer = True
+    while continuer:#Boucle principale du Menu save.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    Jeux(Height, Width)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x , y = event.pos
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                    
+                if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                     
+                if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
+                    menu()
+        pygame.display.update()#Update la page.
+        pygame.time.Clock().tick(fps)
+
+def difficulté():
+    Set = Settings.Settings()
+    Set.read()
+    pygame.font.init()
+
+    Height = Set._dict_["Height"] #Hauteur
+    Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
+
+    pygame.init()
+
+    Window = pygame.display.set_mode((Width,Height))
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
+
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    policeCopyright = pygame.font.SysFont("arial", 12)
+    textTitre = police.render("CHOIX DE LA DIFFICULTER", True, (255,255,255))
+
+
+    textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
+
+    btnJouer = btn.Button(180,60, (144,88,41), "FACILE", 450, Width, Window)#Ajoute un bouton pour la difficulté facile
+    btnJouer.draw()
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
+
+
+    btnSettings = btn.Button(180,60, (144,88,41), "NORMAL", 700, Width, Window)#Ajoute un bouton pour la difficulté normal
+    btnSettings.draw()
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
+
+
+    btnQuitter = btn.Button(270,60, (144,88,41), "DIFFICILE", 950, Width, Window)#Ajoute un bouton pour la difficulté difficile
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    btnQuitter = btn.Button(210,60, (144,88,41), "QUITTER", 1200, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
+    continuer = True
+    while continuer:#Boucle principale du Menu save.
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    Jeux(Height, Width)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x,y = event.pos
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
+                    Jeux(Height, Width,1)
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 270/2) and x < (Width/2 + 270/2):
+                    Jeux(Height, Width,3)
+                if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
+                    Jeux(Height,Width,2)
+                if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
+                    save()
+        pygame.display.update()#Update la page.
+        pygame.time.Clock().tick(fps)
+    
 
 def Pause():
     continuer = True
@@ -115,7 +240,10 @@ def Pause():
 
 
 
-def Jeux(Hht, Wth):
+
+def Jeux(Hht, Wth, d):
+
+    diff = d
     pygame.init()
 
     Set = Settings.Settings()
@@ -222,13 +350,9 @@ def Jeux(Hht, Wth):
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = event.pos
-                print(x,y)
                 if Wave_.Pause and Wave_.end_patern:
-                    print("JE SUIS ICI")
                     Shop.clic(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
                     
-        Wave_.Pause = Wave_.end_patern = True
-
 
         Background.update(Wave_.wave,Wave_.Pause)
         Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
@@ -236,7 +360,6 @@ def Jeux(Hht, Wth):
             Power_UP.update(Wave_.wave, _dict_Powers_ups)
             __GroupBullet_Ally.update(delta_time)
         UIn.update(Wave_.score, Wave_.wave, Spaceship.money)
-
         Background.draw(Window)#Order draw = 1
         Power_UP.draw(Window)#Order draw = 2
         Wave_.draw(Window)#Order draw = 3
@@ -255,7 +378,7 @@ def Jeux(Hht, Wth):
                     __GroupBullet_Ally.empty()
 
                     Shop.done = False
-                    Wave_.__GroupBullet_Ennemy.empty()
+                    #Wave_.__GroupBullet_Ennemy.empty()
 
                     Wave_.Pause = False
                     Wave_.start = 0
@@ -272,11 +395,13 @@ def Jeux(Hht, Wth):
 
         Time = FontFPS.render("Time : {0:.2f}".format(float(Temps_ecoule)), True, (255, 255, 255))
         Speed = FontFPS.render("speed : {}".format(int(Spaceship.__speed__)), True, (255, 255, 255))
+        dmg = FontFPS.render("dmg : {}".format(int(Spaceship.damage)), True, (255, 255, 255))
 
 
         Window.blit(fps_render, (100, 100))
         Window.blit(Speed, (100, 150))
         Window.blit(Time, (100, 200))
+        Window.blit(dmg, (100, 250))
 
         pygame.display.update()
 

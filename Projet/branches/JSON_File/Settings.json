@@ -1,12 +1,16 @@
 {
-    "Height": 1000,
-    "Width": 800,
+    "Height": 900,
+    "Sauvegarde": {
+        "Profile_1": {},
+        "Profile_2": {},
+        "Profile_3": {}
+    },
+    "Width": 900,
     "down": "down",
     "fps": 60,
     "language": "Francais",
     "left": "left",
     "right": "right",
     "s_shoot": "space",
-    "score": {},
     "up": "up"
 }
