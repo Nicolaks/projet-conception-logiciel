@@ -10,12 +10,13 @@ class allyShip(_ss_.SpaceShip):
         Type = "SpaceShip"
         angle = 45
 
-        self.style = style
+        self.nb_style = style
 
         width, dmg, life, shield = self.init_carac(_dict_Spaceship)
 
-        super().__init__(life, dmg ,Type, self.style, __speed__, bullet_type, angle, width, 0)
+        super().__init__(life, dmg ,Type, self.nb_style, __speed__, bullet_type, angle, width, 0)
 
+         
         self.shield = shield
         self.bullet_style = 1
         
@@ -34,15 +35,16 @@ class allyShip(_ss_.SpaceShip):
 
 
     def init_carac(self, _dict_Spaceship):
-        width = _dict_Spaceship[str(self.style)]["width"]
-        dmg = _dict_Spaceship[str(self.style)]["dmg"]
-        life = _dict_Spaceship[str(self.style)]["life"]
-        shield = _dict_Spaceship[str(self.style)]["shield"]
+        width = _dict_Spaceship[str(self.nb_style)]["width"]
+        dmg = _dict_Spaceship[str(self.nb_style)]["dmg"]
+        life = _dict_Spaceship[str(self.nb_style)]["life"]
+        shield = _dict_Spaceship[str(self.nb_style)]["shield"]
         return width, dmg, life, shield
 
     def upgrade_style_performance(self,style,_dict_Spaceship):
         if style <= len(_dict_Spaceship):
-            self.style = style
+            self.nb_style = style
+            self.style = self.type + "_" + str(self.nb_style)
             self.width, self.damage, self.life = self.init_carac(_dict_Spaceship)
             self.upgrade_style()
 

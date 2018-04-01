@@ -67,19 +67,19 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
 
-    btnJouer = btn.Button(170,60, (144,88,41), "JOUER", 450, Width, Window)#Ajoute un bouton jouer.
-    btnJouer.draw()
-    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
+    btnJouer = btn.Button(170,60, (144,88,41), "JOUER", 450, Width)#Ajoute un bouton jouer.
+    btnJouer.draw(Window)
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y, Window)
 
 
-    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width, Window)#Ajoute un bouton settings.
-    btnSettings.draw()
-    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
+    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width)#Ajoute un bouton settings.
+    btnSettings.draw(Window)
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y, Window)
 
 
-    btnQuitter = btn.Button(220,60, (144,88,41), "QUITTER", 950, Width, Window)#Ajoute un bouton quitter.
-    btnQuitter.draw()
-    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+    btnQuitter = btn.Button(220,60, (144,88,41), "QUITTER", 950, Width)#Ajoute un bouton quitter.
+    btnQuitter.draw(Window)
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y, Window)
 
 
 
@@ -163,15 +163,15 @@ def Jeux(Hht, Wth):
     #Groupe d'entité ALLIE
     __GroupBullet_Ally = ENTGroup.Entity()#A mettre en variables du vaisseau
 
-    UIn = UI.ui()
+    UIn = UI.ui()    #UI = User Interface
     Power_UP = PU.Power_ups(_dict_Powers_ups)
-    Shop = SHOP.shop(_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
-    
+
+
     Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
     Spaceship.Reactor_innit()
-    Spaceship.bullet_type = "pierreM"#Ligne non nécéssaire
 
-    
+    Shop = SHOP.shop(Window, Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
+   
 
     BLACK = (0, 0, 0)
     continuer = True
@@ -220,7 +220,16 @@ def Jeux(Hht, Wth):
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 pygame.quit()
                 quit()
-     
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x,y = event.pos
+                print(x,y)
+                if Wave_.Pause and Wave_.end_patern:
+                    print("JE SUIS ICI")
+                    Shop.clic(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
+                    
+        Wave_.Pause = Wave_.end_patern = True
+
+
         Background.update(Wave_.wave,Wave_.Pause)
         Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
         if not Wave_.Pause and not Wave_.end_patern:
@@ -235,15 +244,17 @@ def Jeux(Hht, Wth):
         Spaceship.draw(Window)#Order draw = 5
 
         if Wave_.Pause and Wave_.end_patern:
-            Shop.update(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
+            x,y = (0,0)
+            Shop.update(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
             Shop.draw(Window)#Order draw = 5 bis
-
             if Shop.done:
                 now = pygame.time.get_ticks()
                 if now - Wave_.begin >= 2000:
                     Spaceship.reset_pos()
                     Power_UP.Group.empty()
                     __GroupBullet_Ally.empty()
+
+                    Shop.done = False
                     Wave_.__GroupBullet_Ennemy.empty()
 
                     Wave_.Pause = False

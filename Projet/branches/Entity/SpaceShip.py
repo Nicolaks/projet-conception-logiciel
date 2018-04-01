@@ -53,6 +53,7 @@ class SpaceShip(pygame.sprite.Sprite):
             #self.Reactor = Rct.reactor_f(self)
 
     def upgrade_style(self):
+         
         self.image = pygame.image.load(os.path.join("..", "Ressources", "Graphics", self.type, self.style + ".png")).convert_alpha()#Charge l'image
         coef = (self.image.get_height())/(self.image.get_width())
     

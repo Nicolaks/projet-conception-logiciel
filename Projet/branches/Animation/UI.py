@@ -128,6 +128,9 @@ class ui():
             pos += self.width
                    
 
+    def money_flash_red(self, window):
+        pass
+
     def draw_score(self,window):
         pos = 0
         n = len(self.list_image)
