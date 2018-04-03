@@ -23,6 +23,7 @@ try:
     import Animation.UI as UI
 
     import Menu.button as btn
+    import Menu.GameOver as Dead
 
     import Upgrade.Power_ups as PU
     import Upgrade.Shop as SHOP
@@ -89,12 +90,13 @@ def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jo
                 if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 150/2) and x < (Width/2 + 150/2):
                     save()
                 if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
-                    pygame.quit()
+                    continuer = False
                 if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 240/2) and x < (Width/2 + 240/2):
                     print("ok")
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
-
+    pygame.quit()
+    quit()
 def save():#fonction qui affichera le menu de selection des sauvegardes après avoir cliqué sur jouer
     Set = Settings.Settings()
     Set.read()
@@ -229,17 +231,6 @@ def difficulté():
                     save()
         pygame.display.update()#Update la page.
         pygame.time.Clock().tick(fps)
-    
-
-def Pause():
-    continuer = True
-    while continuer:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                continuer = False
-
-
-
 
 def Jeux(Hht, Wth, d):
 
@@ -297,6 +288,7 @@ def Jeux(Hht, Wth, d):
 
     Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
     Spaceship.Reactor_innit()
+    GameOver = Dead.GameOver(Height,Width)
 
     Shop = SHOP.shop(Window, Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
    
@@ -319,15 +311,16 @@ def Jeux(Hht, Wth, d):
         if len(buttons) >=1 and Wave_.first_press_key != None and Temps_ecoule >= 2:
             Wave_.first_press_key = True
             Wave_.startGame()
+        
+        if Set._dict_["up"] in buttons:
+            Spaceship.up()
+        if Set._dict_["down"] in buttons:
+            Spaceship.down()
+        if Set._dict_["left"] in buttons:
+            Spaceship.left()
+        if Set._dict_["right"] in buttons:
+            Spaceship.right()
         if not Wave_.Pause:
-            if Set._dict_["up"] in buttons:
-                Spaceship.up()
-            if Set._dict_["down"] in buttons:
-                Spaceship.down()
-            if Set._dict_["left"] in buttons:
-                Spaceship.left()
-            if Set._dict_["right"] in buttons:
-                Spaceship.right()
             if Set._dict_["s_shoot"] in buttons:
                 now = pygame.time.get_ticks()
                 if now - Spaceship.bullet_last_hit >= _dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["Cooldown"]:
@@ -352,7 +345,8 @@ def Jeux(Hht, Wth, d):
                 x,y = event.pos
                 if Wave_.Pause and Wave_.end_patern:
                     Shop.clic(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
-                    
+                if Spaceship.life <= 0 and Wave_.Pause:
+                    GameOver.clic(x,y)
 
         Background.update(Wave_.wave,Wave_.Pause)
         Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
@@ -378,13 +372,29 @@ def Jeux(Hht, Wth, d):
                     __GroupBullet_Ally.empty()
 
                     Shop.done = False
-                    #Wave_.__GroupBullet_Ennemy.empty()
+                    Wave_.GroupBullet_Ennemy.empty()
 
                     Wave_.Pause = False
                     Wave_.start = 0
                     Wave_.patern_choose()
                     Wave_.numbers_ennemy_init()
                     Wave_.end_patern = False
+        
+        if Spaceship.life <= 0:
+            Spaceship.life = 0
+            Wave_.Pause = True
+            Wave_.GroupBullet_Ennemy.empty()
+            Wave_.GroupSHIP.empty()
+            __GroupBullet_Ally.empty()
+            Power_UP.Group.empty()
+            GameOver.draw(Window)
+            if GameOver.menu:
+                menu()
+            if GameOver.rejouer:
+                Jeux(Height,Width,d)
+            if GameOver.quitter:
+                pygame.quit()
+                quit()
 
         UIn.draw(Window, Spaceship)#Order draw = 6
 
@@ -395,7 +405,7 @@ def Jeux(Hht, Wth, d):
 
         Time = FontFPS.render("Time : {0:.2f}".format(float(Temps_ecoule)), True, (255, 255, 255))
         Speed = FontFPS.render("speed : {}".format(int(Spaceship.__speed__)), True, (255, 255, 255))
-        dmg = FontFPS.render("dmg : {}".format(int(Spaceship.damage)), True, (255, 255, 255))
+        dmg = FontFPS.render("dmg : {}".format(int(Spaceship.damage + _dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["damage"])), True, (255, 255, 255))
 
 
         Window.blit(fps_render, (100, 100))

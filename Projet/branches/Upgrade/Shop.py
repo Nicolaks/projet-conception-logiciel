@@ -5,7 +5,6 @@ import math
 import random as rd
 import pygame
 from pygame.locals import *
-import Menu.button as btn
 
 
 class shop():
@@ -56,7 +55,7 @@ class shop():
 
         self.create_button_upgrade(window)
 
-        self.price_style = 1000
+        self.price_style = 2500
 
         self.act_life_upgrade = 0
         self.life_nb_upgrade = 5
@@ -84,6 +83,7 @@ class shop():
         self.drop_nb_upgrade = 6
         self.act_Drop_upgrade = 0
         self.price_Drop = 4000
+        self.facteur_upgrade = 3
 
         self.statement(spaceship, dict_spaceship, dict_bullet, dict_power_ups)
 
@@ -137,7 +137,7 @@ class shop():
         #Status amilioration vaisseau
         self.style = spaceship.nb_style
         self.len_style = len(dict_spaceship)
-        if self.style+1 < self.len_style:
+        if self.style+1 <= self.len_style:
             self.next_style = self.style+1
         else:
             self.next_style = "No More !"
@@ -310,7 +310,7 @@ class shop():
                 spaceship.upgrade_style_performance(self.next_style,dict_spaceship)
                 spaceship.money -= self.price_style
 
-                self.price_style += 500
+                self.price_style += 1000
 
                 self.act_damage_upgrade = 0
                 self.price_damage = self.price_damage_o = self.price_damage_o + 500
@@ -400,12 +400,18 @@ class shop():
                 #DRAW flash money
         
         elif mouse_x>= self.lst_btn[6][1] and mouse_x <= self.lst_btn[6][1] + self.lst_btn[6][3] and mouse_y >= self.lst_btn[6][2] and mouse_y <= self.lst_btn[6][2] + self.lst_btn[6][4]:
-            if spaceship.money >= self.price_max_shield:
-                if self.act_shield_max_upgrade <=  self.shield_nb_upgrade and spaceship.shield < 100:
-                    spaceship.money -= self.price_max_shield
-                    spaceship.shield = 100
-                    self.act_shield_max_upgrade += 1
-                    self.price_max_shield += 1000
+            if spaceship.money >= self.price_Drop:
+                if self.act_Drop_upgrade <= self.drop_nb_upgrade:
+                    spaceship.money -= self.price_Drop
+                    self.price_Drop += 1000
+                    self.act_Drop_upgrade += 1
+                    
+                    for Bonus_type in dict_power_ups["List"]:
+                        len_chance = len(dict_power_ups["List"][Bonus_type]["Chance"])
+                        for j in range(len_chance-1):
+                            dict_power_ups["List"][Bonus_type]["Chance"][i] -= self.facteur_upgrade
+                        dict_power_ups["List"][Bonus_type]["Chance"][len_chance-1] += self.facteur_upgrade*(len_chance-1)
+
                 else:
                     pass
                     #Draw button flash

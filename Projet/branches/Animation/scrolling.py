@@ -32,6 +32,8 @@ class Background():
             self.pos_y = self.y % self.Height
             if self.pos_y <= self.Height:
                 Window.blit(self.image,(0,self.pos_y))
+
+            
     def update(self,wave,condition):
         if condition:
             if wave %10==0:

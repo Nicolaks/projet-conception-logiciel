@@ -3,6 +3,7 @@
     {
         "single":{
             "n":1,
+            "style":[11,12,13],
             "speed":-4,
             "Cooldown":650,
             "damage":5, 
@@ -12,6 +13,7 @@
         "double":{
             "n":2,
             "speed":-4,
+            "style":[11,12,13],
             "Cooldown":600,
             "damage":5, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
@@ -22,6 +24,7 @@
         "double_vibrato":{
             "n":2,
             "speed":-4,
+            "style":[11,12,13],
             "Cooldown":550,
             "damage":10, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
@@ -32,6 +35,7 @@
         "ADN":{
             "n":2,
             "speed":-4,
+            "style":[21,22,23],
             "Cooldown":525,
             "damage":11, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
@@ -42,6 +46,7 @@
         "triple":{
             "n":3,
             "speed":-5,
+            "style":[31,32,33],
             "Cooldown":525,
             "damage":12,
             "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
@@ -55,6 +60,7 @@
         "pierreM":{
             "n":3,
             "speed":-10,
+            "style":[41,42,43],
             "Cooldown":300,
             "damage":100, 
             "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
@@ -69,6 +75,7 @@
         "quad":{
             "n":4,
             "speed":-5,
+            "style":[41,42,43],
             "Cooldown":550,
             "damage":15,
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
@@ -83,6 +90,7 @@
         "single_ennemy":{
             "n":1,
             "speed":5,
+            "style":[13],
             "Cooldown":600,
             "damage":0, 
             "position":{"0":{"x":"x + c/2","y":"y + h","angle":0}}, 
@@ -91,6 +99,7 @@
         "double_ennemy":{
             "n":2,
             "speed":5,
+            "style":[11,12,13],
             "Cooldown":300,
             "damage":2, 
             "position":{"0":{"x":"x + c/2","y":"y - h","angle":0},
@@ -99,11 +108,5 @@
                         "1":{"x":"x","y":"y + s"}}
                     }
         },
-    "Order_typ_bullet":["single","double","double_vibrato","ADN","triple","quad"],
-    "style":
-    {
-        "1":{"dmg":0},
-        "2":{"dmg":10}
-
-    }
+    "Order_typ_bullet":["single","double","double_vibrato","ADN","triple","quad"]
 }

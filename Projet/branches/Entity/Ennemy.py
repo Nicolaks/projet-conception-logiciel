@@ -28,7 +28,6 @@ class EnnShip(_ss_.SpaceShip):
 
         super().__init__(life, dmg ,Type, style, __speed__,bullet_type, angle, width, money)
 
-        self.bullet_style = 1
         self.phase = 0
         self.position = Pobj
         self.time = 0

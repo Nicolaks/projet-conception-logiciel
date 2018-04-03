@@ -2,6 +2,7 @@ import time
 import os
 import pygame
 import sympy as sp
+import random as rd
 from sympy.utilities.lambdify import lambdify
 from sympy.abc import x, y, s, a, t, w, h, c, v
 
@@ -34,7 +35,7 @@ class bullet(pygame.sprite.Sprite):
 
         self.type = "Bullet_"
         self.bullet_type = spaceShip.bullet_type
-        self.style = str(spaceShip.bullet_style)
+        self.style = str(rd.choice(__dict_bullet["typ_bullet"][spaceShip.bullet_type]["style"]))
         self.image = pygame.image.load(os.path.join("..","Ressources","Graphics","Bullet",self.type + self.style + ".png")).convert_alpha()
 
         coef = (self.image.get_height())/(self.image.get_width())
@@ -66,7 +67,7 @@ class bullet(pygame.sprite.Sprite):
         self.FCTnewposYY = dict_file["y"]
 
         self.speed___bullet = __dict_bullet["typ_bullet"][spaceShip.bullet_type]["speed"] #vitesse des balles, que l'on définira en Json les paramètres de base
-        self.dmg = spaceShip.damage + __dict_bullet["style"][self.style]["dmg"] + __dict_bullet["typ_bullet"][spaceShip.bullet_type]["damage"]
+        self.dmg = spaceShip.damage + __dict_bullet["typ_bullet"][spaceShip.bullet_type]["damage"] # + __dict_bullet["style"][self.style]["dmg"] 
 
 
         #print("DMG =",self.dmg)

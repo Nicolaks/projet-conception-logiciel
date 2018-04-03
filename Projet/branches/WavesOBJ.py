@@ -21,6 +21,7 @@ def loader_patern(_dict_Patern):
     #s = self.__speed__ pour la vitesse des ennemis
     #c = self.Surf_Width la largeur de la fenetre
     #v = self.Surf_Height la hauteur de la fenetre
+    #t = temps
     for i in _dict_Patern["patern"]: 
         for j in _dict_Patern["patern"][i]["position"]:
             for k in _dict_Patern["patern"][i]["position"][j]:
@@ -68,7 +69,7 @@ class Waves():
         self.start = 0
         self.begin = None
 
-        self.__GroupBullet_Ennemy = ENTGroup.Entity()
+        self.GroupBullet_Ennemy = ENTGroup.Entity()
         self.GroupSHIP = ENTGroup.Entity()
         self.GroupCollide_Bullet = ENTGroup.Entity()
         
@@ -80,46 +81,53 @@ class Waves():
         self._dict_Bullet = _dict_Bullet
 
         self.score = 0
-
-        self.numbers_ennemy_init()
+        
         self.patern_choose()
+        self.numbers_ennemy_init()
 
     def innit_prob(self):
 
         j = 0
+        self.items = []
+        self._proba_l = {}
         for i in self._dict_["patern"]:
-            self.items.append(i)
             p = self._dict_["patern"][i]["Appears"]["Chance"]
-            self._proba_l[str(j)]=p
-            j+=1
+            if p != 0:
+                self.items.append(i)
+                self._proba_l[str(j)]=p
+                j+=1
 
     def proba_up_low(self):
         self._dict_["patern"][self.patern]["Appears"]["Chance"] += self._dict_["patern"][self.patern]["Appears"]["lower"]
 
         for i in self._dict_["patern"]:
             if i != self.patern:
-                self._dict_["patern"][i]["Appears"]["Chance"] += self._dict_["patern"][self.patern]["Appears"]["upgrade"]
+                self._dict_["patern"][i]["Appears"]["Chance"] += self._dict_["patern"][i]["Appears"]["upgrade"]
 
     def patern_choose(self):
-        if self.begin == None:
-            self.innit_prob()
+        self.innit_prob()
         
         somme = 0
         for i in self._proba_l:#On fait la somme de toute les probabilité
             somme += self._proba_l[str(i)]
             #print("puis içi")
         x = rd.uniform(0,somme)
-
+        print(x, self._proba_l, self.items)
         for i in range(len(self._proba_l)):#On calcule retiens le patern qui va annuler le x choisi entre 0 et la somme
             x -= self._proba_l[str(i)]
             if x<=0:
                 tmp = i
+                break
                 #print("et enfin la")
         
         self.patern = self.items[tmp]#Le patern choisi aura sa probabilité réduite, les autres auront leur probabilité augmenté
         self.proba_up_low()
 
         self.patern_duration = len(self._dict_["patern"][self.patern]["position"])
+        self.patern_PO = self._dict_["patern"][self.patern]["Appears"]["PO"]
+
+        print(self.patern, self.patern_duration)
+        
 
     def init_one_ennemy(self, pos):
 
@@ -175,8 +183,16 @@ class Waves():
             if len(self._dict_["ennemy_wave"]["fonction"]) > len(self._dict_["ennemy_wave"]["Wave change"]):
                 self.wave_i += 1
                 self.wave_FCT = self._dict_["ennemy_wave"]["fonction"][str(self.wave_change)]
+        
         self.numbers_ennemy = int(self.wave_FCT(self.wave))
-
+        if self.numbers_ennemy%self.patern_PO != 0:
+            while self.numbers_ennemy%self.patern_PO != 0:
+                self.numbers_ennemy -= 1
+            if self.numbers_ennemy <=0:
+                self.numbers_ennemy = int(self.wave_FCT(self.wave))                
+                while self.numbers_ennemy%self.patern_PO != 0:
+                    self.numbers_ennemy += 1
+                    
     def ennemy_init(self):
 
         for i in range(int(self._dict_["patern"][self.patern]["Appears"]["PO"])):
@@ -194,6 +210,7 @@ class Waves():
                         Sprite_obj.phase += 1
                     if Sprite_obj.phase == self.patern_duration-1:
                         Sprite_obj.phase = 0
+                    Sprite_obj.time = 0
                     self.position_phase_actualisation(Sprite_obj)
                     self.FCT_phase_actualisation(Sprite_obj)
 
@@ -236,7 +253,7 @@ class Waves():
                     SpaceShip.money += ennemy.money
 
     def collide_bulletE_SpaceShip(self, SpaceShip):
-        colision = pygame.sprite.spritecollide(SpaceShip, self.__GroupBullet_Ennemy, True, pygame.sprite.collide_mask)
+        colision = pygame.sprite.spritecollide(SpaceShip, self.GroupBullet_Ennemy, True, pygame.sprite.collide_mask)
         for bullet in colision:
             SpaceShip.hit(bullet.dmg)
 
@@ -248,10 +265,15 @@ class Waves():
                 Bonus.stats(Bonus.dict,NewType)
             SpaceShip.add_Bonus(Bonus)
 
+    def collide_Spaceship_Ennemy(self, SpaceShip):
+        colision = pygame.sprite.spritecollide(SpaceShip, self.GroupSHIP, True, pygame.sprite.collide_mask)
+        for Ennemie in colision:
+            SpaceShip.hit(2*Ennemie.damage)
+
 
     def draw(self, window):
           
-        self.__GroupBullet_Ennemy.draw(window)
+        self.GroupBullet_Ennemy.draw(window)
         self.GroupSHIP.draw(window)
         self.GroupCollide_Bullet.draw(window)
 
@@ -264,18 +286,18 @@ class Waves():
             if p <= ennemy.shoot_prob and now - ennemy.last_shoot >= ennemy.shoot_CD:
                 for i in range(self._dict_Bullet["typ_bullet"][ennemy.bullet_type]["n"]):
                     Bullet = Blt.bullet(ennemy, self._dict_Bullet, i)
-                    self.__GroupBullet_Ennemy.add(Bullet)
+                    self.GroupBullet_Ennemy.add(Bullet)
                 ennemy.last_shoot = now
 
-    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):         
-
+    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):  
+        #print(self.numbers_ennemy, len(self.GroupSHIP.sprites()))       
         if self.begin != None:
             now = pygame.time.get_ticks()
             self.GroupCollide_Bullet.update()
             if not self.Pause and not self.end_patern and (now - self.begin) >= self.start:
                 self.Cooldown_ennemy = self._dict_["patern"][self.patern]["Appears"]["Cooldown"]
 
-                if now - self.last_ennemy_spawn >= self.Cooldown_ennemy and self.numbers_ennemy >= 2:
+                if now - self.last_ennemy_spawn >= self.Cooldown_ennemy and self.numbers_ennemy >=  self.patern_PO:
                     self.ennemy_init()
 
                 self.ennemy_bullet()
@@ -283,13 +305,15 @@ class Waves():
                 self.collide_bulletA_Ennemy(GroupBulletAlly, SpaceShip)
                 self.collide_bulletE_SpaceShip(SpaceShip)
                 self.collide_bonus_SpaceShip(SpaceShip, BonusGroup)
+                self.collide_Spaceship_Ennemy(SpaceShip)
+
 
                 SpaceShip.update_bonus()
-                self.__GroupBullet_Ennemy.update(Delta_time)
+                self.GroupBullet_Ennemy.update(Delta_time)
                 self.GroupSHIP.update(Delta_time)
                 self.phase_statement()
 
-                if len(self.GroupSHIP.sprites())==0 and self.numbers_ennemy == 0:
+                if len(self.GroupSHIP.sprites())==0 and self.numbers_ennemy <= 0:
 
                     self.wave += 1
                     self.Pause = True

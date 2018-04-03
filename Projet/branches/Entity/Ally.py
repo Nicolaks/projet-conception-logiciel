@@ -18,7 +18,6 @@ class allyShip(_ss_.SpaceShip):
 
          
         self.shield = shield
-        self.bullet_style = 1
         
         self.reset_pos()
 
@@ -27,8 +26,6 @@ class allyShip(_ss_.SpaceShip):
         self.speed_bonus = 0
 
         self.Group_Bonus = ENT.Entity()
-
-        self.money = 40000
 
     def reset_pos(self):
         self.rect.x = self.Surf_Width/2 - self.width/2

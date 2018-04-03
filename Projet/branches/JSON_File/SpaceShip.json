@@ -6,5 +6,6 @@
     "5":{"reactor":1, "life":150, "dmg":30, "width":47, "shield":50},
     "6":{"reactor":1, "life":160, "dmg":35, "width":45, "shield":60},
     "7":{"reactor":1, "life":170, "dmg":40, "width":44, "shield":80},
-    "8":{"reactor":1, "life":200, "dmg":45, "width":40, "shield":100}
+    "8":{"reactor":1, "life":200, "dmg":45, "width":40, "shield":100},
+    "9":{"reactor":1, "life":220, "dmg":50, "width":40, "shield":100}
 }
