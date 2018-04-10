@@ -28,6 +28,8 @@ try:
     import Upgrade.Power_ups as PU
     import Upgrade.Shop as SHOP
 
+    import Animation.CollideAnimate as ColAnimate
+
 except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
@@ -179,6 +181,8 @@ def difficulté():
     pygame.init()
 
     Window = pygame.display.set_mode((Width,Height))
+
+
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
     Window.fill((153,77,0))#Donne une couleur de fond a la page.
@@ -276,7 +280,7 @@ def Jeux(Hht, Wth, d):
     #__GroupSHIP = ENTGroup.Entity()
     #__GroupBullet_enn = ENTGroup.Entity()
 
-    Wave_ = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type)#On initialise notre objet de Vague
+    Wave_ = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type, fps)#On initialise notre objet de Vague
     #print(Wave_.patern)
 
     #Groupe d'entité ALLIE
@@ -287,11 +291,13 @@ def Jeux(Hht, Wth, d):
 
 
     Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
+    #Spaceship.bullet_type = ""
     Spaceship.Reactor_innit()
     GameOver = Dead.GameOver(Height,Width)
 
     Shop = SHOP.shop(Window, Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
-   
+    GrShop = ENTGroup.Entity()
+    GrShop.add(Shop)
 
     BLACK = (0, 0, 0)
     continuer = True
@@ -343,13 +349,13 @@ def Jeux(Hht, Wth, d):
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = event.pos
-                if Wave_.Pause and Wave_.end_patern:
-                    Shop.clic(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
+                if Shop.drawIt:
+                    Shop.clic(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y, Power_UP)
                 if Spaceship.life <= 0 and Wave_.Pause:
                     GameOver.clic(x,y)
 
         Background.update(Wave_.wave,Wave_.Pause)
-        Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group)
+        Wave_.update(delta_time, __GroupBullet_Ally, Spaceship, Power_UP.Group, Shop)
         if not Wave_.Pause and not Wave_.end_patern:
             Power_UP.update(Wave_.wave, _dict_Powers_ups)
             __GroupBullet_Ally.update(delta_time)
@@ -358,27 +364,31 @@ def Jeux(Hht, Wth, d):
         Power_UP.draw(Window)#Order draw = 2
         Wave_.draw(Window)#Order draw = 3
         __GroupBullet_Ally.draw(Window)#Order draw = 4
-        Spaceship.draw(Window)#Order draw = 5
+        
+        if Spaceship.life>0:
+            Spaceship.draw(Window)
+        Wave_.GroupCollide_Bullet.draw(Window)
+        Wave_.Group_Explode.draw(Window)
 
-        if Wave_.Pause and Wave_.end_patern:
-            x,y = (0,0)
+        Shop.update_pos_draw(Window)
+        if not Shop.inited:
+
+            collide = pygame.sprite.spritecollide(Spaceship, GrShop, False, pygame.sprite.collide_mask)
+            if len(collide) > 0:
+                Shop.drawIt = True
+        
+        if Shop.drawIt:
+            Wave_.Pause = True
             Shop.update(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
             Shop.draw(Window)#Order draw = 5 bis
+            x,y = (0,0)
             if Shop.done:
                 now = pygame.time.get_ticks()
                 if now - Wave_.begin >= 2000:
-                    Spaceship.reset_pos()
-                    Power_UP.Group.empty()
-                    __GroupBullet_Ally.empty()
-
                     Shop.done = False
-                    Wave_.GroupBullet_Ennemy.empty()
-
+                    Shop.drawIt = False
                     Wave_.Pause = False
                     Wave_.start = 0
-                    Wave_.patern_choose()
-                    Wave_.numbers_ennemy_init()
-                    Wave_.end_patern = False
         
         if Spaceship.life <= 0:
             Spaceship.life = 0
@@ -387,16 +397,17 @@ def Jeux(Hht, Wth, d):
             Wave_.GroupSHIP.empty()
             __GroupBullet_Ally.empty()
             Power_UP.Group.empty()
-            GameOver.draw(Window)
-            if GameOver.menu:
-                menu()
-            if GameOver.rejouer:
-                Jeux(Height,Width,d)
-            if GameOver.quitter:
-                pygame.quit()
-                quit()
+            if len(Wave_.Group_Explode.sprites()) == 0:
+                GameOver.draw(Window)
+                if GameOver.menu:
+                    menu()
+                if GameOver.rejouer:
+                    Jeux(Height,Width,d)
+                if GameOver.quitter:
+                    pygame.quit()
+                    quit()
 
-        UIn.draw(Window, Spaceship)#Order draw = 6
+        UIn.draw(Window, Spaceship, Wave_)#Order draw = 6
 
         fps_render = FontFPS.render("FPS : {}".format(int(FPS)), True, (255, 255, 255))
         nb_sprites = len(Wave_.GroupSHIP.sprites())

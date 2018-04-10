@@ -7,7 +7,7 @@ import pygame
 from pygame.locals import *
 
 class GameOver():
-    def __init__(self, Height, Width, widthtxt = 50):
+    def __init__(self, Height, Width, widthtxt = 25):
 
         self.WHITE = (238, 239, 255)
         self.BLACK = (0,0,0)

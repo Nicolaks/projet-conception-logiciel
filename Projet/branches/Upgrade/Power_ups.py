@@ -14,7 +14,7 @@ class Power_ups():
         self.Group = ENT.Entity()
 
         self.last_drop = 0
-        self.CD = 10000
+        self.CD = 6000
         self.tmp = None
 
         self.load_images(_dict)

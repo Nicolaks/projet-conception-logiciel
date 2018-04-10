@@ -88,4 +88,9 @@ class EnnShip(_ss_.SpaceShip):
 
         if self.life <= 0:
             self.kill()
+
+        if self.time >= 30000:
+            self.time = 0
+            self.FCTnewposYY = lambda y: y + 1
+            self.FCTnewposXX = rd.randint(0,self.Surf_Width - self.width)
         

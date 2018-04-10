@@ -68,18 +68,28 @@ class ui():
         self.RED_a = (156,0,0,0)
         self.GREEN = (0,139,0)
 
+        self.width_boss = int(self.Surf_width/3)
+        self.width_boss_o = self.width_boss
+        self.height_boss = self.width
+        self.boss_x_o = self.width_boss
+        self.boss_y_o = 10
+
     def __init_image(self, char):
         im = pygame.image.load(os.path.join("..","Ressources","Graphics","UI","numeral"+ str(char) + ".png")).convert_alpha()
         im = pygame.transform.scale(im, (self.width,self.width))
         return im
 
-    def draw(self, window, SpaceShip):
+    def draw(self, window, SpaceShip, WaveObj):
+
         self.draw_score(window)
         self.draw_wave(window)
         self.draw_life(window, SpaceShip) 
         self.draw_shield(window, SpaceShip)
         self.draw_money(window)
         self.draw_bonus_cd(window, SpaceShip)
+
+        if WaveObj.wave > 0 and WaveObj.wave%WaveObj.difficulty == 0 and WaveObj.BOSS_init:
+            self.draw_life_boss(window,WaveObj.Boss)
 
     def draw_bonus_cd(self, window, SpaceShip):
         for Bonus in SpaceShip.Group_Bonus.sprites():
@@ -171,6 +181,13 @@ class ui():
         if SpaceShip.shield > 0:
             pygame.draw.rect(window, self.GREY,[self.shield_origin_x+self.ratio_rect, self.shield_origin_y+self.ratio_rect+self.shield_back_rect-self.shield_height,self.width_rect-2*self.ratio_rect, self.shield_height-2*self.ratio_rect])
 
+
+    def draw_life_boss(self, window, Boss):
+
+        self.width_boss = int(((self.width_boss_o-2*self.ratio_rect)/Boss.full_life)*Boss.life)
+
+        pygame.draw.rect(window, self.WHITE,[self.boss_x_o, self.boss_y_o,self.width_boss_o, self.height_boss])
+        pygame.draw.rect(window, self.RED,[self.boss_x_o + self.ratio_rect, self.boss_y_o + self.ratio_rect,self.width_boss, self.height_boss - 2* self.ratio_rect])
 
     def update(self, num, wave, money):
         self.list_image = list(map(int, str(num)))

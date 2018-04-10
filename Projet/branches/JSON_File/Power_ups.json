@@ -17,12 +17,12 @@
         },
         "Speed":{
             "Power":[1,2,3],
-            "Unlocked":[1,1,1],
+            "Unlocked":[1,5,15],
             "Chance":[40,30,30]
         },
         "Random":{
             "Power":[1,2,3],
-            "Unlocked":[10,20,30],
+            "Unlocked":[10,15,20],
             "Chance":[55,30,15]
         }
     },

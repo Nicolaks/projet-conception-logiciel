@@ -10,17 +10,19 @@ from sympy.abc import x, y, s, a, t, w, h, c, v
 import Entity.EntityGroup as ENTGroup
 import Entity.Ennemy as Enn
 import Entity.Bullet as Blt
+import Entity.Boss as BOSS
+
 import Animation.CollideAnimate as ColAnimate
 
 def loader_patern(_dict_Patern):
     #x = self.rect.x position actuelle de l'objet en x
     #y = self.rect.y position actuelle en y
-    #w = self.width largeur de notre objet en pixels
+    #w = self.width largeur de notre objet en pixels #de la balle
     #h = self.height hauteur de notre obj
     #a = self.angle l'angle de rotation de l'image
     #s = self.__speed__ pour la vitesse des ennemis
-    #c = self.Surf_Width la largeur de la fenetre
-    #v = self.Surf_Height la hauteur de la fenetre
+    #c = largeur de l'objet parent Spaceship
+    #v = de même avec la hauteur
     #t = temps
     for i in _dict_Patern["patern"]: 
         for j in _dict_Patern["patern"][i]["position"]:
@@ -47,7 +49,7 @@ def loader_patern(_dict_Patern):
     return(_dict_Patern)
 
 class Waves():
-    def __init__(self, _dict_Patern, _dict_Ennemy, _dict_Bullet):
+    def __init__(self, _dict_Patern, _dict_Ennemy, _dict_Bullet, fps):
         self._dict_ = _dict_Patern
 
         self._proba_l = {}
@@ -69,9 +71,14 @@ class Waves():
         self.start = 0
         self.begin = None
 
+        self.Boss = BOSS.Boss()
+        self.BOSS_init = False
+        self.difficulty = 5#Facile par défault 15 Facile -> 2 pour TEST
+
         self.GroupBullet_Ennemy = ENTGroup.Entity()
         self.GroupSHIP = ENTGroup.Entity()
         self.GroupCollide_Bullet = ENTGroup.Entity()
+        self.Group_Explode = ENTGroup.Entity()
         
         self.numbers_ennemy = 0
         self.Cooldown_ennemy = 0
@@ -121,7 +128,11 @@ class Waves():
                 #print("et enfin la")
         
         self.patern = self.items[tmp]#Le patern choisi aura sa probabilité réduite, les autres auront leur probabilité augmenté
+        
+        #self.patern = ""
+        
         self.proba_up_low()
+
 
         self.patern_duration = len(self._dict_["patern"][self.patern]["position"])
         self.patern_PO = self._dict_["patern"][self.patern]["Appears"]["PO"]
@@ -149,9 +160,9 @@ class Waves():
 
     def change_chance_ennemy(self, j):
         for i in range(len(self._dict_Ennemy["Chance"])):
-            if i != j:
-                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["LOW"][i]
             if i == j:
+                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["LOW"][i]
+            if i != j:
                 self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["UP"][i]
 
 
@@ -249,25 +260,32 @@ class Waves():
             for ennemy in colision[bullet]:
                 ennemy.life -= bullet.dmg
                 if ennemy.life <= 0:
+                    Explode = ColAnimate.impact(ennemy.rect.x,ennemy.rect.y,ennemy.width,statement=2)
+                    self.Group_Explode.add(Explode)
                     self.score += ennemy.score
                     SpaceShip.money += ennemy.money
 
     def collide_bulletE_SpaceShip(self, SpaceShip):
         colision = pygame.sprite.spritecollide(SpaceShip, self.GroupBullet_Ennemy, True, pygame.sprite.collide_mask)
         for bullet in colision:
+            ImpactAnimation = ColAnimate.impact(bullet.rect.x,bullet.rect.y,bullet.width)
+            self.GroupCollide_Bullet.add(ImpactAnimation)
             SpaceShip.hit(bullet.dmg)
 
     def collide_bonus_SpaceShip(self, SpaceShip, BonusGroup):
         colision = pygame.sprite.spritecollide(SpaceShip, BonusGroup, True, pygame.sprite.collide_mask)
         for Bonus in colision:
             if Bonus.type == "Random":
-                NewType = rd.choice(Bonus.dict["type"][Bonus.type+"_"+Bonus.power]["type"])
-                Bonus.stats(Bonus.dict,NewType)
+                print(Bonus.dict["type"], Bonus.type, Bonus.power)
+                NewType = rd.choice(Bonus.dict["type"][Bonus.type+"_"+str(Bonus.power)]["type"])
+                Bonus.stats(Bonus.dict,str(NewType))
             SpaceShip.add_Bonus(Bonus)
 
     def collide_Spaceship_Ennemy(self, SpaceShip):
         colision = pygame.sprite.spritecollide(SpaceShip, self.GroupSHIP, True, pygame.sprite.collide_mask)
         for Ennemie in colision:
+            Explode = ColAnimate.impact(Ennemie.rect.x,Ennemie.rect.y,Ennemie.width,statement=2)
+            self.Group_Explode.add(Explode)
             SpaceShip.hit(2*Ennemie.damage)
 
 
@@ -275,13 +293,12 @@ class Waves():
           
         self.GroupBullet_Ennemy.draw(window)
         self.GroupSHIP.draw(window)
-        self.GroupCollide_Bullet.draw(window)
 
     def ennemy_bullet(self):
         
         for ennemy in self.GroupSHIP.sprites():
             now = pygame.time.get_ticks()
-            p = rd.random()
+            p = rd.randint(0,100)
             #print(now - ennemy.last_shoot, ennemy.shoot_CD)
             if p <= ennemy.shoot_prob and now - ennemy.last_shoot >= ennemy.shoot_CD:
                 for i in range(self._dict_Bullet["typ_bullet"][ennemy.bullet_type]["n"]):
@@ -289,33 +306,68 @@ class Waves():
                     self.GroupBullet_Ennemy.add(Bullet)
                 ennemy.last_shoot = now
 
-    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup):  
+    def update(self, Delta_time, GroupBulletAlly, SpaceShip, BonusGroup, Shop):  
         #print(self.numbers_ennemy, len(self.GroupSHIP.sprites()))       
         if self.begin != None:
             now = pygame.time.get_ticks()
+            if self.Pause and self.end_patern:
+                if now - self.begin >= 500:
+                    GroupBulletAlly.empty()
+                    BonusGroup.empty()
+                    self.GroupBullet_Ennemy.empty()
+                    self.start = 0
+                    self.patern_choose()
+                    self.numbers_ennemy_init()
+                    self.Pause = False
+                    self.end_patern = False
+
+
             self.GroupCollide_Bullet.update()
+            self.Group_Explode.update()
+            print(self.numbers_ennemy)
+
             if not self.Pause and not self.end_patern and (now - self.begin) >= self.start:
                 self.Cooldown_ennemy = self._dict_["patern"][self.patern]["Appears"]["Cooldown"]
 
-                if now - self.last_ennemy_spawn >= self.Cooldown_ennemy and self.numbers_ennemy >=  self.patern_PO:
+                if self.wave > 0 and self.wave%self.difficulty == 0 and not self.BOSS_init:
+                    self.Boss.i_boss(self)
+                    self.GroupSHIP.add(self.Boss)
+                    self.BOSS_init = True
+                elif now - self.last_ennemy_spawn >= self.Cooldown_ennemy and self.numbers_ennemy >=  self.patern_PO and not self.BOSS_init:
                     self.ennemy_init()
+                
+                if not self.BOSS_init:
+                    self.phase_statement()
+                    self.collide_Spaceship_Ennemy(SpaceShip)
+
+                elif self.Boss.life <=0:
+                    self.BOSS_init = False
+                    self.wave+=1
+                    self.Pause = True
+                    self.end_patern = True
+                    self.begin = now
+                
+                print(self._dict_Ennemy["Chance"])
 
                 self.ennemy_bullet()
+
 
                 self.collide_bulletA_Ennemy(GroupBulletAlly, SpaceShip)
                 self.collide_bulletE_SpaceShip(SpaceShip)
                 self.collide_bonus_SpaceShip(SpaceShip, BonusGroup)
-                self.collide_Spaceship_Ennemy(SpaceShip)
-
 
                 SpaceShip.update_bonus()
                 self.GroupBullet_Ennemy.update(Delta_time)
                 self.GroupSHIP.update(Delta_time)
-                self.phase_statement()
+                
+
+                if SpaceShip.life <= 0:
+                    Explode = ColAnimate.impact(SpaceShip.rect.x,SpaceShip.rect.y,SpaceShip.width,statement=2)
+                    self.Group_Explode.add(Explode)
 
                 if len(self.GroupSHIP.sprites())==0 and self.numbers_ennemy <= 0:
-
                     self.wave += 1
+                    Shop.CD += 250
                     self.Pause = True
                     self.end_patern = True
                     self.begin = now

@@ -1,11 +1,11 @@
 {
-    "1":{"reactor":1, "life":100, "dmg":10, "width":60, "shield":10},
-    "2":{"reactor":1, "life":110, "dmg":15, "width":57, "shield":20},
-    "3":{"reactor":1, "life":120, "dmg":20, "width":53, "shield":30},
-    "4":{"reactor":1, "life":130, "dmg":25, "width":50, "shield":40},
-    "5":{"reactor":1, "life":150, "dmg":30, "width":47, "shield":50},
-    "6":{"reactor":1, "life":160, "dmg":35, "width":45, "shield":60},
-    "7":{"reactor":1, "life":170, "dmg":40, "width":44, "shield":80},
-    "8":{"reactor":1, "life":200, "dmg":45, "width":40, "shield":100},
-    "9":{"reactor":1, "life":220, "dmg":50, "width":40, "shield":100}
+    "1":{"reactor":1, "life":100, "dmg":10, "width":60, "shield":10, "speed":4},
+    "2":{"reactor":1, "life":110, "dmg":15, "width":57, "shield":20, "speed":4},
+    "3":{"reactor":1, "life":120, "dmg":20, "width":53, "shield":30, "speed":5},
+    "4":{"reactor":1, "life":130, "dmg":25, "width":50, "shield":40, "speed":5},
+    "5":{"reactor":1, "life":150, "dmg":30, "width":47, "shield":50, "speed":6},
+    "6":{"reactor":1, "life":160, "dmg":35, "width":45, "shield":60, "speed":6},
+    "7":{"reactor":1, "life":170, "dmg":40, "width":44, "shield":80, "speed":7},
+    "8":{"reactor":1, "life":200, "dmg":45, "width":40, "shield":100, "speed":7},
+    "9":{"reactor":1, "life":220, "dmg":50, "width":40, "shield":100, "speed":7}
 }

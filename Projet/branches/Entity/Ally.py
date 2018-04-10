@@ -12,7 +12,7 @@ class allyShip(_ss_.SpaceShip):
 
         self.nb_style = style
 
-        width, dmg, life, shield = self.init_carac(_dict_Spaceship)
+        width, dmg, life, shield, __speed__ = self.init_carac(_dict_Spaceship)
 
         super().__init__(life, dmg ,Type, self.nb_style, __speed__, bullet_type, angle, width, 0)
 
@@ -27,6 +27,8 @@ class allyShip(_ss_.SpaceShip):
 
         self.Group_Bonus = ENT.Entity()
 
+        self.money = 400000
+
     def reset_pos(self):
         self.rect.x = self.Surf_Width/2 - self.width/2
         self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
@@ -38,13 +40,15 @@ class allyShip(_ss_.SpaceShip):
         dmg = _dict_Spaceship[str(self.nb_style)]["dmg"]
         life = _dict_Spaceship[str(self.nb_style)]["life"]
         shield = _dict_Spaceship[str(self.nb_style)]["shield"]
-        return width, dmg, life, shield
+        speed = _dict_Spaceship[str(self.nb_style)]["speed"]
+        return width, dmg, life, shield, speed
 
     def upgrade_style_performance(self,style,_dict_Spaceship):
         if style <= len(_dict_Spaceship):
             self.nb_style = style
             self.style = self.type + "_" + str(self.nb_style)
-            self.width, self.damage, self.life, self.shield = self.init_carac(_dict_Spaceship)
+            self.width, self.damage, self.life, self.shield, self.spaceship_speed = self.init_carac(_dict_Spaceship)
+            #print(self.spaceship_speed)
             self.full_life = self.life
             self.upgrade_style()
 

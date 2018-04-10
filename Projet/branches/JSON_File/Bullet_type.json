@@ -4,17 +4,17 @@
         "single":{
             "n":1,
             "style":[11,12,13],
-            "speed":-4,
-            "Cooldown":650,
-            "damage":5, 
+            "speed":-7,
+            "Cooldown":200,
+            "damage":10, 
             "position":{"0":{"x":"x + c/2","y":"y - h","angle":0}}, 
             "fonction":{"0":{"x":"x","y":"y + s"}}
         },
         "double":{
             "n":2,
-            "speed":-4,
+            "speed":-7,
             "style":[11,12,13],
-            "Cooldown":600,
+            "Cooldown":200,
             "damage":5, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
@@ -23,9 +23,9 @@
         },
         "double_vibrato":{
             "n":2,
-            "speed":-4,
+            "speed":-6,
             "style":[11,12,13],
-            "Cooldown":550,
+            "Cooldown":200,
             "damage":10, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
@@ -34,9 +34,9 @@
         },
         "ADN":{
             "n":2,
-            "speed":-4,
+            "speed":-6,
             "style":[21,22,23],
-            "Cooldown":525,
+            "Cooldown":200,
             "damage":11, 
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0}},
@@ -45,9 +45,9 @@
         },
         "triple":{
             "n":3,
-            "speed":-5,
+            "speed":-6,
             "style":[31,32,33],
-            "Cooldown":525,
+            "Cooldown":200,
             "damage":12,
             "position":{"0":{"x":"x + c/2 + w/2","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 - 2 * w","y":"y - h","angle":10},
@@ -74,9 +74,9 @@
         },
         "quad":{
             "n":4,
-            "speed":-5,
+            "speed":-7,
             "style":[41,42,43],
-            "Cooldown":550,
+            "Cooldown":250,
             "damage":15,
             "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
                         "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0},
@@ -106,7 +106,32 @@
                         "1":{"x":"x + c/2","y":"y - 2*h - 3","angle":0}},
             "fonction":{"0":{"x":"x","y":"y + s"},
                         "1":{"x":"x","y":"y + s"}}
+                    },
+        "double_boss":{
+            "n":2,
+            "speed":5,
+            "style":[11,12,13],
+            "Cooldown":300,
+            "damage":2, 
+            "position":{"0":{"x":"x + c/2 + c/4","y":"y + h","angle":0},
+                        "1":{"x":"x + c/2 - c/4","y":"y + h","angle":0}},
+            "fonction":{"0":{"x":"x","y":"y + s"},
+                        "1":{"x":"x","y":"y + s"}}
+                    },
+        "triple_boss":{
+            "n":3,
+            "speed":5,
+            "style":[11,12,13],
+            "Cooldown":250,
+            "damage":2, 
+            "position":{"0":{"x":"x + c/2 + c/4","y":"y + h","angle":0},
+                        "1":{"x":"x + c/2","y":"y + h","angle":0},
+                        "2":{"x":"x + c/2 - c/4","y":"y + h","angle":0}
+                    },
+            "fonction":{"0":{"x":"x","y":"y + s"},
+                        "1":{"x":"x","y":"y + s"},
+                        "2":{"x":"x","y":"y + s"}}
                     }
-        },
+                },
     "Order_typ_bullet":["single","double","double_vibrato","ADN","triple","quad"]
 }

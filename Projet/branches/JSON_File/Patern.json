@@ -3,7 +3,7 @@
         "tutorial":{
             "Appears":{
                 "PO":2,
-                "Cooldown":2000,
+                "Cooldown":1000,
                 "Chance":9999,
                 "lower":-9999, 
                 "upgrade":0
@@ -198,7 +198,7 @@
                 }
             },
             "times_break":{
-                "0":[0],
+                "0":[2000],
                 "1":[0]
             }      
             }
@@ -208,7 +208,7 @@
         
     "ennemy_wave":{
         "fonction":{
-                "0":"2*v + 6",
+                "0":"2*v + 15",
                 "1":"exp(v)+3"
                     },
         "Wave change":[2]

@@ -7,14 +7,10 @@ import pygame
 from pygame.locals import *
 
 
-class shop():
+class shop(pygame.sprite.Sprite):
     def __init__(self, window, spaceship, dict_spaceship, dict_bullet, dict_power_ups, widthtxt=25):
-
-        self.window_h, self.window_w = window.get_height(), window.get_width()
-
-        self.dict_spaceship = dict_spaceship
-        self.dict_bullet = dict_bullet
-        self.dict_power_ups = dict_power_ups
+        
+        super().__init__()
 
         self.WHITE = (255,255,255)
         self.BLACK = (0,0,0)
@@ -23,13 +19,29 @@ class shop():
         self.RED = (255,0,0)
         self.RED_a = (156,0,0,0)
         self.GREEN = (0,139,0)
+        
+        self.police = pygame.font.Font(os.path.join("..","Ressources","Police","Adventure","Adventure.otf"), int(widthtxt))
+        self.image = self.police.render("SHOP",True,self.RED)
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.timer = 0
+        self.inited = True
+        self.CD = 30000
+
+        self.drawIt = False
+
+
+        self.window_h, self.window_w = window.get_height(), window.get_width()
+        self.rect.x, self.rect.y = rd.randint(0,self.window_w - self.image.get_width()), self.window_h
+
+        self.dict_spaceship = dict_spaceship
+        self.dict_bullet = dict_bullet
+        self.dict_power_ups = dict_power_ups
 
         self.nb_button = 7
         self.police = pygame.font.Font(os.path.join("..","Ressources","Police","Megaten","Megaten 20XX.ttf"), widthtxt)
         self.police_am = pygame.font.Font(os.path.join("..","Ressources","Police","Megaten","Megaten 20XX.ttf"), 10)
         
-        self.txtShop = self.police.render("SHOP", True, (255,255,255))
-
         self.lst_text = ["Amilioration de vaisseau :", "Amilioration de vies :", "Amilioration de dégats :", "Amilioration des balles :", "+ 15 shield :", "Shield MAX :", "Augmentation taux de drop Bonus :", "Continuer"]
 
         self.height_btw_btn = int(1.5*self.police_am.render(self.lst_text[0], True, self.WHITE).get_height())
@@ -56,6 +68,8 @@ class shop():
         self.create_button_upgrade(window)
 
         self.price_style = 2500
+
+        self.lst_btn_stats=[]
 
         self.act_life_upgrade = 0
         self.life_nb_upgrade = 5
@@ -116,7 +130,6 @@ class shop():
 
     def draw(self, window):
         pygame.draw.rect(window, self.GREY, self.rect_shop)
-        window.blit(self.txtShop,((self.window_w/2) + 5,0))
 
         for i in range(len(self.lst_btn)-1):
             pygame.draw.rect(window, self.lst_btn[i][0], [self.lst_btn[i][1], self.lst_btn[i][2], self.lst_btn[i][3], self.lst_btn[i][4]])
@@ -303,7 +316,7 @@ class shop():
     def see_new_upgrade_before(self):
         pass
 
-    def clic(self,spaceship, dict_spaceship, dict_bullet, dict_power_ups, mouse_x, mouse_y):
+    def clic(self,spaceship, dict_spaceship, dict_bullet, dict_power_ups, mouse_x, mouse_y, Power_ups):
         Width = 1
         if mouse_x>= self.lst_btn[0][1] and mouse_x <= self.lst_btn[0][1] + self.lst_btn[0][3] and mouse_y >= self.lst_btn[0][2] and mouse_y <= self.lst_btn[0][2] + self.lst_btn[0][4]:
             if spaceship.money >= self.price_style and self.next_style != "No More !":
@@ -405,11 +418,12 @@ class shop():
                     spaceship.money -= self.price_Drop
                     self.price_Drop += 1000
                     self.act_Drop_upgrade += 1
+                    Power_ups.CD -= 500
                     
                     for Bonus_type in dict_power_ups["List"]:
                         len_chance = len(dict_power_ups["List"][Bonus_type]["Chance"])
                         for j in range(len_chance-1):
-                            dict_power_ups["List"][Bonus_type]["Chance"][i] -= self.facteur_upgrade
+                            dict_power_ups["List"][Bonus_type]["Chance"][j] -= self.facteur_upgrade
                         dict_power_ups["List"][Bonus_type]["Chance"][len_chance-1] += self.facteur_upgrade*(len_chance-1)
 
                 else:
@@ -421,9 +435,24 @@ class shop():
         elif mouse_x>= self.lst_btn[7][1] and mouse_x <= self.lst_btn[7][1] + self.lst_btn[7][3] and mouse_y >= self.lst_btn[7][2] and mouse_y <= self.lst_btn[7][2] + self.lst_btn[7][4]:
             self.done = True
 
+    def update_pos_draw(self, window):
+        self.rect.y += 2
+
+        now = pygame.time.get_ticks()
+        if self.rect.y >= (self.window_h) and not self.inited:
+            self.timer = now
+            self.inited = True
+        else:
+            window.blit(self.image, self.rect)
+        
+        if now - self.timer >= self.CD and self.inited:#Chaque minute
+            self.rect.y = -1*self.image.get_height()
+            self.rect.x = rd.randint(0,self.window_w - self.image.get_width())
+            self.inited = False
+
+
     def update(self, spaceship, dict_spaceship, dict_bullet, dict_power_ups, mouse_x, mouse_y):
         self.statement(spaceship, dict_spaceship, dict_bullet, dict_power_ups)
-
         #Içi on vérifiera les zones de CLIC en hover ou pas
         
         
