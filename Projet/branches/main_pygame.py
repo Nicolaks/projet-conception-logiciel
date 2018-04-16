@@ -18,7 +18,7 @@ try:
     import Entity.SpaceShip as spaceShip
     import Entity.Ally as Ally
     import Entity.Bullet as Blt
-    
+
     import Animation.scrolling as scroll
     import Animation.UI as UI
 
@@ -122,7 +122,7 @@ def save():#fonction qui affichera le menu de selection des sauvegardes après a
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
     placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
 
-    btnJouer = btn.Button(360,60, (144,88,41), "SAUVEGARDE 1", 450, Width, Window)#Ajoute un bouton pour la Sauvegrade une 
+    btnJouer = btn.Button(360,60, (144,88,41), "SAUVEGARDE 1", 450, Width, Window)#Ajoute un bouton pour la Sauvegrade une
     btnJouer.draw()
     btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
 
@@ -159,11 +159,11 @@ def save():#fonction qui affichera le menu de selection des sauvegardes après a
                 if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
                     Set.save_settings(Set._dict_)
                     difficulté()
-                    
+
                 if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
                     Set.save_settings(Set._dict_)
                     difficulté()
-                     
+
                 if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
                     menu()
         pygame.display.update()#Update la page.
@@ -188,7 +188,7 @@ def difficulté():
     Window.fill((153,77,0))#Donne une couleur de fond a la page.
     police = pygame.font.SysFont("monospace", 50)
     policeCopyright = pygame.font.SysFont("arial", 12)
-    textTitre = police.render("CHOIX DE LA DIFFICULTER", True, (255,255,255))
+    textTitre = police.render("CHOIX DE LA DIFFICULTÉ", True, (255,255,255))
 
 
     textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
@@ -216,7 +216,7 @@ def difficulté():
     Window.blit(textCopyright, (450,850))
     continuer = True
     while continuer:#Boucle principale du Menu save.
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
                 continuer = False
@@ -247,13 +247,13 @@ def Jeux(Hht, Wth, d):
     def load_json_to_dict(path):
         with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
-        return _dict_ 
+        return _dict_
 
     ### Charge un dictionnaire de données sur les differentes "Balles" ###
-    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json'] 
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json']
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
-    
+
     _dict_Patern = load_json_to_dict("JSON_File/Patern.json")
     _dict_Patern = Wvs.loader_patern(_dict_Patern)
 
@@ -271,7 +271,7 @@ def Jeux(Hht, Wth, d):
     Clock = pygame.time.Clock()
     FontFPS = pygame.font.Font(None, 30)
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
-    
+
     #Background = pygame.image.load(os.path.join("..", "Ressources", "Background","Background.jpg")).convert()
     #Background = pygame.transform.scale(Background, (Width,Height))#Charge l'image
     Background = scroll.Background(0, Width, Height)
@@ -304,7 +304,7 @@ def Jeux(Hht, Wth, d):
     Temps_ecoule = 0
     while continuer:
         #Window.blit(Background, (0,0))
-        
+
         #Window.fill(BLACK)
         delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
         FPS = Clock.get_fps()
@@ -317,7 +317,7 @@ def Jeux(Hht, Wth, d):
         if len(buttons) >=1 and Wave_.first_press_key != None and Temps_ecoule >= 2:
             Wave_.first_press_key = True
             Wave_.startGame()
-        
+
         if Set._dict_["up"] in buttons:
             Spaceship.up()
         if Set._dict_["down"] in buttons:
@@ -364,7 +364,7 @@ def Jeux(Hht, Wth, d):
         Power_UP.draw(Window)#Order draw = 2
         Wave_.draw(Window)#Order draw = 3
         __GroupBullet_Ally.draw(Window)#Order draw = 4
-        
+
         if Spaceship.life>0:
             Spaceship.draw(Window)
         Wave_.GroupCollide_Bullet.draw(Window)
@@ -376,12 +376,13 @@ def Jeux(Hht, Wth, d):
             collide = pygame.sprite.spritecollide(Spaceship, GrShop, False, pygame.sprite.collide_mask)
             if len(collide) > 0:
                 Shop.drawIt = True
-        
+
         if Shop.drawIt:
             Wave_.Pause = True
+            x,y = (0,0)
             Shop.update(Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups,x,y)
             Shop.draw(Window)#Order draw = 5 bis
-            x,y = (0,0)
+
             if Shop.done:
                 now = pygame.time.get_ticks()
                 if now - Wave_.begin >= 2000:
@@ -389,7 +390,7 @@ def Jeux(Hht, Wth, d):
                     Shop.drawIt = False
                     Wave_.Pause = False
                     Wave_.start = 0
-        
+
         if Spaceship.life <= 0:
             Spaceship.life = 0
             Wave_.Pause = True
@@ -425,4 +426,3 @@ def Jeux(Hht, Wth, d):
         Window.blit(dmg, (100, 250))
 
         pygame.display.update()
-
