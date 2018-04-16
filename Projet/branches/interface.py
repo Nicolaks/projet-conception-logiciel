@@ -23,16 +23,8 @@ class App:#Class de type App qui gère la fenêtre graphique de base.
         relief=RAISED, compound=CENTER, bg=couleurPrincipale,
         width=25, height=5, command=self.quitterPartie).pack()#Ajout d'un boutton pour quitter la fenêtre.
 
-        #self.labelWidth = Label(self.master, text="La taille en largeur: ", width=50).pack()
-        #self.inputWidth = Entry(self.master, width=50)
-        #self.inputWidth.pack()
-
-        #self.labelHeight = Label(self.master, text="La taille en hauteur: ", width=50).pack()
-        #self.inputHeight = Entry(master, width=50)
-        #self.inputHeight.pack()
-
-        self.labelPlace = Label(self.master, text="", height=5).pack()
-        self.label = Label(self.master, text="Résolution", width=11).pack()
+        self.labelPlace = Label(self.master, text="", height=5).pack()#Place le label permettant de faire un espace vertical.
+        self.label = Label(self.master, text="Résolution", width=11).pack()#Label permettant de voir la Résolution.
 
         self.listbox = Listbox(self.master, width=11, height=3)
         self.listbox.insert(0, "1920 X 1080")
