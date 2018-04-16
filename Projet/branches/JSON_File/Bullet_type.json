@@ -13,9 +13,9 @@
         "max_boss":{
             "n":1,
             "style":[31],
-            "speed":-4,
-            "Cooldown":500,
-            "damage":50,
+            "speed":-6,
+            "Cooldown":400,
+            "damage":30,
             "position":{"0":{"x":"x + c/2","y":"y - h","angle":0}},
             "fonction":{"0":{"x":"x","y":"y + s"}}
         },
@@ -179,5 +179,5 @@
                         "2":{"x":"x","y":"y + s"}}
                     }
                 },
-    "Order_typ_bullet":["single","double", "double_speed", "double_vibrato","ADN","triple","quad", "max_boss", "double_bizarre"]
+    "Order_typ_bullet":["single", "max_boss", "double", "double_speed", "double_vibrato", "double_bizarre","ADN","triple","quad"]
 }
