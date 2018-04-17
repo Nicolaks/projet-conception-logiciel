@@ -21,7 +21,7 @@ class Boss(pygame.sprite.Sprite):
         self.fps = fps
 
         self.lst_delete = ["double_ennemy", "double_boss"]
-        self.lst_bullet = ["double_ennemy", "double_boss", "triple_boss"]
+        self.lst_bullet = ["double_ennemy", "double_boss", "triple_boss", "boss_damage"]
         self.lst_add = ["Boss_2","Boss_3","Boss_4","Boss_5","Boss_6"]
         self.bullet_type = rd.choice(self.lst_bullet)
         self.damage = 15
