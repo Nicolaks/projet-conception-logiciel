@@ -1,6 +1,6 @@
 import time
 import os
-import random as rd 
+import random as rd
 import pygame
 import math
 
@@ -11,7 +11,7 @@ class Boss(pygame.sprite.Sprite):
 
         super().__init__()
         Surface = pygame.display.get_surface()
-        self.Surf_Height, self.Surf_Width = Surface.get_height(), Surface.get_width() 
+        self.Surf_Height, self.Surf_Width = Surface.get_height(), Surface.get_width()
 
         self.full_life = None
         self.life = None
@@ -20,9 +20,7 @@ class Boss(pygame.sprite.Sprite):
         self.dict_boss = {}
         self.fps = fps
 
-        self.lst_delete = ["double_ennemy", "double_boss"]
-        self.lst_bullet = ["double_ennemy", "double_boss", "triple_boss", "boss_damage"]
-        self.lst_add = ["Boss_2","Boss_3","Boss_4","Boss_5","Boss_6"]
+        self.lst_bullet = ["double_ennemy", "double_boss", "triple_boss"]
         self.bullet_type = rd.choice(self.lst_bullet)
         self.damage = 15
         self.last_shoot = 0
@@ -56,7 +54,7 @@ class Boss(pygame.sprite.Sprite):
         self.last_img = pygame.time.get_ticks()
 
         self.time = 1.5
-        
+
     def draw_(self, window):
         self.draw(window)
 
@@ -70,7 +68,7 @@ class Boss(pygame.sprite.Sprite):
             self.image = self.dict_boss[str(self.boss)][self.cmpt_image]
             x,y = self.rect.x, self.rect.y
             self.rect = self.image.get_rect()
-            self.rect.x, self.rect.y = x,y  
+            self.rect.x, self.rect.y = x,y
             self.last_img = now
 
     def update_pos(self):
@@ -104,10 +102,9 @@ class Boss(pygame.sprite.Sprite):
                 if nb_frame+1<10:
                     nb_frame = "0"+str(nb_frame+1)
                 else:
-                    nb_frame = str(nb_frame+1) 
+                    nb_frame = str(nb_frame+1)
                 img = pygame.image.load(os.path.join("..", "Ressources", "Graphics", "Boss", str(boss+1),"frame-"+nb_frame+".gif")).convert_alpha()#Charge l'image
-                
+
                 height = int(coef * self.width)
                 img = pygame.transform.scale(img, (self.width,height))
                 self.dict_boss[str(boss+1)].append(img)
-

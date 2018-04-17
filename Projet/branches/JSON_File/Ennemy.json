@@ -10,10 +10,10 @@
             "type tir":["single_ennemy", "double_ennemy"],
             "money":100},
         "assassin":{"life":150, "dmg":40, "width":55, "speed":6, "style":[41,42,43,44,45,46], "score":800, "ratio_tir":25,"CD":200,
-            "type tir":["double_ennemy", "triple_ennemy", "quad_ennemy"],
+            "type tir":["double_ennemy","triple_ennemy", "quad_ennemy"],
             "money":125},
         "vitesse":{"life":200, "dmg":30, "width":40, "speed":8, "style":[51,52,53,54,55,56], "score":1000, "ratio_tir":20,"CD":250,
-            "type tir":["single_ennemy", "double_ennemy","triple_ennemy", "quad_ennemy"],
+            "type tir":["single_ennemy", "double_ennemy","triple_ennemy","quad_ennemy"],
             "money":150}
     },
     "Type":["lambda","lambda++","tank","assassin","vitesse"],
@@ -21,4 +21,4 @@
     "LOW":[-10,-7,-5,-4,-4],
     "UP":[8,6,3,2,1],
     "Reset_Hard":[15,35,50,40,40]
-} 
+}

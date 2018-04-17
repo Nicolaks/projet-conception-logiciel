@@ -153,38 +153,37 @@
             "fonction":{"0":{"x":"x","y":"y + s"},
                         "1":{"x":"x","y":"y + s"}}
                     },
-        
-      "triple_ennemy":{
-        "n":3,
-        "speed":5,
-        "style":[11,12,13],
-        "Cooldown":350,
-        "damage":2,
-        "position":{"0":{"x":"x + c/2 + c/4","y":"y + h","angle":0},
-                    "1":{"x":"x + c/2","y":"y + h","angle":0},
-                    "2":{"x":"x + c/2 - c/4","y":"y + h","angle":0}
-                  },
-        "fonction":{"0":{"x":"x","y":"y + s"},
-                    "1":{"x":"x","y":"y + s"},
-                    "2":{"x":"x","y":"y + s"}}
-                  }
-                },
 
-        "quad_ennemy":{
-            "n":4,
-            "speed":7,
-            "style":[41,42,43],
-            "Cooldown":250,
-            "damage":10,
-            "position":{"0":{"x":"x + c/2 - 2*w","y":"y - h","angle":0},
-                        "1":{"x":"x + c/2 + 2*w","y":"y - h","angle":0},
-                        "2":{"x":"x + c/2 + 4 *w","y":"y - h","angle":-10},
-                        "3":{"x":"x + c/2 - 4*w","y":"y - h","angle":10}},
-            "fonction":{"0":{"x":"x","y":"y + s"},
-                        "1":{"x":"x","y":"y + s"},
-                        "2":{"x":"x - cos(a)","y":"y + s"},
-                        "3":{"x":"x + cos(a)","y":"y + s"}
-                        }},
+        "triple_ennemy":{
+              "n":3,
+              "speed":5,
+              "style":[11,12,13],
+              "Cooldown":350,
+              "damage":2,
+              "position":{"0":{"x":"x + c/2 + c/4","y":"y + h","angle":0},
+                          "1":{"x":"x + c/2","y":"y + h","angle":0},
+                          "2":{"x":"x + c/2 - c/4","y":"y + h","angle":0}
+                        },
+              "fonction":{"0":{"x":"x","y":"y + s"},
+                          "1":{"x":"x","y":"y + s"},
+                          "2":{"x":"x","y":"y + s"}}
+                      },
+              "quad_ennemy":{
+                  "n":4,
+                  "speed":7,
+                  "style":[41,42,43],
+                  "Cooldown":250,
+                  "damage":10,
+                  "position":{"0":{"x":"x + c/2 - 2*w","y":"y + h","angle":0},
+                              "1":{"x":"x + c/2 + 2*w","y":"y + h","angle":0},
+                              "2":{"x":"x + c/2 + 4 *w","y":"y + h","angle":-10},
+                              "3":{"x":"x + c/2 - 4*w","y":"y + h","angle":10}},
+                  "fonction":{"0":{"x":"x","y":"y + s"},
+                              "1":{"x":"x","y":"y + s"},
+                              "2":{"x":"x - cos(a)","y":"y + s"},
+                              "3":{"x":"x + cos(a)","y":"y + s"}
+                              }
+                          },
         "double_boss":{
             "n":2,
             "speed":5,
@@ -211,15 +210,5 @@
                         "2":{"x":"x","y":"y + s"}}
                     }
                 },
-    
-            "boss_damage":{
-                "n":1,
-                "style":[33],
-                "speed":3,
-                "Cooldown":400,
-                "damage":100,
-                "position":{"0":{"x":"x + c/2","y":"y - h","angle":0}},
-                "fonction":{"0":{"x":"x","y":"y + s"}}
-            },
     "Order_typ_bullet":["single", "max_boss", "double", "double_speed", "double_vibrato", "double_bizarre","ADN","triple","quad"]
 }
