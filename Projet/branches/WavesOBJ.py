@@ -3,6 +3,7 @@ import os
 import pygame
 import random as rd
 from pygame.locals import * 
+import math
 import sympy as sp
 from sympy.utilities.lambdify import lambdify
 from sympy.abc import x, y, s, a, t, w, h, c, v
@@ -161,21 +162,21 @@ class Waves():
     def change_chance_ennemy(self, j):
         for i in range(len(self._dict_Ennemy["Chance"])):
             if i == j:
-                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["LOW"][i]
+                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["LOW"][i]*(math.log10(self.wave))
             if i != j:
-                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["UP"][i]
+                self._dict_Ennemy["Chance"][i] += self._dict_Ennemy["UP"][i]*(math.log10(self.wave))
 
 
     def choose_ennemy_type(self):
         somme = 0
         for i in self._dict_Ennemy["Chance"]:
-            somme += i
+            somme += int(i)
         
         p = rd.uniform(0,somme)
         for i,j in zip(self._dict_Ennemy["Chance"], range(len(self._dict_Ennemy["Chance"]))):#On calcule retiens le patern qui va annuler le x choisi entre 0 et la somme
-            p -= i
+            p -= int(i)
             if p<=0:
-                if self._dict_Ennemy["Chance"][j] == i:
+                if int(self._dict_Ennemy["Chance"][j]) == int(i):
                     return self._dict_Ennemy["Type"][j], j       
 
     def wave_change_init(self):

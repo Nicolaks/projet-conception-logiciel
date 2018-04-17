@@ -69,6 +69,7 @@ class impact(pygame.sprite.Sprite):
 
     def update(self):
         now = pygame.time.get_ticks()
+        self.posY += 1
         if now - self.last_change >= self.CD:
             if self.cmpt_image < len(self.list_images):
                 self.cmpt_image += 1

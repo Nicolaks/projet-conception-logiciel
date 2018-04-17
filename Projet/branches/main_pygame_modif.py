@@ -8,7 +8,6 @@ try:
     from pygame.locals import *
     import random as rd
     import sympy as sp
-    import threading
 
     import WavesOBJ as Wvs
 
@@ -35,63 +34,185 @@ except ImportError as error:
     print(error.__class__.__name__ + " : " + error.msg)
     sys.exit(0)
 
-def loading_phase(list_images, fps, Window, width, height):
-    now = pygame.time.get_ticks()
-    t = 0
-    t2 = 0
-    n = len(list_images)-1
-    time = now
-    time2 = now
 
-    police = pygame.font.Font(os.path.join("..","Ressources","Police","Adventure","Adventure.otf"), int(25))
+def menu():#Fonction menu qui sera lancée après avoir cliqué sur le bouton jouer de interface.py
+    Set = Settings.Settings()
+    Set.read()
+    pygame.font.init()
 
-    one = "Une jeu créé par"
-    two = "Ragot David"
-    three = "Aubry Nicolas"
-    four = "Bertier Théo"
-    five = "En partenariat avec"
-    six = "La licence informatique"
-    seven = "Dans le cadre de l'UE"
-    eight = "Conception Logicielle"
-    nine = "Vous présente :"
-    ten = "PS : Nous n'avons pas utilisé ce temps pour chargé tout notre contenu"
+    Height = Set._dict_["Height"] #Hauteur
+    Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
 
-    listTXT = [one,two,three,four,five,six,seven,eight,nine,ten]
+    pygame.init()
 
-    Color_i = [255,255,255]
-    Color = Color_i
+    Window = pygame.display.set_mode((Width,Height))
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
-    while True:
 
-        now = pygame.time.get_ticks()
-        if t == n:
-            t=0
-        Window.blit(list_images[t],(0,0))
 
-        Color = [x-1 for x in Color]
-        if Color == [0,0,0]:
-            Color = Color_i
-            t2 += 1
-        if t2 > len(listTXT)-1:
-            return
-        else:
-            txt = police.render(listTXT[t2],True,(Color[0],Color[1],Color[2]))
-            posX = width/2 - txt.get_width()/2
-            posY = height/2 - txt.get_height()/2
-            Window.blit(txt,(posX,posY))
-        if now - time >= fps:
-            time = now
-            t += 1
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    policeCopyright = pygame.font.SysFont("arial", 12)
+    textTitre = police.render("Manic Shooter:", True, (255,255,255))
 
-        pygame.display.update()
 
-def loading_background(Width,Height):
-    global Background
-    Background = scroll.Background(0, Width, Height)
+    textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
 
-def loading_Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type, fps):
-    global Wave_
-    Wave_ = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type, fps)
+    btnJouer = btn.Button(150,60, (144,88,41), "JOUER", 450, Width, Window)#Ajoute un bouton jouer.
+    btnJouer.draw()
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
+
+
+    btnSettings = btn.Button(240,60, (144,88,41), "SETTINGS", 700, Width, Window)#Ajoute un bouton settings.
+    btnSettings.draw()
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
+
+    btnQuitter = btn.Button(210,60, (144,88,41), "QUITTER", 950, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
+
+    continuer = True
+    while continuer:#Boucle principale du jeux.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    save()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x , y = event.pos
+
+                    print("ok")
+        pygame.display.update()#Update la page.
+        pygame.time.Clock().tick(fps)
+    pygame.quit()
+    quit()
+def save():#fonction qui affichera le menu de selection des sauvegardes après avoir cliqué sur jouer
+    Set = Settings.Settings()
+    Set.read()
+    pygame.font.init()
+
+    Height = Set._dict_["Height"] #Hauteur
+    Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
+
+    pygame.init()
+
+    Window = pygame.display.set_mode((Width,Height))
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
+
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    policeCopyright = pygame.font.SysFont("arial", 12)
+    textTitre = police.render("CHOIX DE LA SAUVEGARDE", True, (255,255,255))
+
+
+    textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
+
+    btnJouer = btn.Button(360,60, (144,88,41), "SAUVEGARDE 1", 450, Width, Window)#Ajoute un bouton pour la Sauvegrade une 
+    btnJouer.draw()
+    btnJouer.afficherTexte(btnJouer.txtPlacement_x,btnJouer.txtPlacement_y)
+
+
+    btnSettings = btn.Button(360,60, (144,88,41), "SAUVEGARDE 2", 700, Width, Window)#Ajoute un bouton pour la deuxième sauvegarde
+    btnSettings.draw()
+    btnSettings.afficherTexte(btnSettings.txtPlacement_x,btnSettings.txtPlacement_y)
+
+
+    btnQuitter = btn.Button(360,60, (144,88,41), "SAUVEGARDE 3", 950, Width, Window)#Ajoute un bouton pour la troisième sauvegarde
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    btnQuitter = btn.Button(210,60, (144,88,41), "QUITTER", 1200, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter.draw()
+    btnQuitter.afficherTexte(btnQuitter.txtPlacement_x, btnQuitter.txtPlacement_y)
+
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
+
+    continuer = True
+    while continuer:#Boucle principale du Menu save.
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    Jeux(Height, Width)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x , y = event.pos
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                    
+                if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
+                    Set.save_settings(Set._dict_)
+                    difficulté()
+                     
+                if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
+                    menu()
+        pygame.display.update()#Update la page.
+        pygame.time.Clock().tick(fps)
+
+def difficulté():
+    Set = Settings.Settings()
+    Set.read()
+    pygame.font.init()
+
+    Height = Set._dict_["Height"] #Hauteur
+    Width = Set._dict_["Width"] #Largeur
+    fps = Set._dict_["fps"]
+
+    pygame.init()
+
+    Window = pygame.display.set_mode((Width,Height))
+
+
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
+
+    Window.fill((153,77,0))#Donne une couleur de fond a la page.
+    police = pygame.font.SysFont("monospace", 50)
+    policeCopyright = pygame.font.SysFont("arial", 12)
+    textTitre = police.render("CHOIX DE LA DIFFICULTÉ", True, (255,255,255))
+
+
+    textCopyright = policeCopyright.render("© Développé par Aubry Nicolas, Ragot David et Berthier Théo", True, (255,255,255))
+    placementTexteTitre = (Width/2) - (textTitre.get_width()/2)
+
+   
+    Window.blit(textTitre, (placementTexteTitre, 30))
+    Window.blit(textCopyright, (450,850))
+    continuer = True
+    while continuer:#Boucle principale du Menu save.
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:#Si on ferme la fenêtre en cliquant sur la CROIX
+                continuer = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_g:
+                    Jeux(Height, Width)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x,y = event.pos
+                if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
+                    Jeux(Height, Width,1)
+                if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 270/2) and x < (Width/2 + 270/2):
+                    Jeux(Height, Width,3)
+                if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
+                    Jeux(Height,Width,2)
+                if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
+                    save()
+        pygame.display.update()#Update la page.
+        pygame.time.Clock().tick(fps)
 
 def Jeux(Hht, Wth):
     pygame.init()
@@ -99,37 +220,13 @@ def Jeux(Hht, Wth):
     Set = Settings.Settings()
     Set.read()
 
-    Height, Width = Hht, Wth
-    if Set.file_here:
-        Height = Set._dict_["Height"]  # Hauteur
-        Width = Set._dict_["Width"]  # Largeur
-    fps = Set._dict_["fps"]
-
-    Window = pygame.display.set_mode((Width, Height), pygame.SRCALPHA)
-    pygame.display.set_caption("Manic Shooter : Shot'em up !")
-    Clock = pygame.time.Clock()
-    FontFPS = pygame.font.Font(None, 30)
-    
-    n = len(os.listdir(os.path.join("..", "Ressources", "Loading_screen","3")))
-    listIMG = []
-
-    for i in range(1,n):
-        if i<10:
-            j = "0"+str(i)
-        else:
-            j = str(i)
-        img = pygame.image.load(os.path.join("..", "Ressources",  "Loading_screen","3","frame-"+j+".gif")).convert_alpha()
-        img = pygame.transform.scale(img, (Width,Height))
-        listIMG.append(img)
-
-    t1 = threading.Thread(target=loading_phase, args=(listIMG,fps,Window,Width,Height))
-    t1.start()
-
     def load_json_to_dict(path):
         with open(path) as file:  # On récupère le fichier
             _dict_ = json.load(file)
-        return _dict_
+        return _dict_ 
 
+    ### Charge un dictionnaire de données sur les differentes "Balles" ###
+    # File_path = ['Entity/Bullet/Bullet_type.json', 'Patern.json'] 
     _dict_Bullet_type = load_json_to_dict("JSON_File/Bullet_type.json")
     _dict_Bullet_type = Blt.loader_fct_bullet(_dict_Bullet_type)#Permet de creer les fonctions une seules fois, en les remplacant a leur endroit respectif dans le dictionnaire.
     
@@ -140,16 +237,25 @@ def Jeux(Hht, Wth):
     _dict_Ennemy = load_json_to_dict("JSON_File/Ennemy.json")
     _dict_Powers_ups = load_json_to_dict("JSON_File/Power_ups.json")
 
-    t2 = threading.Thread(target=loading_Waves, args=(_dict_Patern, _dict_Ennemy, _dict_Bullet_type, fps))
-    t3 = threading.Thread(target=loading_background, args=(Width,Height))
+    Height, Width = Hht, Wth
+    if Set.file_here:
+        Height = Set._dict_["Height"]  # Hauteur
+        Width = Set._dict_["Width"]  # Largeur
+    fps = Set._dict_["fps"]
 
-    t3.start()
-    t2.start()
+    Window = pygame.display.set_mode((Width, Height), pygame.SRCALPHA)
+    Clock = pygame.time.Clock()
+    FontFPS = pygame.font.Font(None, 30)
+    pygame.display.set_caption("Manic Shooter : Shot'em up !")
 
+    Background = scroll.Background(0, Width, Height)
+
+    Wave_ = Wvs.Waves(_dict_Patern, _dict_Ennemy, _dict_Bullet_type, fps)#On initialise notre objet de Vague
     __GroupBullet_Ally = ENTGroup.Entity()#A mettre en variables du vaisseau
 
     UIn = UI.ui()    #UI = User Interface
     Power_UP = PU.Power_ups(_dict_Powers_ups)
+
 
     Spaceship = Ally.allyShip(_dict_Spaceship, UIn.width)
     #Spaceship.bullet_type = ""
@@ -159,8 +265,6 @@ def Jeux(Hht, Wth):
     Shop = SHOP.shop(Window, Spaceship,_dict_Spaceship, _dict_Bullet_type, _dict_Powers_ups)
     GrShop = ENTGroup.Entity()
     GrShop.add(Shop)
-
-    t2.join()
 
 #########################Police###########################
     police = pygame.font.SysFont("monospace", 50)
@@ -176,7 +280,6 @@ def Jeux(Hht, Wth):
 ##########################################################
 ###########################MENU_SAVE######################
     txtSave = police.render("CHOIX DE LA SAUVEGARDE", True, (255,255,255))
-    placementTxtSave = (Width/2) - (txtSave.get_width()/2)
     btnSave1 = btn.Button(360,60, (144,88,41), "SAUVEGARDE 1", 450, Width, Window)#Ajoute un bouton pour la Sauvegrade une 
     btnSave2 = btn.Button(360,60, (144,88,41), "SAUVEGARDE 2", 700, Width, Window)#Ajoute un bouton pour la deuxième sauvegarde
     btnSave3 = btn.Button(360,60, (144,88,41), "SAUVEGARDE 3", 950, Width, Window)#Ajoute un bouton pour la troisième sauvegarde
@@ -184,20 +287,11 @@ def Jeux(Hht, Wth):
 ##########################################################
 ##########################MENU_DIFF#######################
     txtDiff = police.render("Choix de la difficulté", True, (255,255,255))
-    placementTxtDiff = (Width/2) - (txtDiff.get_width()/2)
     btnFacile = btn.Button(180,60, (144,88,41), "FACILE", 450, Width, Window)#Ajoute un bouton pour la difficulté facile
     btnNormal = btn.Button(180,60, (144,88,41), "NORMAL", 700, Width, Window)#Ajoute un bouton pour la difficulté normal
     btnDiff = btn.Button(270,60, (144,88,41), "DIFFICILE", 950, Width, Window)#Ajoute un bouton pour la difficulté difficile
-    btnQuitter_3 = btn.Button(210,60, (144,88,41), "Retour", 1200, Width, Window)#Ajoute un bouton quitter.
+    btnQuitter_3 = btn.Button(210,60, (144,88,41), "QUITTER", 1200, Width, Window)#Ajoute un bouton quitter.
 ##########################################################
-    
-    t1.join()
-    t3.join()
-
-    t1._stop()
-    t2._stop()
-    t3._stop()
-
     continuer = True
 
     Game = False
@@ -209,7 +303,7 @@ def Jeux(Hht, Wth):
     Temps_ecoule = 0
     while continuer:
         #Window.blit(Background, (0,0))
-        x,y = (0,0)
+        
         #Window.fill(BLACK)
         delta_time = Clock.tick(fps) * 0.001 #En ms -> x0.001 pour mettre en seconde et delta time : c'est le temps entre 2 images.
         FPS = Clock.get_fps()
@@ -239,11 +333,10 @@ def Jeux(Hht, Wth):
             if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 150/2) and x < (Width/2 + 150/2):
                 Menu_Profile = True
                 Menu_Home = False
-            if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 240/2) and x < (Width/2 + 240/2):
-                print("OK")
             if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
+                print("OK")
+            if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 240/2) and x < (Width/2 + 240/2):
                 continuer = False
-            x,y = (0,0)
         if not Menu_Home and Menu_Profile:
 
             Window.fill((153,77,0))#Donne une couleur de fond a la page.
@@ -254,8 +347,8 @@ def Jeux(Hht, Wth):
             btnSave3.draw()
             btnSave3.afficherTexte(btnSave3.txtPlacement_x, btnSave3.txtPlacement_y)
             btnQuitter_2.draw()
-            btnQuitter_2.afficherTexte(btnQuitter_2.txtPlacement_x, btnQuitter_2.txtPlacement_y)
-            Window.blit(txtSave, (placementTxtSave, 30))
+            btnQuitter_2.afficherTexte(btnSave3.txtPlacement_x, btnSave3.txtPlacement_y)
+            Window.blit(txtSave, (placementTexteTitre, 30))
 
             if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 360/2) and x < (Width/2 + 360/2):
                 Profile = "profile1"
@@ -270,9 +363,8 @@ def Jeux(Hht, Wth):
                 Menu_Profile = False
                 Menu_Difficulty = True
             if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
-                Menu_Profile = False
-                Menu_Home = True
-            x,y = (0,0)
+                continuer = False
+
         if not Menu_Home and not Menu_Profile and Menu_Difficulty:
 
             Window.fill((153,77,0))#Donne une couleur de fond a la page.
@@ -284,24 +376,24 @@ def Jeux(Hht, Wth):
             btnDiff.afficherTexte(btnDiff.txtPlacement_x, btnDiff.txtPlacement_y)
             btnQuitter_3.draw()
             btnQuitter_3.afficherTexte(btnQuitter_3.txtPlacement_x, btnQuitter_3.txtPlacement_y)
-            Window.blit(txtDiff, (placementTxtDiff, 30))
+            Window.blit(txtDiff, (placementTexteTitre, 30))
 
             if y> 450/2 and y < 450/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
                 Wave_.difficulty = 15
                 Game = True
                 Menu_Difficulty = False
-            if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
+            if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 270/2) and x < (Width/2 + 270/2):
                 Wave_.difficulty = 10
                 Game = True
                 Menu_Difficulty = False
-            if y > 950/2 and y < 950/2 + 60 and x > (Width/2 - 270/2) and x < (Width/2 + 270/2):
+            if y > 700/2 and y < 700/2 + 60 and x > (Width/2 - 180/2) and x < (Width/2 + 180/2):
                 Wave_.difficulty = 5
                 Game = True
                 Menu_Difficulty = False
             if y > 1200/2 and y < 1200/2 + 60 and x > (Width/2 - 210/2) and x < (Width/2 + 210/2):
                 Menu_Profile = True
                 Menu_Difficulty = False
-            x,y = (0,0)
+
         if Game:
             Temps_ecoule += delta_time
             if len(buttons) >=1 and Wave_.first_press_key != None and Temps_ecoule >= 2:
@@ -404,10 +496,10 @@ def Jeux(Hht, Wth):
             dmg = FontFPS.render("dmg : {}".format(int(Spaceship.damage + _dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["damage"])), True, (255, 255, 255))
 
 
-            Window.blit(fps_render, (100, 100))
-            Window.blit(Speed, (100, 150))
-            Window.blit(Time, (100, 200))
-            Window.blit(dmg, (100, 250))
+        Window.blit(fps_render, (100, 100))
+        Window.blit(Speed, (100, 150))
+        Window.blit(Time, (100, 200))
+        Window.blit(dmg, (100, 250))
 
         pygame.display.update()
     pygame.quit()

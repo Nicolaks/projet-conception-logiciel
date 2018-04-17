@@ -451,7 +451,7 @@ class shop(pygame.sprite.Sprite):
             self.inited = False
 
 
-    def update(self, spaceship, dict_spaceship, dict_bullet, dict_power_ups, mouse_x, mouse_y):
+    def update(self, spaceship, dict_spaceship, dict_bullet, dict_power_ups):
         self.statement(spaceship, dict_spaceship, dict_bullet, dict_power_ups)
         #Içi on vérifiera les zones de CLIC en hover ou pas
         
