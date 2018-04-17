@@ -99,6 +99,12 @@ def Jeux(Hht, Wth):
     Set = Settings.Settings()
     Set.read()
 
+    sound_ambiance = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Ambiance_2.wav"))
+    sound_ambiance2 = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Ambiance_1.wav"))
+    sound_shoot = pygame.mixer.Sound(os.path.join("..","Ressources","Son","SpaceShip_Shoot.wav"))
+    sound_exploded = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Explosion_2.wav"))
+    sound_ambiance_shoot = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Ambiance_tir.wav"))
+
     Height, Width = Hht, Wth
     if Set.file_here:
         Height = Set._dict_["Height"]  # Hauteur
@@ -109,6 +115,8 @@ def Jeux(Hht, Wth):
     pygame.display.set_caption("Manic Shooter : Shot'em up !")
     Clock = pygame.time.Clock()
     FontFPS = pygame.font.Font(None, 30)
+
+    sound_ambiance.play(loops=1, maxtime=0, fade_ms=0)
     
     n = len(os.listdir(os.path.join("..", "Ressources", "Loading_screen","3")))
     listIMG = []
@@ -207,6 +215,8 @@ def Jeux(Hht, Wth):
     Menu_Difficulty = False
 
     Temps_ecoule = 0
+    sound_ambiance.fadeout(250)
+    sound_ambiance2.play(loops=1, maxtime=0, fade_ms=0)
     while continuer:
         #Window.blit(Background, (0,0))
         x,y = (0,0)
@@ -320,13 +330,15 @@ def Jeux(Hht, Wth):
                 if Set._dict_["s_shoot"] in buttons:
                     now = pygame.time.get_ticks()
                     if now - Spaceship.bullet_last_hit >= _dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["Cooldown"]:
+                        sound_shoot.play()
                         for i in range(_dict_Bullet_type["typ_bullet"][Spaceship.bullet_type]["n"]):
                             Bullet = Blt.bullet(Spaceship, _dict_Bullet_type, i)
                             __GroupBullet_Ally.add(Bullet)
                         Spaceship.bullet_last_hit = now
 
             if 'escape' in buttons:
-                menu()
+                Menu_Home=True
+                Game=False
 
             if 'f' in buttons and 'i' in buttons and 'n' in buttons:
                 pygame.quit()
@@ -385,12 +397,20 @@ def Jeux(Hht, Wth):
                     GameOver.update(x_pos,y_pos)
                     GameOver.draw(Window)
                     if GameOver.menu:
-                        menu()
+                        Game = False
+                        Menu_Home = True
                     if GameOver.rejouer:
-                        Jeux(Height,Width,d)
+                        Wave_.Pause = False
+                        Temps_ecoule = 0
+                        Wave_.wave = 1
+                        Wave_.numbers_ennemy_init()
+                        Wave_.patern_choose()
+                        Spaceship.upgrade_style_performance(1,_dict_Spaceship)
                     if GameOver.quitter:
                         pygame.quit()
                         quit()
+                    x,y = (0,0)
+
 
             UIn.draw(Window, Spaceship, Wave_)#Order draw = 6
 

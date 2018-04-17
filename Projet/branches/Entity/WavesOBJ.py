@@ -123,7 +123,7 @@ class Waves():
         self.GroupSHIP.add(Ennemy)
 
         self.numbers_ennemy -= 1
-        print("Ennemy restant =",self.numbers_ennemy)
+        #print("Ennemy restant =",self.numbers_ennemy)
 
     def wave_change_init(self):
         if len(self._dict_["ennemy_wave"]["fonction"]) > 1:
@@ -145,7 +145,7 @@ class Waves():
     def ennemy_init(self):
 
         for i in range(int(self._dict_["patern"][self.patern]["Appears"]["PO"])):
-            print(i)
+            #print(i)
             self.init_one_ennemy(i)
         self.last_ennemy_spawn = pygame.time.get_ticks()
 

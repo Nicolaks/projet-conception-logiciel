@@ -34,7 +34,6 @@ class allyShip(_ss_.SpaceShip):
         self.rect.y = self.Surf_Height*(1-(5/80)) - self.height
 
 
-
     def init_carac(self, _dict_Spaceship):
         width = _dict_Spaceship[str(self.nb_style)]["width"]
         dmg = _dict_Spaceship[str(self.nb_style)]["dmg"]

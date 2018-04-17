@@ -57,6 +57,8 @@ class bullet(pygame.sprite.Sprite):
         
         self.FposX = self.rect.x 
         self.FposY = self.rect.y
+
+        self.sound = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Ambiance_tir.wav"))
         # TRAJECTOIRE
         dict_file = __dict_bullet["typ_bullet"][self.bullet_type]["fonction"][str(self.position)]
 
@@ -69,10 +71,10 @@ class bullet(pygame.sprite.Sprite):
         self.speed___bullet = __dict_bullet["typ_bullet"][spaceShip.bullet_type]["speed"] #vitesse des balles, que l'on définira en Json les paramètres de base
         self.dmg = spaceShip.damage + __dict_bullet["typ_bullet"][spaceShip.bullet_type]["damage"] # + __dict_bullet["style"][self.style]["dmg"] 
 
-
         #print("DMG =",self.dmg)
  
         self.time = 0
+        self.sound.play(loops=1, maxtime=0, fade_ms=0)
 
     def init_pos(self, dict_file, spaceShip):
         
@@ -110,5 +112,7 @@ class bullet(pygame.sprite.Sprite):
 
         if self.rect.x >= Width + self.width or self.rect.x <= 0 - self.width:
             self.kill()
+            self.sound.stop()
         if self.rect.y <= 0 - self.height or self.rect.y >= Height + self.height:
             self.kill()
+            self.sound.stop()

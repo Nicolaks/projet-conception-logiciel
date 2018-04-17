@@ -18,7 +18,10 @@ class impact(pygame.sprite.Sprite):
             type_images = ["Blue_","Red_","Green_"]
             self.type = rd.choice(type_images)
             self.load_images()
+            self.sound = pygame.mixer.Sound(os.path.join("..","Ressources","Son","impact.wav"))
+            self.sound.set_volume(0.5*self.sound.get_volume())
         else:
+            self.sound = pygame.mixer.Sound(os.path.join("..","Ressources","Son","Explosion_2.wav"))
             self.type = "frame-"
             self.load_images_explode(_Width)
 
@@ -30,6 +33,7 @@ class impact(pygame.sprite.Sprite):
 
         self.posX, self.posY = self.rect.x, self.rect.y
 
+        self.sound.play()
         self.last_change = pygame.time.get_ticks()
 
         

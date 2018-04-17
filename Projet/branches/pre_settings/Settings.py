@@ -5,15 +5,10 @@ class Settings:
     def __init__(self):
         self.path = "JSON_File/Settings.json"#Par rapport a main_pygame.py
         self._default_dict_ = {u"up":"up",u"down":"down",u"right":"right",u"left":"left",u"s_shoot":"space",u"Sauvegarde":{"profile1":{"score":[],"wave":[]},"profile2":{"score":[],"wave":[]},"profile3":{"score":[],"wave":[]}},u"language":"Francais",u"Width":900,u"Height":900, u"fps":60}
-
         self._dict_ = self._default_dict_
-
         self.file = None
-
         self.file_here = None
-
         self.key_hold = None
-
     def read(self):#Fonction qui va faire une lecture du file pour en extraire des informations.
         try:    
             self.load_json_to_dict()
@@ -161,4 +156,7 @@ class Settings:
 #    Settings.default_save()
 #    print(Settings._dict_["up"])
 #    print(Settings._dict_)
-
+    def draw(self, window):
+        pass
+    def update(self):
+        pass
